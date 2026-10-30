@@ -15,11 +15,11 @@ function normalizarTexto(txt) {
   return txt.toString().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function iniciarApp() {
   inicializarTema();
   inicializarTamanhoFonte();
-  carregarDadosEstaticos();
   inicializarTodosCustomSelects();
+  carregarDadosEstaticos();
   inicializarRoteadorSPA();
   inicializarScrollSpyDocumentacao();
 
@@ -33,7 +33,13 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.custom-select-wrapper.open').forEach(w => w.classList.remove('open'));
     }
   });
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', iniciarApp);
+} else {
+  iniciarApp();
+}
 
 // 1. Gerenciamento de Tema (Dark / Light)
 function inicializarTema() {
@@ -118,8 +124,11 @@ function sincronizarCustomSelect(selectId) {
   const select = document.getElementById(selectId);
   if (!select) return;
 
-  const wrapper = select.closest('.custom-select-wrapper');
-  if (!wrapper) return;
+  let wrapper = select.closest('.custom-select-wrapper');
+  if (!wrapper) {
+    inicializarCustomSelect(selectId);
+    return;
+  }
 
   const triggerSpan = wrapper.querySelector('.custom-select-trigger span');
   const menu = wrapper.querySelector('.custom-select-menu');
