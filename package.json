@@ -1,0 +1,32 @@
+{
+  "name": "med-saude-amazon-connect",
+  "version": "1.0.0",
+  "description": "Portal Med+Saúde com Guia Médico Inteligente e Atendimento Omnichannel Amazon Connect - Escola da Nuvem",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "build": "node build.js"
+  },
+  "keywords": [
+    "amazon-connect",
+    "amazon-lex",
+    "guia-medico",
+    "saude",
+    "escola-da-nuvem"
+  ],
+  "author": "Grupo 6 - Escola da Nuvem",
+  "license": "ISC",
+  "dependencies": {
+    "@angular/common": "^22.2.4",
+    "@angular/core": "^22.2.4",
+    "@angular/platform-browser": "^22.2.4",
+    "@ionic/angular": "^9.0.10",
+    "@ionic/core": "^9.0.10",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "ionicons": "^8.1.0",
+    "rxjs": "^7.8.2",
+    "zone.js": "^0.16.3"
+  }
+}

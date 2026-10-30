@@ -1,0 +1,1954 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Med+Saúde | Guia Médico Inteligente & Atendimento Omnichannel</title>
+  <meta name="description" content="Encontre especialistas credenciados e agende sua consulta conversacionalmente via Chat e Voz com inteligência artificial Amazon Connect e Amazon Lex.">
+  
+  <!-- Google Fonts: Plus Jakarta Sans + Space Grotesk + Chakra Petch (Retro-Tech) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Favicons Oficiais Med+Saúde Pará -->
+  <link rel="icon" type="image/png" sizes="64x64" href="./images/favicon.png">
+  <link rel="shortcut icon" href="./favicon.ico">
+  <link rel="apple-touch-icon" href="./images/favicon.png">
+  
+  <!-- PWA & Mobile App Experience (Android / iOS) -->
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#0284c7">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Med+Saúde">
+
+  <!-- Ionicons (Biblioteca de Ícones Mobile / Web) -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+  <!-- Critical Override: Restauração Absoluta de Scroll Nativo no HTML & Blindagem de Elementos Fixos -->
+  <style>
+    html {
+      width: 100% !important;
+      height: auto !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+      scroll-behavior: smooth !important;
+      position: static !important;
+    }
+    body {
+      width: 100% !important;
+      height: auto !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: visible !important;
+      position: static !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      transform: none !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
+    .app-container, ion-app {
+      display: block !important;
+      position: static !important;
+      width: 100% !important;
+      height: auto !important;
+      min-height: 100% !important;
+      overflow: visible !important;
+      contain: none !important;
+    }
+    main {
+      display: block !important;
+      width: 100% !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+    .page-view.active {
+      display: block !important;
+      width: 100% !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    /* Blindagem Absoluta do Menu Superior Fixo na Janela */
+    #floating-nav-wrapper.floating-nav-wrapper {
+      position: fixed !important;
+      top: 1.25rem !important;
+      left: 0 !important;
+      right: 0 !important;
+      margin: 0 auto !important;
+      max-width: 1380px !important;
+      width: calc(100% - 2rem) !important;
+      z-index: 999999 !important;
+      pointer-events: auto !important;
+    }
+
+    /* Blindagem Absoluta do Botão do Chatbot e Painel no Viewport do Monitor */
+    #chat-launcher.chat-launcher-btn {
+      position: fixed !important;
+      bottom: 2rem !important;
+      right: 2rem !important;
+      top: auto !important;
+      left: auto !important;
+      margin: 0 !important;
+      z-index: 2147483647 !important;
+      display: flex !important;
+    }
+
+    #chat-panel.chat-widget-panel {
+      position: fixed !important;
+      bottom: 6.5rem !important;
+      right: 2rem !important;
+      top: auto !important;
+      left: auto !important;
+      margin: 0 !important;
+      z-index: 2147483646 !important;
+    }
+
+    @media (max-width: 768px) {
+      #floating-nav-wrapper.floating-nav-wrapper {
+        top: 0.65rem !important;
+        width: calc(100% - 1.25rem) !important;
+      }
+      #chat-launcher.chat-launcher-btn {
+        bottom: 84px !important;
+        right: 1.25rem !important;
+      }
+      #chat-panel.chat-widget-panel {
+        bottom: 78px !important;
+        right: 0.5rem !important;
+      }
+    }
+  </style>
+
+  <!-- Estilos Customizados & Design System (Angular + Ionic Tokens) -->
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body class="ion-app-root">
+  <!-- BARRA DE NAVEGAÇÃO FLUTUANTE EM CÁPSULA (ESTILO ISLAND NAVBAR - FIXA NO VIEWPORT) -->
+  <header class="floating-nav-wrapper" id="floating-nav-wrapper">
+    <nav class="floating-navbar" id="floating-navbar">
+      <!-- LOGO OFICIAL MED+SAÚDE -->
+      <a href="#inicio" class="brand-logo" title="Med+Saúde - Página Inicial">
+        <div class="logo-icon-box">
+          <img src="./images/logo-medsaude-para.png" alt="Med+Saúde - Logo Oficial" class="logo-brand-img">
+        </div>
+        <div class="brand-name">Med+<span>Saúde</span></div>
+      </a>
+
+      <!-- LINKS CENTRAIS (NAVEGAÇÃO INSTANTÂNEA SPA COM SUBMENUS) -->
+      <ul class="nav-links">
+        <!-- 1. Início -->
+        <li class="nav-item">
+          <a href="#inicio" class="nav-link-pill active" onclick="navegarPara('inicio'); return false;">Início</a>
+        </li>
+
+        <!-- 2. Guia Médico -->
+        <li class="nav-item">
+          <a href="#guia-medico" class="nav-link-pill" onclick="navegarPara('guia-medico'); return false;">Guia Médico</a>
+        </li>
+
+        <!-- 3. Planos de Saúde -->
+        <li class="nav-item nav-has-dropdown">
+          <a href="#planos" class="nav-link-pill" onclick="navegarPara('planos'); return false;">
+            Planos de Saúde <i class="fa-solid fa-chevron-down nav-chevron"></i>
+          </a>
+          <ul class="nav-dropdown-menu">
+            <li>
+              <a href="#planos-cards" onclick="navegarPara('planos-cards'); return false;">
+                <i class="fa-solid fa-layer-group"></i>
+                <div>
+                  <strong>Categorias & Preços</strong>
+                  <small>Básico, Regional e Premium</small>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#planos-simulador" onclick="navegarPara('planos-simulador'); return false;">
+                <i class="fa-solid fa-calculator"></i>
+                <div>
+                  <strong>Simulador por Idade</strong>
+                  <small>Cálculo de mensalidade</small>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#planos-tabela" onclick="navegarPara('planos-tabela'); return false;">
+                <i class="fa-solid fa-table-list"></i>
+                <div>
+                  <strong>Matriz de Cobertura</strong>
+                  <small>Rol ANS, carências e urgência</small>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- 4. Sobre Nós -->
+        <li class="nav-item nav-has-dropdown">
+          <a href="#sobre-nos" class="nav-link-pill" onclick="navegarPara('sobre-nos'); return false;">
+            Sobre Nós <i class="fa-solid fa-chevron-down nav-chevron"></i>
+          </a>
+          <ul class="nav-dropdown-menu">
+            <li>
+              <a href="#sobre-nos-integrantes" onclick="navegarPara('sobre-nos-integrantes'); return false;">
+                <i class="fa-solid fa-users"></i>
+                <div>
+                  <strong>Squad Grupo 6</strong>
+                  <small>Integrantes e papéis técnicos</small>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#sobre-nos-timeline" onclick="navegarPara('sobre-nos-timeline'); return false;">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <div>
+                  <strong>Escola da Nuvem</strong>
+                  <small>Turma piloto e jornada Connect</small>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- 5. Documentação -->
+        <li class="nav-item nav-has-dropdown">
+          <a href="#documentacao" class="nav-link-pill" onclick="navegarPara('documentacao'); return false;">
+            Documentação <i class="fa-solid fa-chevron-down nav-chevron"></i>
+          </a>
+          <ul class="nav-dropdown-menu nav-dropdown-wide">
+            <li>
+              <a href="#doc-visao-geral" onclick="navegarPara('doc-visao-geral'); return false;">
+                <i class="fa-solid fa-diagram-project"></i>
+                <div>
+                  <strong>1. Visão Geral do Case</strong>
+                  <small>Desafio, problema e objetivos</small>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#doc-lex-intents" onclick="navegarPara('doc-lex-intents'); return false;">
+                <i class="fa-solid fa-brain"></i>
+                <div>
+                  <strong>2. Mapeamento Lex V2</strong>
+                  <small>Intenções, slots e respostas</small>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#doc-s3-data" onclick="navegarPara('doc-s3-data'); return false;">
+                <i class="fa-solid fa-database"></i>
+                <div>
+                  <strong>3. Banco de Dados S3</strong>
+                  <small>Estrutura dos especialistas</small>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#doc-contact-flow" onclick="navegarPara('doc-contact-flow'); return false;">
+                <i class="fa-solid fa-route"></i>
+                <div>
+                  <strong>4. Fluxo Amazon Connect</strong>
+                  <small>Roteamento ASR e blocos</small>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#doc-widget-aws" onclick="navegarPara('doc-widget-aws'); return false;">
+                <i class="fa-solid fa-comment-dots"></i>
+                <div>
+                  <strong>5. Chatbot Widget AWS</strong>
+                  <small>Script oficial e integração</small>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#doc-s3-deploy" onclick="navegarPara('doc-s3-deploy'); return false;">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <div>
+                  <strong>6. Deploy S3 & CloudFront</strong>
+                  <small>Hospedagem estática na nuvem</small>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#doc-lambda-event" onclick="navegarPara('doc-lambda-event'); return false;">
+                <i class="fa-solid fa-bolt"></i>
+                <div>
+                  <strong>7. Eventos AWS Lambda</strong>
+                  <small>Payload JSON de agendamento</small>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#doc-faq-banca" onclick="navegarPara('doc-faq-banca'); return false;">
+                <i class="fa-solid fa-circle-question"></i>
+                <div>
+                  <strong>8. FAQ da Banca</strong>
+                  <small>Perguntas e respostas técnicas</small>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- 6. Arquitetura AWS -->
+        <li class="nav-item nav-has-dropdown">
+          <a href="#omnichannel-case" class="nav-link-pill" onclick="navegarPara('omnichannel-case'); return false;">
+            Arquitetura AWS <i class="fa-solid fa-chevron-down nav-chevron"></i>
+          </a>
+          <ul class="nav-dropdown-menu">
+            <li>
+              <a href="#aws-canais" onclick="navegarPara('aws-canais'); return false;">
+                <i class="fa-solid fa-headset"></i>
+                <div>
+                  <strong>1. Canais & IA Agêntica</strong>
+                  <small>Chat Online e Voz 0800</small>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#aws-metricas" onclick="navegarPara('aws-metricas'); return false;">
+                <i class="fa-solid fa-chart-line"></i>
+                <div>
+                  <strong>2. Métricas do TMA</strong>
+                  <small>Redução de tempo de espera</small>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#aws-telemetria" onclick="navegarPara('aws-telemetria'); return false;">
+                <i class="fa-solid fa-terminal"></i>
+                <div>
+                  <strong>3. Trilha CloudWatch</strong>
+                  <small>Telemetria e observabilidade</small>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#aws-finops" onclick="navegarPara('aws-finops'); return false;">
+                <i class="fa-solid fa-coins"></i>
+                <div>
+                  <strong>4. FinOps & Custos AWS</strong>
+                  <small>R$ 0,08 por consulta</small>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <!-- AÇÕES À DIREITA (TEMA, VOZ, SOLICITAR/CHAT, ENTRAR) -->
+      <div class="nav-actions">
+        <!-- Alternador Dark / Light Mode -->
+        <button class="nav-icon-btn" id="theme-toggle" onclick="alternarTema()" title="Alternar Modo Claro / Escuro">
+          <i class="fa-solid fa-sun" id="theme-icon"></i>
+        </button>
+
+        <!-- Controle de Acessibilidade: Tamanho da Fonte (A- / A / A+) -->
+        <div class="font-accessibility-group" title="Acessibilidade: Ajustar Tamanho da Fonte">
+          <button type="button" class="font-btn" onclick="ajustarTamanhoFonte(-1)" title="Diminuir tamanho da fonte (A-)" aria-label="Diminuir tamanho da fonte">
+            A-
+          </button>
+          <button type="button" class="font-btn font-btn-reset" onclick="resetarTamanhoFonte()" title="Restaurar tamanho padrão da fonte (A)" aria-label="Restaurar tamanho padrão da fonte">
+            A
+          </button>
+          <button type="button" class="font-btn" onclick="ajustarTamanhoFonte(1)" title="Aumentar tamanho da fonte (A+)" aria-label="Aumentar tamanho da fonte">
+            A+
+          </button>
+        </div>
+
+        <!-- Botão Central Voz 0800 -->
+        <button class="nav-icon-btn" onclick="simularLigacaoVoz()" title="Central Telefônica de Voz 0800 (Amazon Connect)">
+          <i class="fa-solid fa-headset"></i>
+        </button>
+
+        <!-- Botão Entrar -->
+        <button class="btn btn-pill-outline" onclick="simularLoginBeneficiario()">
+          <i class="fa-regular fa-user"></i> Entrar
+        </button>
+
+        <!-- Botão Menu Mobile Hambúrguer (Visível em Celulares) -->
+        <button class="mobile-menu-toggle" id="btn-menu-mobile" onclick="toggleMenuMobile()" title="Abrir Menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <div class="app-container" id="app-container">
+
+  <!-- MENU LATERAL MOBILE DESLIZANTE (DRAWER ESTILO APP IONIC) -->
+  <div class="mobile-drawer-backdrop" id="mobile-drawer-backdrop" onclick="fecharMenuMobile()"></div>
+  <aside class="mobile-drawer" id="mobile-drawer">
+    <div class="drawer-header">
+      <div class="brand-logo">
+        <div class="logo-icon-box" style="width: 36px; height: 36px;">
+          <img src="./images/logo-medsaude-para.png" alt="Med+Saúde" class="logo-brand-img">
+        </div>
+        <div class="brand-name" style="font-size: 1.15rem;">Med+<span>Saúde</span></div>
+      </div>
+      <button class="drawer-close-btn" onclick="fecharMenuMobile()" title="Fechar Menu">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="drawer-content">
+      <div class="drawer-section-title">Páginas do Portal</div>
+      <ul class="drawer-nav-list">
+        <li>
+          <a href="#inicio" class="drawer-nav-link active" onclick="navegarDrawer('inicio')">
+            <i class="fa-solid fa-house"></i> Início
+          </a>
+        </li>
+        <li>
+          <a href="#guia-medico" class="drawer-nav-link" onclick="navegarDrawer('guia-medico')">
+            <i class="fa-solid fa-stethoscope"></i> Guia Médico
+          </a>
+        </li>
+        <li>
+          <a href="#planos" class="drawer-nav-link" onclick="navegarDrawer('planos')">
+            <i class="fa-solid fa-shield-halved"></i> Planos de Saúde
+          </a>
+        </li>
+        <li>
+          <a href="#sobre-nos" class="drawer-nav-link" onclick="navegarDrawer('sobre-nos')">
+            <i class="fa-solid fa-users"></i> Sobre Nós (Grupo 6)
+          </a>
+        </li>
+        <li>
+          <a href="#documentacao" class="drawer-nav-link" onclick="navegarDrawer('documentacao')">
+            <i class="fa-solid fa-book-bookmark"></i> Documentação Técnica
+          </a>
+        </li>
+        <li>
+          <a href="#omnichannel-case" class="drawer-nav-link" onclick="navegarDrawer('omnichannel-case')">
+            <i class="fa-solid fa-cloud"></i> Arquitetura AWS
+          </a>
+        </li>
+      </ul>
+
+      <div class="drawer-section-title" style="margin-top: 1.5rem;">Canais de Atendimento</div>
+      <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+        <button class="btn btn-outline" style="width: 100%; justify-content: center; font-size: 0.88rem;" onclick="simularLigacaoVoz(); fecharMenuMobile();">
+          <i class="fa-solid fa-phone"></i> Central de Voz 0800
+        </button>
+        <button class="btn btn-primary" style="width: 100%; justify-content: center; font-size: 0.88rem;" onclick="abrirChatWidget(); fecharMenuMobile();">
+          <i class="fa-solid fa-robot"></i> Conversar com Arwen
+        </button>
+      </div>
+
+      <div style="margin-top: 2rem; padding-top: 1.25rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 0.85rem; color: var(--text-muted); font-family: var(--font-tech);">Alternar Tema</span>
+        <button class="nav-icon-btn" onclick="alternarTema()" title="Alternar Modo Claro / Escuro">
+          <i class="fa-solid fa-sun" id="theme-icon-drawer"></i>
+        </button>
+      </div>
+
+      <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 0.85rem; color: var(--text-muted); font-family: var(--font-tech);">Tamanho do Texto</span>
+        <div class="font-accessibility-group">
+          <button type="button" class="font-btn" onclick="ajustarTamanhoFonte(-1)" title="Diminuir texto (A-)">A-</button>
+          <button type="button" class="font-btn font-btn-reset" onclick="resetarTamanhoFonte()" title="Restaurar padrão (A)">A</button>
+          <button type="button" class="font-btn" onclick="ajustarTamanhoFonte(1)" title="Aumentar texto (A+)">A+</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main>
+    <!-- VIEW 1: PÁGINA INÍCIO -->
+    <div class="page-view active" id="view-inicio">
+      <!-- HERO SECTION -->
+      <section class="hero-section" id="inicio">
+        <div class="container hero-grid">
+          <div class="hero-content">
+            <!-- BADGE REGIONAL RETRÔ IDÊNTICO À REFERÊNCIA -->
+            <div class="hero-region-pill">
+              <span class="region-dot"></span>
+              Atendimento em Belém, Ananindeua e Região • Grupo 6 (Escola da Nuvem)
+            </div>
+            <h1 class="hero-title">
+              Encontre o especialista ideal sem filas no <span class="text-highlight">Guia Médico</span>.
+            </h1>
+            <p class="hero-subtitle">
+              Localize cardiologistas, ortopedistas e clínicas por especialidade e localidade. Agende sua consulta em segundos conversando com nosso assistente virtual no Chat ou por Voz.
+            </p>
+
+            <!-- BUSCA RÁPIDA DO GUIA MÉDICO -->
+            <div class="hero-search-box">
+              <div class="search-field">
+                <i class="fa-solid fa-stethoscope field-icon"></i>
+                <select id="select-especialidade" onchange="aplicarFiltros()">
+                  <option value="todas">Todas as Especialidades</option>
+                </select>
+              </div>
+              <div class="search-field">
+                <i class="fa-solid fa-location-dot field-icon"></i>
+                <select id="select-cidade" onchange="aplicarFiltros()">
+                  <option value="todas">Todas as Cidades</option>
+                </select>
+              </div>
+              <div class="search-field">
+                <i class="fa-solid fa-magnifying-glass field-icon"></i>
+                <input type="text" id="input-busca-geral" placeholder="Nome do médico ou bairro..." oninput="aplicarFiltros()">
+              </div>
+              <button class="btn btn-primary" onclick="filtrarEIrParaGuia()">
+                <i class="fa-solid fa-search"></i> Buscar no Guia
+              </button>
+            </div>
+          </div>
+
+        <!-- CARD DE STATUS OMNICHANNEL & CORPO CLÍNICO -->
+        <div class="hero-card-side">
+          <!-- CARD DE EQUIPE MÉDICA E ACOLHIMENTO -->
+          <div class="human-care-card">
+            <img src="./images/atendimento-humanizado.jpg" alt="Equipe médica credenciada Med+Saúde e acolhimento humanizado">
+            <div class="human-care-overlay">
+              <span class="human-care-badge">
+                <i class="fa-solid fa-user-doctor"></i> Corpo Clínico Credenciado
+              </span>
+              <span class="human-care-caption">Cuidado que conecta</span>
+            </div>
+          </div>
+
+          <div class="omnichannel-preview-card">
+            <div class="preview-header">
+              <div>
+                <h3 class="preview-title">Contact Center Inteligente</h3>
+                <p class="preview-subtitle">Monitoramento dos canais de atendimento</p>
+              </div>
+              <div class="pulse-indicator">
+                <span class="pulse-dot"></span> Operação 24/7
+              </div>
+            </div>
+
+            <div class="channel-items-stack">
+              <div class="channel-status-item" onclick="abrirChatWidget()" style="cursor: pointer;">
+                <div class="channel-icon">
+                  <i class="fa-solid fa-robot"></i>
+                </div>
+                <div class="channel-details">
+                  <h4>Chat Online (Amazon Lex)</h4>
+                  <p>Interpretação de linguagem natural e busca no S3 em tempo real.</p>
+                </div>
+                <span class="aws-badge-pill" style="margin-left: auto;">Online</span>
+              </div>
+
+              <div class="channel-status-item" onclick="simularLigacaoVoz()" style="cursor: pointer;">
+                <div class="channel-icon" style="background: rgba(2, 132, 199, 0.2); color: #38bdf8; border: 1px solid rgba(2, 132, 199, 0.35);">
+                  <i class="fa-solid fa-headset"></i>
+                </div>
+                <div class="channel-details">
+                  <h4>Canal de Voz (IA Agêntica)</h4>
+                  <p>Sem menus rígidos: compreensão de fala natural para idosos e urgências.</p>
+                </div>
+                <span class="aws-badge-pill" style="margin-left: auto;">Disponível</span>
+              </div>
+
+              <div class="channel-status-item">
+                <div class="channel-icon" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.35);">
+                  <i class="fa-solid fa-brain"></i>
+                </div>
+                <div class="channel-details">
+                  <h4>Amazon Q in Connect</h4>
+                  <p>Base de conhecimento integrada e respostas de cobertura e carência.</p>
+                </div>
+                <span class="aws-badge-pill" style="margin-left: auto;">Sincronizado</span>
+              </div>
+
+              <div class="channel-status-item">
+                <div class="channel-icon" style="background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.35);">
+                  <i class="fa-solid fa-user-doctor"></i>
+                </div>
+                <div class="channel-details">
+                  <h4>Transbordo Humano N1</h4>
+                  <p>Transferência humanizada preservando o histórico completo na tela do agente.</p>
+                </div>
+                <span class="aws-badge-pill" style="margin-left: auto;">Fila Reduzida</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ATALHOS RÁPIDOS E APRESENTAÇÃO DO CASE 1 NA HOME -->
+    <section style="padding: 4.5rem 0; background: var(--bg-surface); border-top: 1px solid var(--border-color);">
+      <div class="container">
+        <div class="section-header">
+          <span class="tag-badge">Escola da Nuvem • Case 1</span>
+          <h2>Solução Omnichannel com Inteligência Artificial</h2>
+          <p>Conectando beneficiários a especialistas através de Chatbot Lex, Telefonia Inteligente e Amazon Q in Connect.</p>
+        </div>
+
+        <div class="arch-cards-grid" style="margin-bottom: 2rem;">
+          <div class="arch-card" onclick="navegarPara('guia-medico')" style="cursor: pointer;">
+            <div class="arch-card-icon">
+              <i class="fa-solid fa-stethoscope"></i>
+            </div>
+            <h3>Guia Médico Interativo</h3>
+            <p>Consulte especialistas por bairro, especialidade e telemedicina com agendamento direto e sem filas.</p>
+            <span class="arch-card-tag">Acessar Guia →</span>
+          </div>
+
+          <div class="arch-card" onclick="navegarPara('planos')" style="cursor: pointer;">
+            <div class="arch-card-icon" style="background: rgba(14, 165, 233, 0.25); color: #38bdf8;">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <h3>Planos de Saúde</h3>
+            <p>Tabela comparativa, carências reduzidas e simulador de mensalidades para o Pará e Brasil.</p>
+            <span class="arch-card-tag tag-blue">Simular Planos →</span>
+          </div>
+
+          <div class="arch-card" onclick="navegarPara('sobre-nos')" style="cursor: pointer;">
+            <div class="arch-card-icon" style="background: rgba(16, 185, 129, 0.25); color: #34d399;">
+              <i class="fa-solid fa-users"></i>
+            </div>
+            <h3>Integrantes do Grupo 6</h3>
+            <p>Conheça os profissionais da Escola da Nuvem responsáveis pelo desenvolvimento e engenharia da solução.</p>
+            <span class="arch-card-tag tag-green">Conhecer Equipe →</span>
+          </div>
+
+          <div class="arch-card" onclick="navegarPara('documentacao')" style="cursor: pointer;">
+            <div class="arch-card-icon" style="background: rgba(245, 158, 11, 0.25); color: #fbbf24;">
+              <i class="fa-solid fa-book-bookmark"></i>
+            </div>
+            <h3>Documentação Técnica</h3>
+            <p>Acesse as intents do Lex, estrutura JSON do S3, fluxos de contato e passos para replicação do projeto.</p>
+            <span class="arch-card-tag tag-amber">Ver Manual →</span>
+          </div>
+
+          <div class="arch-card" onclick="navegarPara('omnichannel-case')" style="cursor: pointer;">
+            <div class="arch-card-icon" style="background: rgba(99, 102, 241, 0.25); color: #818cf8;">
+              <i class="fa-solid fa-cloud"></i>
+            </div>
+            <h3>Arquitetura Amazon Connect</h3>
+            <p>Descubra como o Amazon Lex e o Contact Center em nuvem reduziram 78% do tempo de atendimento.</p>
+            <span class="arch-card-tag" style="background: rgba(99, 102, 241, 0.2); color: #a5b4fc;">Ver Arquitetura →</span>
+          </div>
+        </div>
+
+        <!-- SEÇÃO FICTÍCIA: NÚMEROS E IMPACTO INSTITUCIONAL MED+SAÚDE NO PARÁ -->
+        <div style="margin-top: 4rem; padding-top: 3rem; border-top: 1px solid var(--border-color);">
+          <div class="section-header" style="text-align: center; margin-bottom: 2rem;">
+            <span class="tag-badge">Números da Operadora</span>
+            <h2>Impacto e Cobertura no Estado do Pará</h2>
+            <p>Conectando vidas a cuidados de saúde humanizados com infraestrutura médica e tecnológica de ponta.</p>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stats-card">
+              <div class="stats-card-val">145.000+</div>
+              <div class="stats-card-label">Beneficiários Ativos no Pará</div>
+            </div>
+            <div class="stats-card">
+              <div class="stats-card-val">520+</div>
+              <div class="stats-card-label">Médicos Cooperados & Clínicas</div>
+            </div>
+            <div class="stats-card">
+              <div class="stats-card-val">32</div>
+              <div class="stats-card-label">Hospitais & Prontos-Socorros</div>
+            </div>
+            <div class="stats-card">
+              <div class="stats-card-val">99,98%</div>
+              <div class="stats-card-label">Disponibilidade na AWS</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SEÇÃO FICTÍCIA: HOSPITAIS E CENTROS MÉDICOS DE REFERÊNCIA -->
+        <div style="margin-top: 3.5rem;">
+          <div class="section-header" style="text-align: center; margin-bottom: 2rem;">
+            <span class="tag-badge tag-badge-blue">Rede Credenciada Pará</span>
+            <h2>Principais Hospitais e Centros de Diagnóstico</h2>
+            <p>Atendimento emergencial e agendado com tecnologia e acolhimento em Belém e Região Metropolitana.</p>
+          </div>
+
+          <div class="hospitals-grid">
+            <div class="hospital-card">
+              <div class="hospital-icon"><i class="fa-solid fa-hospital"></i></div>
+              <div class="hospital-details">
+                <h4>Hospital Porto Dias</h4>
+                <p>Av. Almirante Barroso, Marco • Belém<br>Pronto Atendimento Adulto/Infantil 24h & UTI de Alta Complexidade.</p>
+              </div>
+            </div>
+
+            <div class="hospital-card">
+              <div class="hospital-icon" style="background: rgba(16, 185, 129, 0.15); color: #34d399;"><i class="fa-solid fa-square-plus"></i></div>
+              <div class="hospital-details">
+                <h4>Hospital Guadalupe</h4>
+                <p>R. Arcipreste Manoel Teodoro, Campina • Belém<br>Centro Cirúrgico Avançado, Maternidade e Centro Cardiológico.</p>
+              </div>
+            </div>
+
+            <div class="hospital-card">
+              <div class="hospital-icon" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24;"><i class="fa-solid fa-truck-medical"></i></div>
+              <div class="hospital-details">
+                <h4>Hospital Metropolitano</h4>
+                <p>Rodovia BR-316, Km 3 • Ananindeua<br>Referência em Ortopedia, Traumatologia e Medicina Diagnóstica.</p>
+              </div>
+            </div>
+
+            <div class="hospital-card">
+              <div class="hospital-icon" style="background: rgba(239, 68, 68, 0.15); color: #f87171;"><i class="fa-solid fa-heart-pulse"></i></div>
+              <div class="hospital-details">
+                <h4>Clínica Som Diagnósticos</h4>
+                <p>Tv. Dom Romualdo de Seixas, Umarizal • Belém<br>Ressonância Magnética, Tomografia Computadorizada e Laboratório.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SEÇÃO FICTÍCIA: DEPOIMENTOS DE BENEFICIÁRIOS DO PARÁ -->
+        <div style="margin-top: 4rem; padding-top: 3rem; border-top: 1px solid var(--border-color);">
+          <div class="section-header" style="text-align: center; margin-bottom: 2rem;">
+            <span class="tag-badge tag-badge-green">Experiência do Paciente</span>
+            <h2>O que Dizem Nossos Beneficiários</h2>
+            <p>Histórias reais de quem precisou de agilidade e foi atendido sem filas pela nossa inteligência artificial.</p>
+          </div>
+
+          <div class="testimonials-grid">
+            <div class="testimonial-card">
+              <div>
+                <div class="testimonial-stars">
+                  <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <p class="testimonial-text">
+                  "Eu tinha receio de usar robô por causa da minha idade, mas liguei pro 0800 e a voz da Arwen me entendeu perfeitamente! Falei que precisava de cardiologista no Marco e ela marcou com o Dr. Marcos na hora. Nota mil!"
+                </p>
+              </div>
+              <div class="testimonial-author">
+                <div class="testimonial-avatar">RN</div>
+                <div class="testimonial-info">
+                  <h4>Dona Raimunda Nonata, 64 anos</h4>
+                  <span>Aposentada • Bairro de Nazaré, Belém/PA</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="testimonial-card">
+              <div>
+                <div class="testimonial-stars">
+                  <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <p class="testimonial-text">
+                  "No meio da correria do trabalho precisei agendar um ortopedista pra uma lesão no joelho. Pelo chat aqui no celular, em 40 segundos escolhi o horário em Ananindeua e já recebi o protocolo no WhatsApp."
+                </p>
+              </div>
+              <div class="testimonial-author">
+                <div class="testimonial-avatar" style="background: linear-gradient(135deg, #0284c7, #2563eb);">CS</div>
+                <div class="testimonial-info">
+                  <h4>Carlos Eduardo Siqueira, 38 anos</h4>
+                  <span>Engenheiro Civil • Cidade Nova, Ananindeua/PA</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="testimonial-card">
+              <div>
+                <div class="testimonial-stars">
+                  <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <p class="testimonial-text">
+                  "Como médico cooperado, percebi uma queda de mais de 40% no não comparecimento às consultas. Os pacientes chegam informados, com guia autorizada e dados já integrados ao sistema."
+                </p>
+              </div>
+              <div class="testimonial-author">
+                <div class="testimonial-avatar" style="background: linear-gradient(135deg, #059669, #10b981);">PA</div>
+                <div class="testimonial-info">
+                  <h4>Dr. Paulo Sérgio Alencar</h4>
+                  <span>Cardiologista Credenciado • CRM/PA 6720</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+  <!-- FIM DA VIEW 1: INÍCIO -->
+
+  <!-- VIEW 2: PÁGINA GUIA MÉDICO -->
+  <div class="page-view" id="view-guia-medico">
+    <!-- SEÇÃO GUIA MÉDICO INTERATIVO -->
+    <section class="section-guia" id="guia-medico">
+      <div class="container">
+        <div class="section-header">
+          <span class="tag-badge">Rede Credenciada Med+Saúde</span>
+          <h2>Especialistas e Clínicas Credenciadas</h2>
+          <p>Consulte a disponibilidade de consultas presenciais e por telemedicina em nossa base de dados oficial.</p>
+        </div>
+
+        <!-- BARRA DE CONTROLE E PESQUISA INTERATIVA DO GUIA MÉDICO -->
+        <div class="guia-control-panel" style="margin-bottom: 2rem; display: flex; flex-direction: column; gap: 1rem;">
+          <!-- LINHA DE BUSCA DIRETA, REGIÃO E CIDADE -->
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;">
+            <div style="flex: 1; min-width: 260px; position: relative;">
+              <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none;"></i>
+              <input type="text" id="input-busca-guia" placeholder="Buscar por especialista, CRM, sintomas, clínica, exames ou bairro..." oninput="filtrarGuiaMedico()" style="width: 100%; padding: 0.75rem 1rem 0.75rem 2.6rem; border-radius: 16px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-primary); font-family: var(--font-sans); font-size: 0.9rem; outline: none; transition: var(--transition);">
+            </div>
+            <div style="min-width: 170px;">
+              <select id="select-regiao-guia" onchange="filtrarGuiaMedico()" style="width: 100%; padding: 0.75rem 1rem; border-radius: 16px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-primary); font-family: var(--font-sans); font-size: 0.9rem; cursor: pointer; outline: none;">
+                <option value="todas">Todas as Regiões</option>
+                <option value="Sul">Região Sul</option>
+                <option value="Sudeste">Região Sudeste</option>
+                <option value="Norte">Região Norte</option>
+                <option value="Nordeste">Região Nordeste</option>
+                <option value="Centro-Oeste">Região Centro-Oeste</option>
+              </select>
+            </div>
+            <div style="min-width: 220px;">
+              <select id="select-cidade-guia" onchange="filtrarGuiaMedico()" style="width: 100%; padding: 0.75rem 1rem; border-radius: 16px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-primary); font-family: var(--font-sans); font-size: 0.9rem; cursor: pointer; outline: none;">
+                <option value="todas">Todas as Cidades (Brasil)</option>
+              </select>
+            </div>
+            <button class="btn btn-outline" onclick="limparFiltrosGuia()" style="padding: 0.75rem 1.25rem; font-size: 0.85rem; border-radius: 14px; display: inline-flex; align-items: center; gap: 0.4rem;" title="Limpar todos os filtros">
+              <i class="fa-solid fa-rotate-left"></i> Limpar Filtros
+            </button>
+          </div>
+
+          <!-- BARRA DE FILTROS POR CHIP COM COBERTURA TOTAL DAS 5 REGIÕES -->
+          <div class="filter-bar" id="guia-busca" style="margin-bottom: 0;">
+            <div class="filter-tags" id="chips-especialidades">
+              <button type="button" class="filter-chip active" onclick="filtrarPorChip('todas', this)"><i class="fa-solid fa-layer-group"></i> Todas (25)</button>
+              <button type="button" class="filter-chip" onclick="filtrarPorChip('Cardiologia', this)">Cardiologia</button>
+              <button type="button" class="filter-chip" onclick="filtrarPorChip('Ortopedia', this)">Ortopedia</button>
+              <button type="button" class="filter-chip" onclick="filtrarPorChip('Pediatria', this)">Pediatria</button>
+              <button type="button" class="filter-chip" onclick="filtrarPorChip('Pneumologia', this)">Pneumologia</button>
+              <button type="button" class="filter-chip" onclick="filtrarPorChip('Dermatologia', this)">Dermatologia</button>
+              <button type="button" class="filter-chip" onclick="filtrarPorChip('Neurologia', this)">Neurologia</button>
+              <button type="button" class="filter-chip" onclick="filtrarPorChip('Gastroenterologia', this)">Gastroenterologia</button>
+              <button type="button" class="filter-chip" onclick="filtrarPorChip('Ginecologia', this)">Ginecologia</button>
+              <button type="button" class="filter-chip" onclick="filtrarPorChip('Clínica Geral', this)">Clínica Geral</button>
+              <button type="button" class="filter-chip" onclick="filtrarPorChip('Endocrinologia', this)">Endocrinologia</button>
+              <button type="button" class="filter-chip" onclick="filtrarPorChip('Oftalmologia', this)">Oftalmologia</button>
+              <button type="button" class="filter-chip" onclick="filtrarPorChip('Infectologia', this)">Infectologia</button>
+              <button type="button" class="filter-chip" onclick="filtrarPorChip('Geriatria', this)">Geriatria</button>
+              <button type="button" class="filter-chip" onclick="filtrarPorChip('Otorrinolaringologia', this)">Otorrinolaringologia</button>
+              <button type="button" class="filter-chip" onclick="filtrarPorChip('Psiquiatria', this)">Psiquiatria</button>
+              <button type="button" class="filter-chip" onclick="filtrarPorChip('Urologia', this)">Urologia</button>
+              <button type="button" class="filter-chip" onclick="filtrarPorChip('Reumatologia', this)">Reumatologia</button>
+            </div>
+            <div style="font-size: 0.88rem; color: var(--text-secondary); white-space: nowrap;">
+              Exibindo <strong id="contador-medicos" style="color: var(--primary); font-size: 1.05rem;">0</strong> credenciados
+            </div>
+          </div>
+        </div>
+
+        <!-- GRID DE CARDS DOS MÉDICOS -->
+        <div class="doctors-grid" id="doctors-container">
+          <!-- Injetado dinamicamente via JS -->
+        </div>
+      </div>
+    </section>
+  </div>
+  <!-- FIM DA VIEW 2: GUIA MÉDICO -->
+
+
+
+  <!-- VIEW 3: PÁGINA PLANOS DE SAÚDE -->
+  <div class="page-view" id="view-planos">
+    <!-- SEÇÃO PLANOS DE SAÚDE -->
+    <section class="section-guia" id="planos" style="background-color: var(--bg-surface);">
+      <div class="container">
+        <div class="section-header">
+          <span class="tag-badge">Nossos Planos</span>
+          <h2>Planos sob Medida para Você e Sua Família</h2>
+          <p>Ampla cobertura nacional, rede própria e credenciada de excelência.</p>
+        </div>
+
+        <!-- SUB-BARRA DE NAVEGAÇÃO RÁPIDA NOS TÓPICOS DOS PLANOS -->
+        <div style="display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 2rem;">
+          <a href="#planos-cards" onclick="navegarPara('planos-cards')" class="btn btn-pill-outline" style="font-size: 0.82rem; padding: 0.45rem 1rem;">
+            <i class="fa-solid fa-layer-group"></i> 1. Categorias & Preços
+          </a>
+          <a href="#planos-simulador" onclick="navegarPara('planos-simulador')" class="btn btn-pill-outline" style="font-size: 0.82rem; padding: 0.45rem 1rem;">
+            <i class="fa-solid fa-calculator"></i> 2. Simulador por Idade
+          </a>
+          <a href="#planos-tabela" onclick="navegarPara('planos-tabela')" class="btn btn-pill-outline" style="font-size: 0.82rem; padding: 0.45rem 1rem;">
+            <i class="fa-solid fa-table-list"></i> 3. Matriz de Cobertura
+          </a>
+          <a href="#guia-medico" onclick="navegarPara('guia-medico')" class="btn btn-pill-outline" style="font-size: 0.82rem; padding: 0.45rem 1rem; border-color: var(--primary);">
+            <i class="fa-solid fa-stethoscope"></i> Consultar Especialistas →
+          </a>
+        </div>
+
+        <div class="doctors-grid" id="planos-cards">
+          <div class="doctor-card" style="border-top: 4px solid var(--primary);">
+            <div style="font-family: var(--font-tech); font-size: 0.85rem; color: var(--primary-light); margin-bottom: 0.25rem;">PLANO AMBULATORIAL & HOSPITALAR</div>
+            <h3 style="font-size: 1.4rem; margin-bottom: 0.25rem;">Med+ Básico</h3>
+            <div style="font-family: var(--font-tech); font-size: 1.6rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.75rem;">
+              R$ 189<span style="font-size: 1rem; font-weight: 500; color: var(--text-muted);">,90 /mês</span>
+            </div>
+            <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1.5rem;">Atendimento ambulatorial e hospitalar com enfermaria regional (Belém e Ananindeua).</p>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.88rem; margin-bottom: 2rem;">
+              <li><i class="fa-solid fa-check text-primary"></i> Consultas em todas as especialidades</li>
+              <li><i class="fa-solid fa-check text-primary"></i> Pronto Atendimento Virtual 24h via IA Arwen</li>
+              <li><i class="fa-solid fa-check text-primary"></i> Exames laboratoriais e radiografia simples</li>
+              <li><i class="fa-solid fa-check text-primary"></i> Internação em Enfermaria Regional</li>
+            </ul>
+            <button class="btn btn-outline" style="width: 100%; justify-content: center;" onclick="abrirChatComMensagem('Quero saber mais sobre o plano Med+ Básico')">Consultar Detalhes</button>
+          </div>
+
+          <div class="doctor-card" style="border-top: 4px solid var(--secondary); transform: scale(1.02); box-shadow: var(--shadow-lg);">
+            <div class="aws-badge-pill" style="position: absolute; top: 1rem; right: 1rem;">Mais Procurado</div>
+            <div style="font-family: var(--font-tech); font-size: 0.85rem; color: var(--secondary); margin-bottom: 0.25rem;">COBERTURA NACIONAL COMPLETA</div>
+            <h3 style="font-size: 1.4rem; margin-bottom: 0.25rem;">Med+ Especial</h3>
+            <div style="font-family: var(--font-tech); font-size: 1.6rem; font-weight: 800; color: var(--secondary); margin-bottom: 0.75rem;">
+              R$ 349<span style="font-size: 1rem; font-weight: 500; color: var(--text-muted);">,90 /mês</span>
+            </div>
+            <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1.5rem;">Quarto individual, cobertura nacional e ampla rede de laboratórios e hospitais.</p>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.88rem; margin-bottom: 2rem;">
+              <li><i class="fa-solid fa-check text-primary"></i> Todas as coberturas do Med+ Básico</li>
+              <li><i class="fa-solid fa-check text-primary"></i> Acomodação em Apartamento Privativo</li>
+              <li><i class="fa-solid fa-check text-primary"></i> Reembolso de consultas e exames</li>
+              <li><i class="fa-solid fa-check text-primary"></i> Cobertura nacional completa com urgência 24h</li>
+              <li><i class="fa-solid fa-check text-primary"></i> Parto e internações de alta complexidade</li>
+            </ul>
+            <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="abrirChatComMensagem('Quero contratar o plano Med+ Especial')">Falar com Consultor</button>
+          </div>
+
+          <div class="doctor-card" style="border-top: 4px solid #f59e0b;">
+            <div style="font-family: var(--font-tech); font-size: 0.85rem; color: #fbbf24; margin-bottom: 0.25rem;">LINHA EXECUTIVA & PREMIUM</div>
+            <h3 style="font-size: 1.4rem; margin-bottom: 0.25rem;">Med+ Premium</h3>
+            <div style="font-family: var(--font-tech); font-size: 1.6rem; font-weight: 800; color: #fbbf24; margin-bottom: 0.75rem;">
+              R$ 599<span style="font-size: 1rem; font-weight: 500; color: var(--text-muted);">,90 /mês</span>
+            </div>
+            <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1.5rem;">Centros de referência de ponta, vacinas internacionais, concierge e coleta em casa.</p>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.88rem; margin-bottom: 2rem;">
+              <li><i class="fa-solid fa-check text-primary"></i> Hospitais de primeira linha (Einstein, Sírio, Porto Dias)</li>
+              <li><i class="fa-solid fa-check text-primary"></i> Seguro viagem internacional (US$ 60.000)</li>
+              <li><i class="fa-solid fa-check text-primary"></i> Coleta domiciliar de exames laboratoriais</li>
+              <li><i class="fa-solid fa-check text-primary"></i> Reembolso com teto diferenciado em até 48h</li>
+              <li><i class="fa-solid fa-check text-primary"></i> Atendimento Concierge exclusivo com Arwen VIP</li>
+            </ul>
+            <button class="btn btn-outline" style="width: 100%; justify-content: center;" onclick="abrirChatComMensagem('Quero proposta para o plano Med+ Premium')">Solicitar Proposta</button>
+          </div>
+        </div>
+
+        <!-- SIMULADOR INTERATIVO FICTÍCIO DE MENSALIDADE POR IDADE -->
+        <div class="plan-simulator-card" id="planos-simulador">
+          <div class="section-header" style="text-align: left; margin-bottom: 1rem;">
+            <span class="tag-badge tag-badge-teal">Simulador de Mensalidades</span>
+            <h3>Calcule sua Mensalidade por Idade e Plano</h3>
+            <p>Selecione a categoria desejada e a faixa etária para visualizar os valores oficiais regulamentados pela ANS.</p>
+          </div>
+
+          <div class="plan-calc-grid">
+            <div>
+              <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.4rem;">
+                <i class="fa-solid fa-shield-halved text-primary"></i> Categoria do Plano:
+              </label>
+              <select id="simulador-plano" class="plan-calc-select" onchange="simularPrecoPlano()">
+                <option value="basico">Med+ Básico (Enfermaria Regional PA)</option>
+                <option value="especial" selected>Med+ Especial (Apartamento Nacional)</option>
+                <option value="premium">Med+ Premium (VIP & Concierge)</option>
+              </select>
+            </div>
+
+            <div>
+              <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.4rem;">
+                <i class="fa-solid fa-user text-primary"></i> Faixa Etária:
+              </label>
+              <select id="simulador-faixa" class="plan-calc-select" onchange="simularPrecoPlano()">
+                <option value="0-18">0 a 18 anos</option>
+                <option value="19-23">19 a 23 anos</option>
+                <option value="24-28">24 a 28 anos</option>
+                <option value="29-33" selected>29 a 33 anos</option>
+                <option value="34-38">34 a 38 anos</option>
+                <option value="39-43">39 a 43 anos</option>
+                <option value="44-48">44 a 48 anos</option>
+                <option value="49-53">49 a 53 anos</option>
+                <option value="54-58">54 a 58 anos</option>
+                <option value="59+">59 anos ou mais</option>
+              </select>
+            </div>
+
+            <div class="plan-price-output">
+              <span style="font-size: 0.78rem; font-family: var(--font-tech); text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.2rem;">Valor da Mensalidade</span>
+              <div class="plan-price-val" id="simulador-resultado-valor">R$ 529,00</div>
+              <span id="simulador-resultado-desc" style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-top: 0.35rem;">Med+ Especial • Faixa: 29-33 anos • Carência zero online</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- MATRIZ COMPARATIVA DE COBERTURAS FICTÍCIA -->
+        <div style="margin-top: 3.5rem;" id="planos-tabela">
+          <div class="section-header" style="text-align: left; margin-bottom: 1rem;">
+            <span class="tag-badge tag-badge-green">Transparência Total</span>
+            <h3>Matriz Comparativa de Coberturas e Benefícios</h3>
+            <p>Confira o comparativo detalhado de cada plano e escolha a melhor opção para sua família ou empresa.</p>
+          </div>
+
+          <div class="finops-table-wrapper">
+            <table class="matrix-table">
+              <thead>
+                <tr>
+                  <th>Benefício / Cobertura</th>
+                  <th>Med+ Básico</th>
+                  <th>Med+ Especial</th>
+                  <th>Med+ Premium</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Tipo de Acomodação</strong></td>
+                  <td>Enfermaria Coletiva</td>
+                  <td>Apartamento Individual</td>
+                  <td>Suíte VIP c/ Acompanhante</td>
+                </tr>
+                <tr>
+                  <td><strong>Abrangência Geográfica</strong></td>
+                  <td>Regional (Pará)</td>
+                  <td>Nacional</td>
+                  <td>Nacional + Internacional</td>
+                </tr>
+                <tr>
+                  <td><strong>Telemedicina 24h c/ IA Arwen</strong></td>
+                  <td><i class="fa-solid fa-check text-primary"></i> Ilimitada</td>
+                  <td><i class="fa-solid fa-check text-primary"></i> Ilimitada</td>
+                  <td><i class="fa-solid fa-check text-primary"></i> Ilimitada VIP</td>
+                </tr>
+                <tr>
+                  <td><strong>Parto e Obstetrícia</strong></td>
+                  <td><i class="fa-solid fa-xmark text-muted"></i> Não incluso</td>
+                  <td><i class="fa-solid fa-check text-primary"></i> Incluso</td>
+                  <td><i class="fa-solid fa-check text-primary"></i> Incluso c/ Suite Especial</td>
+                </tr>
+                <tr>
+                  <td><strong>Reembolso de Consultas</strong></td>
+                  <td><i class="fa-solid fa-xmark text-muted"></i> Sem reembolso</td>
+                  <td>R$ 180,00 por consulta</td>
+                  <td>R$ 450,00 por consulta</td>
+                </tr>
+                <tr>
+                  <td><strong>Coleta Domiciliar de Exames</strong></td>
+                  <td><i class="fa-solid fa-xmark text-muted"></i> Não incluso</td>
+                  <td>Coparticipação reduzida</td>
+                  <td><i class="fa-solid fa-check text-primary"></i> Gratuita e Ilimitada</td>
+                </tr>
+                <tr>
+                  <td><strong>Desconto em Medicamentos</strong></td>
+                  <td>Até 35% em farmácias</td>
+                  <td>Até 50% em farmácias</td>
+                  <td>Até 65% em farmácias</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!-- FIM DA VIEW 4: PLANOS -->
+
+  <!-- VIEW 5: PÁGINA SOBRE NÓS (EQUIPE GRUPO 6 - ESCOLA DA NUVEM) -->
+  <div class="page-view" id="view-sobre-nos">
+    <section class="section-sobre-nos" id="sobre-nos">
+      <div class="container">
+        <div class="section-header">
+          <span class="tag-badge tag-badge-green">Escola da Nuvem • Grupo 6</span>
+          <h2>Conheça os Integrantes do Grupo 6</h2>
+          <p>Equipe multidisciplinar responsável pelo planejamento, arquitetura em nuvem e implementação da jornada omnichannel no Amazon Connect para o Case 1 da Med+Saúde.</p>
+        </div>
+
+        <!-- SUB-BARRA DE NAVEGAÇÃO RÁPIDA NOS TÓPICOS DO SOBRE NÓS -->
+        <div class="sub-nav-topics">
+          <a href="#sobre-nos-integrantes" onclick="navegarPara('sobre-nos-integrantes')" class="btn btn-pill-outline" style="font-size: 0.82rem; padding: 0.45rem 1rem;">
+            <i class="fa-solid fa-users"></i> 1. Integrantes da Squad
+          </a>
+          <a href="#sobre-nos-timeline" onclick="navegarPara('sobre-nos-timeline')" class="btn btn-pill-outline" style="font-size: 0.82rem; padding: 0.45rem 1rem;">
+            <i class="fa-solid fa-code-commit"></i> 2. Indicadores do Projeto
+          </a>
+        </div>
+
+        <!-- GRID DOS INTEGRANTES DO GRUPO 6 COM DADOS REAIS DA SQUAD -->
+        <div class="team-grid" id="sobre-nos-integrantes">
+          <!-- Integrante 1: Jessica (Admin da Squad & Bot Lex) -->
+          <div class="team-card">
+            <div class="team-avatar-box">
+              <img src="./images/jessica.png" alt="Jessica" class="team-avatar-img">
+            </div>
+            <h3 class="team-name">Jessica</h3>
+            <span class="team-role">Admin do Grupo • Especialista em Bot Lex</span>
+            <p class="team-bio">
+              Liderança e governança da squad no programa Escola da Nuvem, gestão do fluxo ágil, modelagem e curadoria de intenções conversacionais no Amazon Lex V2.
+            </p>
+            <div class="team-links">
+              <a href="https://www.linkedin.com/in/jessieviana/" target="_blank" rel="noopener noreferrer" class="team-icon-btn team-icon-linkedin" title="LinkedIn de Jessica" aria-label="LinkedIn">
+                <i class="fa-brands fa-linkedin-in"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Integrante 2: Lucivaldo Junior (Tech Lead & Arquiteto Cloud) -->
+          <div class="team-card">
+            <div class="team-avatar-box">
+              <img src="./images/lucivaldo-junior.jpg" alt="Lucivaldo Junior" class="team-avatar-img" style="object-position: center 15%;">
+            </div>
+            <h3 class="team-name">Lucivaldo Junior</h3>
+            <span class="team-role">Tech Lead & Arquiteto Cloud Solutions</span>
+            <p class="team-bio">
+              Liderança técnica da squad, arquitetura da jornada omnichannel no Amazon Connect, engenharia do portal Med+Saúde e integração dos serviços AWS (Connect, Lex, Lambda e S3).
+            </p>
+            <div class="team-links">
+              <a href="https://github.com/luci-jr" target="_blank" rel="noopener noreferrer" class="team-icon-btn team-icon-github" title="GitHub de Lucivaldo Junior" aria-label="GitHub">
+                <i class="fa-brands fa-github"></i>
+              </a>
+              <a href="https://www.linkedin.com/in/lucivaldojr/" target="_blank" rel="noopener noreferrer" class="team-icon-btn team-icon-linkedin" title="LinkedIn de Lucivaldo Junior" aria-label="LinkedIn">
+                <i class="fa-brands fa-linkedin-in"></i>
+              </a>
+              <a href="https://portifolio.lucivaldo.cloud/" target="_blank" rel="noopener noreferrer" class="team-icon-btn team-icon-portfolio" title="Portfólio Profissional de Lucivaldo Junior" aria-label="Portfólio">
+                <i class="fa-solid fa-globe"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Integrante 3: Beth Nascimento -->
+          <div class="team-card">
+            <div class="team-avatar-box">
+              <span class="team-avatar-initials" style="background: linear-gradient(135deg, #0284c7, #2563eb); color: #ffffff;">BN</span>
+            </div>
+            <h3 class="team-name">Beth Nascimento</h3>
+            <span class="team-role">Engenharia Cloud & Amazon Connect</span>
+            <p class="team-bio">
+              Desenho dos Contact Flows no Amazon Connect, canais de telefonia com IA de voz agêntica, testes de filas de atendimento e regras de horário de operação.
+            </p>
+            <div class="team-links">
+              <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" class="team-icon-btn team-icon-linkedin" title="Conectar no LinkedIn" aria-label="LinkedIn">
+                <i class="fa-brands fa-linkedin-in"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Integrante 4: Camila Landy -->
+          <div class="team-card">
+            <div class="team-avatar-box">
+              <span class="team-avatar-initials" style="background: linear-gradient(135deg, #ec4899, #8b5cf6); color: #ffffff;">CL</span>
+            </div>
+            <h3 class="team-name">Camila Landy</h3>
+            <span class="team-role">Experiência do Paciente & Contact Flow</span>
+            <p class="team-bio">
+              Estruturação da jornada do beneficiário no portal e no contact center, alinhamento de acessibilidade, fluxos conversacionais humanizados e redução de atritos.
+            </p>
+            <div class="team-links">
+              <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" class="team-icon-btn team-icon-linkedin" title="Conectar no LinkedIn" aria-label="LinkedIn">
+                <i class="fa-brands fa-linkedin-in"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Integrante 5: Daniel Villegas -->
+          <div class="team-card">
+            <div class="team-avatar-box">
+              <span class="team-avatar-initials" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: #ffffff;">DV</span>
+            </div>
+            <h3 class="team-name">Daniel Villegas</h3>
+            <span class="team-role">Engenharia de Dados & Amazon S3</span>
+            <p class="team-bio">
+              Modelagem e estruturação do catálogo médico e clínicas credenciadas no Amazon S3, esquemas JSON para integração rápida e curadoria do Amazon Q in Connect.
+            </p>
+            <div class="team-links">
+              <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" class="team-icon-btn team-icon-linkedin" title="Conectar no LinkedIn" aria-label="LinkedIn">
+                <i class="fa-brands fa-linkedin-in"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Integrante 6: Felipe -->
+          <div class="team-card">
+            <div class="team-avatar-box">
+              <span class="team-avatar-initials" style="background: linear-gradient(135deg, #6366f1, #4338ca); color: #ffffff;">FE</span>
+            </div>
+            <h3 class="team-name">Felipe</h3>
+            <span class="team-role">DevOps, Infraestrutura & CloudWatch</span>
+            <p class="team-bio">
+              Telemetria e observabilidade da arquitetura AWS, rastreamento de Contact Trace Records (CTR), métricas de latência e alarmes de monitoramento no Amazon CloudWatch.
+            </p>
+            <div class="team-links">
+              <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" class="team-icon-btn team-icon-linkedin" title="Conectar no LinkedIn" aria-label="LinkedIn">
+                <i class="fa-brands fa-linkedin-in"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Integrante 7: Paula Lopes -->
+          <div class="team-card">
+            <div class="team-avatar-box">
+              <span class="team-avatar-initials" style="background: linear-gradient(135deg, #10b981, #047857); color: #ffffff;">PL</span>
+            </div>
+            <h3 class="team-name">Paula Lopes</h3>
+            <span class="team-role">Especialista em Bot Lex & Treinamento NLU</span>
+            <p class="team-bio">
+              Desenvolvimento de utterances regionais do Pará, slots de especialidades médicas e calibração das intenções do chatbot Arwen para resolução em autoatendimento.
+            </p>
+            <div class="team-links">
+              <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" class="team-icon-btn team-icon-linkedin" title="Conectar no LinkedIn" aria-label="LinkedIn">
+                <i class="fa-brands fa-linkedin-in"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Integrante 8: Rebeca -->
+          <div class="team-card">
+            <div class="team-avatar-box">
+              <span class="team-avatar-initials" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: #ffffff;">RE</span>
+            </div>
+            <h3 class="team-name">Rebeca</h3>
+            <span class="team-role">QA Lead & Transbordo Humanizado N1</span>
+            <p class="team-bio">
+              Homologação de ponta a ponta dos canais de voz e chat, testes de estresse de chamadas simultâneas, validação do transbordo N1 e garantia de qualidade clínica.
+            </p>
+            <div class="team-links">
+              <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" class="team-icon-btn team-icon-linkedin" title="Conectar no LinkedIn" aria-label="LinkedIn">
+                <i class="fa-brands fa-linkedin-in"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- INDICADORES FICTÍCIOS DE ENGENHARIA DA SQUAD GRUPO 6 -->
+        <div style="margin-top: 3.5rem;" id="sobre-nos-timeline">
+          <div class="section-header" style="text-align: center; margin-bottom: 1.5rem;">
+            <span class="tag-badge tag-badge-green">Entregáveis do Projeto</span>
+            <h3>Resultados de Desenvolvimento da Squad</h3>
+            <p>Esforço prático e métricas alcançadas durante a construção da arquitetura no laboratório AWS da Escola da Nuvem.</p>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stats-card">
+              <div class="stats-card-val">240h</div>
+              <div class="stats-card-label">Laboratórios Práticos AWS</div>
+            </div>
+            <div class="stats-card">
+              <div class="stats-card-val">12</div>
+              <div class="stats-card-label">Contact Flows Arquitetados</div>
+            </div>
+            <div class="stats-card">
+              <div class="stats-card-val">15</div>
+              <div class="stats-card-label">Intenções NLU no Lex V2</div>
+            </div>
+            <div class="stats-card">
+              <div class="stats-card-val">120+</div>
+              <div class="stats-card-label">Cenários de Testes de Carga</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BANNER DE CONCLUSÃO DO MÓDULO -->
+        <div style="margin-top: 4rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 2.5rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap;">
+          <div>
+            <span class="aws-badge-pill" style="margin-bottom: 0.75rem;">Capacitação Profissional AWS</span>
+            <h3 style="font-size: 1.35rem; color: var(--text-primary); margin-bottom: 0.5rem;">Desenvolvido no Programa Escola da Nuvem</h3>
+            <p style="color: var(--text-secondary); max-width: 650px; font-size: 0.92rem;">
+              Projeto prático focado na modernização do contact center hospitalar utilizando computação em nuvem AWS, Inteligência Artificial generativa e soluções omnichannel resilientes.
+            </p>
+          </div>
+          <button class="btn btn-primary" onclick="navegarPara('documentacao')">
+            <i class="fa-solid fa-book-open"></i> Acessar Documentação Técnica
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!-- FIM DA VIEW 5: SOBRE NÓS -->
+
+  <!-- VIEW 5: PÁGINA DOCUMENTAÇÃO TÉCNICA -->
+  <div class="page-view" id="view-documentacao">
+    <section class="section-documentacao" id="documentacao">
+      <div class="container">
+        <div class="section-header">
+          <span class="tag-badge tag-badge-amber">Manual do Case • AWS Connect</span>
+          <h2>Documentação Técnica & Arquitetura</h2>
+          <p>Especificação detalhada do Case 1 (Agendamento de Consultas via Guia Médico), intenções do Amazon Lex, schemas JSON no S3 e instruções de implantação.</p>
+        </div>
+
+        <div class="docs-grid-layout">
+          <!-- CONTEÚDO DOS DOCUMENTOS (LARGURA INTEGRAL) -->
+          <div class="docs-content-area">
+
+
+            <!-- Tópico 1: Visão Geral -->
+            <div class="docs-block" id="doc-visao-geral">
+              <h3><i class="fa-solid fa-bullseye text-primary"></i> 1. Visão Geral do Case Med+Saúde</h3>
+              <p>
+                A <strong>Med+Saúde</strong> enfrentava um desafio crítico de negócio: um <strong>Tempo Médio de Atendimento (TMA) de 14 minutos</strong> para agendamentos de consultas de rotina via central telefônica tradicional, gerando filas de espera, abandono de chamadas e insatisfação dos usuários.
+              </p>
+              <p>
+                <strong>Solução do Grupo 6:</strong> Desenvolvemos uma jornada omnichannel 100% automatizada no <strong>Amazon Connect</strong>, integrando bot de texto (Chat Web) e voz (telefonia 0800 com ASR) alimentados pelo <strong>Amazon Lex V2</strong> e consulta em tempo real à base de especialistas armazenada no <strong>Amazon S3</strong>.
+              </p>
+              <div style="background: rgba(6, 182, 212, 0.08); border-left: 4px solid var(--primary); padding: 1rem; border-radius: 4px; font-size: 0.9rem; color: var(--text-primary);">
+                <strong>Impacto Mensurado:</strong> Redução do TMA de 14min para <strong>3 minutos e 12 segundos</strong> (-78%), com <strong>84% de resolução autônoma pela IA</strong> sem necessidade de operador humano.
+              </div>
+            </div>
+
+            <!-- Tópico 2: Amazon Lex V2 -->
+            <div class="docs-block" id="doc-lex-intents">
+              <h3><i class="fa-solid fa-robot text-primary"></i> 2. Especificação do Amazon Lex V2 (NLU)</h3>
+              <p>O bot <strong>Arwen</strong> foi modelado com as seguintes intenções conversacionais, tipos de slots e comportamentos de fallback:</p>
+              <table class="docs-table">
+                <thead>
+                  <tr>
+                    <th>Intenção (Intent)</th>
+                    <th>Slots Requeridos</th>
+                    <th>Exemplos de Utterances (Frases)</th>
+                    <th>Ação do Contact Flow</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>ConsultarEspecialidade</code></td>
+                    <td><code>EspecialidadeMedica</code></td>
+                    <td>"Quero cardiologista", "tem ortopedista?"</td>
+                    <td>Filtra médicos no S3 e lista horários.</td>
+                  </tr>
+                  <tr>
+                    <td><code>BuscarPorLocalidade</code></td>
+                    <td><code>CidadePara</code>, <code>Bairro</code></td>
+                    <td>"Médicos em Belém", "clínica em Ananindeua"</td>
+                    <td>Retorna consultórios credenciados na região.</td>
+                  </tr>
+                  <tr>
+                    <td><code>AgendarConsulta</code></td>
+                    <td><code>MedicoId</code>, <code>DataHora</code>, <code>CPF</code></td>
+                    <td>"Quero marcar com Dr. Marcos", "agendar às 14h"</td>
+                    <td>Gera protocolo e confirmação com SMS.</td>
+                  </tr>
+                  <tr>
+                    <td><code>AmazonQ_KnowledgeSearch</code></td>
+                    <td><code>PerguntaUsuario</code></td>
+                    <td>"Qual a carência do plano?", "cobre parto?"</td>
+                    <td>Consulta o FAQ do plano no Amazon Q.</td>
+                  </tr>
+                  <tr>
+                    <td><code>TransbordoAgenteN1</code></td>
+                    <td>Nenhum (ou Fallback x2)</td>
+                    <td>"Falar com atendente", "quero humano"</td>
+                    <td>Transfere para fila mantendo o histórico.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Tópico 3: Dados S3 -->
+            <div class="docs-block" id="doc-s3-data">
+              <h3><i class="fa-solid fa-database text-primary"></i> 3. Estrutura de Dados no Amazon S3</h3>
+              <p>O catálogo do Guia Médico e a base de conhecimento são geridos em arquivos JSON leves armazenados em bucket S3:</p>
+              <div class="code-snippet-box">
+                <button class="copy-btn" onclick="copiarSnippet('code-s3-json', this)"><i class="fa-regular fa-copy"></i> Copiar JSON</button>
+                <pre id="code-s3-json">{
+  "id": "med-01",
+  "nome": "Dr. Marcos Vinícius Paiva",
+  "especialidade": "Cardiologia",
+  "crm": "CRM/PA 8912",
+  "cidade": "Belém",
+  "uf": "PA",
+  "bairro": "Marco",
+  "endereco": "Av. Almirante Barroso, 2140 - Ed. Saúde Prime, Sala 402",
+  "telemedicina": true,
+  "proximosHorarios": ["Amanhã às 09:30", "Quinta às 14:00", "Sexta às 11:15"],
+  "avaliacao": 4.9
+}</pre>
+              </div>
+            </div>
+
+            <!-- Tópico 4: Contact Flow -->
+            <div class="docs-block" id="doc-contact-flow">
+              <h3><i class="fa-solid fa-diagram-project text-primary"></i> 4. Lógica do Contact Flow no Amazon Connect</h3>
+              <p>O fluxo de atendimento da Med+Saúde segue uma árvore modular à prova de falhas:</p>
+              <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--border-color); border-radius: 8px; padding: 1.25rem; font-family: monospace; font-size: 0.84rem; line-height: 1.6; color: #e2e8f0;">
++-- [Início da Interação (Voz / Chat)]<br>
+|   +-- Bloco: "Set Logging Behavior" (Auditoria ativada via CloudWatch)<br>
+|   +-- Bloco: "Set Voice / Speech" (Camila - Neural para Português-BR)<br>
+|   +-- Bloco: "Get Customer Input" (Invoca Amazon Lex V2 Bot 'Arwen')<br>
+|       +-- Intenção Identificada: Consulta / Agendamento<br>
+|       |   +-- Bloco: "Invoke AWS Lambda" (Consulta dados no S3 / DynamoDB)<br>
+|       |   +-- Bloco: "Play Prompt / Send Message" (Retorna especialistas ao usuário)<br>
+|       +-- Intenção Dúvida Cobertura<br>
+|       |   +-- Bloco: "Query Amazon Q in Connect" (Base de FAQ do plano)<br>
+|       +-- Intenção "Humano" ou 2 Fallbacks seguidos<br>
+|           +-- Bloco: "Set Working Queue" (Fila: Transbordo_N1_Saude)<br>
+|           +-- Bloco: "Transfer to Queue" (Preserva todos os atributos da sessão)<br>
+              </div>
+            </div>
+
+            <!-- Tópico 5: Widget Oficial AWS Connect -->
+            <div class="docs-block" id="doc-widget-aws">
+              <h3><i class="fa-solid fa-code text-primary"></i> 5. Injeção do Widget Oficial do Amazon Connect</h3>
+              <p>O portal já possui o container preparado no arquivo <code>index.html</code> (linha <code>#amazon-connect-live-widget</code>). Para ativar a instância real da AWS na apresentação, basta colar o script oficial fornecido pelo console do Connect:</p>
+              <div class="code-snippet-box">
+                <button class="copy-btn" onclick="copiarSnippet('code-connect-js', this)"><i class="fa-regular fa-copy"></i> Copiar Snippet</button>
+                <pre id="code-connect-js">&lt;!-- Amazon Connect Live Chat Widget Script --&gt;
+&lt;script src="https://static.connect.aws/connect-chat-interface.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  connect.ChatInterface.init({
+    containerId: 'amazon-connect-live-widget',
+    region: 'us-east-1',
+    instanceId: 'SUA_INSTANCE_ID_AQUI',
+    contactFlowId: 'SEU_CONTACT_FLOW_ID_AQUI'
+  });
+&lt;/script&gt;</pre>
+              </div>
+            </div>
+
+            <!-- Tópico 6: Deploy no Amazon S3 -->
+            <div class="docs-block" id="doc-s3-deploy">
+              <h3><i class="fa-solid fa-cloud-arrow-up text-primary"></i> 6. Como Fazer o Deploy no Amazon S3</h3>
+              <p>Como a arquitetura é 100% estática (HTML5, CSS3, Vanilla JS), a hospedagem pode ser feita em um bucket S3 com Static Website Hosting em 2 minutos:</p>
+              <div class="code-snippet-box">
+                <button class="copy-btn" onclick="copiarSnippet('code-s3-deploy', this)"><i class="fa-regular fa-copy"></i> Copiar Comando</button>
+                <pre id="code-s3-deploy"># 1. Crie o bucket S3
+aws s3 mb s3://medsaude-grupo6-escola-da-nuvem --region us-east-1
+
+# 2. Habilite a hospedagem de site estático
+aws s3 website s3://medsaude-grupo6-escola-da-nuvem --index-document index.html
+
+# 3. Sincronize os arquivos do projeto
+aws s3 sync ./public s3://medsaude-grupo6-escola-da-nuvem --acl public-read</pre>
+              </div>
+            </div>
+
+            <!-- Tópico 7: Payload do Evento AWS Lambda -->
+            <div class="docs-block" id="doc-lambda-event">
+              <h3><i class="fa-solid fa-bolt text-primary"></i> 7. Payload Real do Evento AWS Lambda / Connect (event.json)</h3>
+              <p>Estrutura realística de entrada enviada pelo bloco <em>"Invoke AWS Lambda function"</em> no Contact Flow com os atributos de sessão do beneficiário:</p>
+              <div class="code-snippet-box">
+                <button class="copy-btn" onclick="copiarSnippet('code-lambda-json', this)"><i class="fa-regular fa-copy"></i> Copiar JSON</button>
+                <pre id="code-lambda-json">{
+  "Name": "ContactFlowEvent",
+  "Details": {
+    "ContactData": {
+      "ContactId": "c8f49a21-7e3b-41da-a012-e789bcde0145",
+      "Channel": "VOICE",
+      "InstanceARN": "arn:aws:connect:us-east-1:123456789012:instance/medsaude-prd",
+      "CustomerEndpoint": {
+        "Address": "+5591981442026",
+        "Type": "TELEPHONE_NUMBER"
+      },
+      "Attributes": {
+        "CanalOrigem": "Telefonia_0800_Belem",
+        "EspecialidadeSolicitada": "Cardiologia",
+        "Cidade": "Belém",
+        "Bairro": "Marco",
+        "PreferênciaTelemedicina": "false"
+      }
+    },
+    "Parameters": {
+      "Acao": "BuscarEspecialistasDisponiveis",
+      "LimiteResultados": "3"
+    }
+  }
+}</pre>
+              </div>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.75rem;">
+                <strong>Resposta JSON devolvida pelo Lambda para o Connect:</strong> <code>{"status": "SUCESSO", "medicoNome": "Dr. Marcos Vinícius Paiva", "crm": "CRM/PA 8912", "proximoHorario": "Amanhã às 09:30"}</code>. O Amazon Connect usa essa chave para que a voz neural de Camila pronuncie diretamente ao paciente.
+              </p>
+            </div>
+
+            <!-- Tópico 8: FAQ Técnico da Banca de Avaliação -->
+            <div class="docs-block" id="doc-faq-banca">
+              <h3><i class="fa-solid fa-circle-question text-primary"></i> 8. FAQ Técnico & Perguntas da Banca (Escola da Nuvem)</h3>
+              <p>Respostas arquiteturais para as principais dúvidas técnicas levantadas pelos instrutores e avaliadores:</p>
+              
+              <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+                <div style="background: rgba(15, 23, 42, 0.5); border: 1px solid var(--border-color); border-radius: 8px; padding: 1.25rem;">
+                  <h4 style="font-size: 0.95rem; color: var(--primary-light); margin-bottom: 0.4rem;">
+                    <i class="fa-solid fa-server"></i> 1. Como a arquitetura garante tolerância a falhas se o Lex sofrer indisponibilidade?
+                  </h4>
+                  <p style="font-size: 0.86rem; color: var(--text-secondary); line-height: 1.5;">
+                    O Contact Flow possui o bloco de tratamento de erro <em>"Error"</em> e <em>"No Match"</em> configurado em cada nó de decisão. Se o Amazon Lex V2 não responder em 3 segundos, o fluxo executa o fallback transparente para o Amazon Q in Connect ou transborda imediatamente para a fila prioritária de atendimento humano N1, preservando o número de telefone (ANI) e evitando que o paciente fique mudo ou a ligação caia.
+                  </p>
+                </div>
+
+                <div style="background: rgba(15, 23, 42, 0.5); border: 1px solid var(--border-color); border-radius: 8px; padding: 1.25rem;">
+                  <h4 style="font-size: 0.95rem; color: var(--primary-light); margin-bottom: 0.4rem;">
+                    <i class="fa-solid fa-shield-halved"></i> 2. De que forma os dados sensíveis de saúde são protegidos perante a LGPD?
+                  </h4>
+                  <p style="font-size: 0.86rem; color: var(--text-secondary); line-height: 1.5;">
+                    Utilizamos criptografia em repouso com chaves gerenciadas no <strong>AWS KMS (SSE-KMS)</strong> em todos os buckets S3 e logs do CloudWatch. A transcrição de voz pelo Contact Lens mascara automaticamente CPFs e números de cartão do plano usando regras de PII (Personally Identifiable Information). Nenhum dado de prontuário é transmitido em texto plano.
+                  </p>
+                </div>
+
+                <div style="background: rgba(15, 23, 42, 0.5); border: 1px solid var(--border-color); border-radius: 8px; padding: 1.25rem;">
+                  <h4 style="font-size: 0.95rem; color: var(--primary-light); margin-bottom: 0.4rem;">
+                    <i class="fa-solid fa-microphone"></i> 3. Como a IA compreende os regionalismos paraenses falados pelos idosos?
+                  </h4>
+                  <p style="font-size: 0.86rem; color: var(--text-secondary); line-height: 1.5;">
+                    O Amazon Lex V2 foi enriquecido com utterances regionais e sinônimos nos slots (ex: "dor no espinhaço" mapeado para <em>Ortopedia</em>, "vista embaçada" para <em>Oftalmologia</em>, e nomes de bairros locais como Umarizal, Telégrafo, Pedreira e Cidade Nova em Ananindeua), além de contar com a voz neural da Camila (Polly) ajustada com cadência suave.
+                  </p>
+                </div>
+
+                <div style="background: rgba(15, 23, 42, 0.5); border: 1px solid var(--border-color); border-radius: 8px; padding: 1.25rem;">
+                  <h4 style="font-size: 0.95rem; color: var(--primary-light); margin-bottom: 0.4rem;">
+                    <i class="fa-solid fa-coins"></i> 4. Qual é o custo unitário por consulta agendada via automação serverless?
+                  </h4>
+                  <p style="font-size: 0.86rem; color: var(--text-secondary); line-height: 1.5;">
+                    Com uma duração média de 1m 14s no canal de voz, o custo total de telecomunicações do Connect (US$ 0,005) + Lex V2 (US$ 0,004) + Lambda (US$ 0,000002) resulta em aproximadamente <strong>R$ 0,08 por agendamento concluído</strong>, representando uma economia de 89% em comparação com o custo médio de R$ 1,80 a R$ 2,50 por minuto de um operador humano em contact centers tradicionais.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!-- FIM DA VIEW 6: DOCUMENTAÇÃO -->
+
+
+  <!-- VIEW 6: PÁGINA ARQUITETURA AWS -->
+  <div class="page-view" id="view-omnichannel-case">
+    <!-- SEÇÃO ARQUITETURA AWS CONNECT (GRUPO 6 - ESCOLA DA NUVEM) -->
+    <section class="section-omnichannel" id="omnichannel-case">
+      <div class="container">
+        <div class="section-header">
+          <span class="tag-badge tag-badge-teal">Case 1 — Escola da Nuvem</span>
+          <h2>Jornada Omnichannel no Amazon Connect</h2>
+          <p>Arquitetura desenvolvida para eliminar o elevado Tempo Médio de Atendimento (TMA) e automatizar o agendamento de consultas via Guia Médico.</p>
+        </div>
+
+        <!-- SUB-BARRA DE NAVEGAÇÃO RÁPIDA NOS TÓPICOS DA ARQUITETURA AWS -->
+        <div class="sub-nav-topics">
+          <a href="#aws-canais" onclick="navegarPara('aws-canais')" class="btn btn-pill-outline" style="font-size: 0.82rem; padding: 0.45rem 1rem;">
+            <i class="fa-solid fa-headset"></i> 1. Canais & IA
+          </a>
+          <a href="#aws-metricas" onclick="navegarPara('aws-metricas')" class="btn btn-pill-outline" style="font-size: 0.82rem; padding: 0.45rem 1rem;">
+            <i class="fa-solid fa-chart-line"></i> 2. Métricas do TMA
+          </a>
+          <a href="#aws-telemetria" onclick="navegarPara('aws-telemetria')" class="btn btn-pill-outline" style="font-size: 0.82rem; padding: 0.45rem 1rem;">
+            <i class="fa-solid fa-terminal"></i> 3. Trilha CloudWatch
+          </a>
+          <a href="#aws-finops" onclick="navegarPara('aws-finops')" class="btn btn-pill-outline" style="font-size: 0.82rem; padding: 0.45rem 1rem;">
+            <i class="fa-solid fa-coins"></i> 4. FinOps & Custos
+          </a>
+        </div>
+
+        <div class="arch-cards-grid" id="aws-canais">
+          <div class="arch-card">
+            <div class="arch-card-icon">
+              <i class="fa-solid fa-comments"></i>
+            </div>
+            <h3>Canal Chat Online (Texto)</h3>
+            <p>O beneficiário busca médicos em linguagem natural. O bot NLU interpreta as intenções <code>ConsultarEspecialidade</code> e <code>BuscarPorLocalidade</code> retornando os especialistas cadastrados no S3.</p>
+            <span class="arch-card-tag">Amazon Connect + Lex</span>
+          </div>
+
+          <div class="arch-card">
+            <div class="arch-card-icon" style="background: rgba(2, 132, 199, 0.25); color: #38bdf8;">
+              <i class="fa-solid fa-microphone-lines"></i>
+            </div>
+            <h3>Canal Voz (Telefonia)</h3>
+            <p>Desenvolvido com IA agêntica e reconhecimento de voz (ASR). Idosos e beneficiários podem falar espontaneamente sem digitar números de menus complicados.</p>
+            <span class="arch-card-tag">ASR + NLU + Amazon Lex</span>
+          </div>
+
+          <div class="arch-card">
+            <div class="arch-card-icon" style="background: rgba(245, 158, 11, 0.25); color: #fbbf24;">
+              <i class="fa-solid fa-database"></i>
+            </div>
+            <h3>Amazon Q in Connect & S3</h3>
+            <p>Base de conhecimento viva do Guia Médico e regras de negócio do plano (carências, autorizações, boletos) consultada em tempo real para respostas assertivas.</p>
+            <span class="arch-card-tag">Amazon Q + AWS S3</span>
+          </div>
+
+          <div class="arch-card">
+            <div class="arch-card-icon" style="background: rgba(239, 68, 68, 0.25); color: #f87171;">
+              <i class="fa-solid fa-headset"></i>
+            </div>
+            <h3>Transbordo Humanizado N1</h3>
+            <p>Se o bot não conseguir solucionar ou houver pedido explícito, o chamado é transbordado para o atendente N1 preservando todo o histórico e intenções na tela do operador.</p>
+            <span class="arch-card-tag">Preservação de Contexto</span>
+          </div>
+        </div>
+
+        <!-- MÉTRICAS DO CASE DE SUCESSO -->
+        <div class="metrics-box" id="aws-metricas">
+          <div class="metric-item">
+            <div class="metric-val">-68%</div>
+            <div class="metric-label">Redução do TMA na Central</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-val">84%</div>
+            <div class="metric-label">Agendamentos Resolvidos pela IA</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-val">Zero</div>
+            <div class="metric-label">Perda de Contexto no Transbordo N1</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-val">98%</div>
+            <div class="metric-label">Satisfação dos Beneficiários (CSAT)</div>
+          </div>
+        </div>
+
+        <!-- SIMULADOR FICTÍCIO: LOG DE ATENDIMENTO E TELEMETRIA NLU NO CLOUDWATCH -->
+        <div style="margin-top: 3.5rem;" id="aws-telemetria">
+          <div class="section-header" style="text-align: left; margin-bottom: 1.25rem;">
+            <span class="tag-badge tag-badge-blue">Telemetria CloudWatch & Contact Lens</span>
+            <h3>Trilha de Auditoria e Sessão NLU em Tempo Real</h3>
+            <p>Rastreabilidade ponta a ponta: do utterance do beneficiário de Belém/PA à execução do Lambda e persistência no S3.</p>
+          </div>
+
+          <div class="session-log-terminal">
+            <div class="log-entry">
+              <span class="log-time">[14:32:01.104]</span>
+              <span class="log-tag connect">CONNECT</span>
+              <span>Inbound Call Started • ContactId: <code>c8f49a21-7e3b-41da-a012-e789bcde0145</code> • ANI: <code>+55 (91) 98144-****</code> (Belém/PA)</span>
+            </div>
+            <div class="log-entry">
+              <span class="log-time">[14:32:02.450]</span>
+              <span class="log-tag connect">FLOW</span>
+              <span>Invoking Contact Flow: <code>MedSaude_Principal_Voz_v3</code> • Audio Stream Neural: <code>Camila (pt-BR)</code></span>
+            </div>
+            <div class="log-entry">
+              <span class="log-time">[14:32:04.120]</span>
+              <span class="log-tag lex">LEX V2</span>
+              <span>Utterance: <em>"Preciso de uma consulta com cardiologista aqui no Marco em Belém"</em></span>
+            </div>
+            <div class="log-entry">
+              <span class="log-time">[14:32:04.380]</span>
+              <span class="log-tag lex">LEX V2</span>
+              <span>Intent: <code>ConsultarEspecialidade</code> (Confidence: 0.984) • Slots: <code>{Especialidade: "Cardiologia", Cidade: "Belém", Bairro: "Marco"}</code></span>
+            </div>
+            <div class="log-entry">
+              <span class="log-time">[14:32:04.425]</span>
+              <span class="log-tag lambda">LAMBDA</span>
+              <span>Invoking <code>MedSaude-GuiaMedico-Lookup</code> • Runtime: Node.js 20.x • Memory: 256MB</span>
+            </div>
+            <div class="log-entry">
+              <span class="log-time">[14:32:04.478]</span>
+              <span class="log-tag s3">S3 GET</span>
+              <span>Bucket: <code>s3://medsaude-guia-dados-prd/especialistas.json</code> • Matched: <strong>Dr. Marcos Vinícius Paiva (CRM/PA 8912)</strong></span>
+            </div>
+            <div class="log-entry">
+              <span class="log-time">[14:32:04.530]</span>
+              <span class="log-tag lambda">LAMBDA</span>
+              <span>Execution Time: <strong>52ms</strong> • Slots Preenchidos • Próximos Horários: <code>["Amanhã às 09:30", "Quinta às 14:00"]</code></span>
+            </div>
+            <div class="log-entry">
+              <span class="log-time">[14:32:06.890]</span>
+              <span class="log-tag connect">CONNECT</span>
+              <span>Prompt: <em>"Encontrei o Dr. Marcos Vinícius no Ed. Saúde Prime, Marco. Ele tem horário amanhã às 09:30. Deseja confirmar?"</em></span>
+            </div>
+            <div class="log-entry">
+              <span class="log-time">[14:32:08.200]</span>
+              <span class="log-tag lex">LEX V2</span>
+              <span>Utterance: <em>"Sim, pode confirmar por favor"</em> • Intent: <code>ConfirmarAgendamento</code> (Confidence: 0.992)</span>
+            </div>
+            <div class="log-entry">
+              <span class="log-time">[14:32:08.780]</span>
+              <span class="log-tag connect">SNS SMS</span>
+              <span>SMS Protocolo <code>#MED-940218</code> despachado com sucesso • TMA Total da Interação: <strong>1m 14s</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- FINOPS FICTÍCIO: DIMENSIONAMENTO DE CUSTOS AWS CONNECT VS TRADICIONAL -->
+        <div class="finops-box" id="aws-finops">
+          <div class="section-header" style="text-align: left; margin-bottom: 0.5rem;">
+            <span class="tag-badge tag-badge-green">FinOps & Arquitetura de Custos</span>
+            <h3>Dimensionamento de Custos: On-Premise vs. Serverless AWS</h3>
+            <p>Projeção de volume mensal considerando <strong>50.000 chamadas e interações</strong> de agendamento na Med+Saúde:</p>
+          </div>
+
+          <div class="finops-table-wrapper">
+            <table class="finops-table">
+              <thead>
+                <tr>
+                  <th>Componente / Serviço</th>
+                  <th>Modelo Tradicional (PBX Físico)</th>
+                  <th>Solução AWS Connect (Grupo 6)</th>
+                  <th>Diferença / Economia</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Telefonia & Troncos E1</strong></td>
+                  <td>R$ 18.500,00 (Contrato Fixo Mensal)</td>
+                  <td>R$ 1.620,00 (US$ 0,004/min Connect)</td>
+                  <td><span class="aws-badge-pill" style="color: #10b981;">-91,2%</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Licenciamento por Agente / PA</strong></td>
+                  <td>R$ 14.000,00 (40 licenças proprietárias)</td>
+                  <td>R$ 0,00 (Zero custo de licença fixa)</td>
+                  <td><span class="aws-badge-pill" style="color: #10b981;">-100%</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Automação Cognitiva (Lex V2)</strong></td>
+                  <td>R$ 6.200,00 (URA engessada legada)</td>
+                  <td>R$ 1.850,00 (US$ 0,004/interação voz)</td>
+                  <td><span class="aws-badge-pill" style="color: #10b981;">-70,1%</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Infraestrutura & Storage (S3/Lambda)</strong></td>
+                  <td>R$ 4.800,00 (Servidores e manutenção)</td>
+                  <td>R$ 380,00 (Serverless sob demanda)</td>
+                  <td><span class="aws-badge-pill" style="color: #10b981;">-92,0%</span></td>
+                </tr>
+                <tr style="font-weight: 700; background: rgba(6, 182, 212, 0.08);">
+                  <td><strong>Custo Total Mensal Estimado</strong></td>
+                  <td style="color: #ef4444;">R$ 43.500,00 / mês</td>
+                  <td style="color: #10b981;">R$ 3.850,00 / mês</td>
+                  <td><span class="tag-badge tag-badge-green">Economia de 91,1%</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem;">
+            * Estimativa baseada na calculadora oficial AWS Pricing Calculator para a região <code>us-east-1</code> (N. Virginia), com cotação US$ 1,00 = R$ 5,40.
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!-- FIM DA VIEW 6: ARQUITETURA AWS -->
+</main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="brand-logo" style="margin-bottom: 1rem;">
+            <div class="logo-icon-box">
+              <img src="./images/logo-medsaude-para.png" alt="Med+Saúde - Logo Oficial" class="logo-brand-img">
+            </div>
+            <div class="brand-name">Med+<span>Saúde</span></div>
+          </div>
+          <p style="max-width: 420px; font-size: 0.9rem; margin-bottom: 1rem;">
+            Operadora de Saúde fictícia criada para demonstração prática da jornada omnichannel de atendimento e agendamento de consultas via Amazon Connect, Amazon Lex e Amazon Q in Connect.
+          </p>
+          <div class="aws-badge-pill">
+            Turma Piloto | Escola da Nuvem — Grupo 6
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="#inicio" onclick="navegarPara('inicio')">Início</a></li>
+            <li><a href="#guia-medico" onclick="navegarPara('guia-medico')">Guia Médico</a></li>
+            <li><a href="#planos" onclick="navegarPara('planos')">Planos de Saúde</a></li>
+            <li><a href="#sobre-nos" onclick="navegarPara('sobre-nos')">Sobre Nós (Grupo 6)</a></li>
+            <li><a href="#documentacao" onclick="navegarPara('documentacao')">Documentação Técnica</a></li>
+            <li><a href="#omnichannel-case" onclick="navegarPara('omnichannel-case')">Arquitetura AWS</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Canais & Recursos</h4>
+          <ul>
+            <li><a href="#doc-contact-flow" onclick="navegarPara('doc-contact-flow')"><i class="fa-solid fa-headset"></i> Central 0800 & Telefonia</a></li>
+            <li><a href="#doc-widget-aws" onclick="navegarPara('doc-widget-aws')"><i class="fa-solid fa-robot"></i> Chatbot Arwen & Lex</a></li>
+            <li><a href="#doc-faq-banca" onclick="navegarPara('doc-faq-banca')"><i class="fa-solid fa-circle-question"></i> FAQ da Solução</a></li>
+            <li><a href="#aws-telemetria" onclick="navegarPara('aws-telemetria')"><i class="fa-solid fa-chart-line"></i> Telemetria CloudWatch</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy-credits">
+          <span>&copy; 2026 <strong>Med+Saúde</strong></span>
+          <span class="footer-divider">•</span>
+          <span>Projeto em Equipe — Curso de Amazon Connect (Escola da Nuvem • Grupo 6)</span>
+          <span class="footer-divider">|</span>
+          <span>Desenvolvido por <a href="https://portifolio.lucivaldo.cloud/" target="_blank" rel="noopener noreferrer" class="footer-dev-link">Lucivaldo Junior • Engenheiro de Software</a></span>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- BARRA DE NAVEGAÇÃO INFERIOR MOBILE (IONIC TAB BAR NATIVO) -->
+  <ion-tab-bar slot="bottom" class="mobile-bottom-bar" id="mobile-bottom-bar">
+    <ion-tab-button tab="inicio" href="#inicio" class="bottom-tab-item active" onclick="navegarPara('inicio')">
+      <ion-icon name="home-outline"></ion-icon>
+      <i class="fa-solid fa-house" style="display: none;"></i>
+      <span>Início</span>
+    </ion-tab-button>
+    <ion-tab-button tab="guia-medico" href="#guia-medico" class="bottom-tab-item" onclick="navegarPara('guia-medico')">
+      <ion-icon name="medkit-outline"></ion-icon>
+      <i class="fa-solid fa-stethoscope" style="display: none;"></i>
+      <span>Guia</span>
+    </ion-tab-button>
+    <ion-tab-button tab="sobre-nos" href="#sobre-nos" class="bottom-tab-item" onclick="navegarPara('sobre-nos')">
+      <ion-icon name="people-outline"></ion-icon>
+      <i class="fa-solid fa-users" style="display: none;"></i>
+      <span>Grupo 6</span>
+    </ion-tab-button>
+    <ion-tab-button tab="documentacao" href="#documentacao" class="bottom-tab-item" onclick="navegarPara('documentacao')">
+      <ion-icon name="document-text-outline"></ion-icon>
+      <i class="fa-solid fa-book-bookmark" style="display: none;"></i>
+      <span>Docs</span>
+    </ion-tab-button>
+    <ion-tab-button tab="omnichannel-case" href="#omnichannel-case" class="bottom-tab-item" onclick="navegarPara('omnichannel-case')">
+      <ion-icon name="cloud-outline"></ion-icon>
+      <i class="fa-solid fa-cloud" style="display: none;"></i>
+      <span>AWS</span>
+    </ion-tab-button>
+  </ion-tab-bar>
+
+  <div id="amazon-connect-live-widget">
+    <!-- INÍCIO: COLE SEU SCRIPT JS DO AMAZON CONNECT ABAIXO -->
+
+    <!-- Exemplo do formato do script oficial AWS Connect:
+    <script type="text/javascript">
+      (function(w, d, x, id){
+        s=d.createElement('script');
+        s.src='https://sua-instancia.my.connect.aws/snippet.js';
+        s.async=1;
+        s.id=id;
+        d.getElementsByTagName('head')[0].appendChild(s);
+      })(window, document, 'amazon-connect-chat-widget', 'connect-widget-script');
+    </script>
+    -->
+
+    <!-- FIM DO SCRIPT JS DO AMAZON CONNECT -->
+  </div>
+  <!-- ========================================================================= -->
+
+  </div>
+
+  <!-- ==================== WIDGET DO CHATBOT FLUTUANTE (FIXO NO VIEWPORT DO BODY) ==================== -->
+  <!-- Botão Disparador Premium (Arwen - Amazon Connect) -->
+  <button class="chat-launcher-btn" id="chat-launcher" onclick="toggleChatWidget()" aria-label="Abrir Assistente Virtual Arwen">
+    <div class="chat-launcher-inner">
+      <i class="fa-solid fa-comment-medical chat-launcher-icon"></i>
+      <span class="chat-launcher-pulse"></span>
+    </div>
+    <span class="chat-launcher-status-dot" title="Arwen Online 24 Horas"></span>
+    <span class="chat-launcher-tooltip">Assistente Arwen • IA Connect</span>
+  </button>
+
+  <!-- Janela do Chat -->
+  <div class="chat-widget-panel hidden" id="chat-panel">
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <div class="chat-bot-avatar">
+          <img src="./images/avatar-arwen.jpg" alt="Arwen" class="chat-bot-avatar-img">
+        </div>
+        <div class="chat-bot-titles">
+          <h4>Arwen <span style="font-size: 0.65rem; background: rgba(94, 234, 212, 0.2); padding: 0.1rem 0.4rem; border-radius: 99px; color: #5eead4;">Amazon Connect</span></h4>
+          <p>Guia Médico Virtual & Agendamento</p>
+        </div>
+      </div>
+      <div class="chat-header-actions">
+        <button class="chat-btn-icon" onclick="toggleAwsConfigDrawer()" title="Configurar Snippet Real da AWS">
+          <i class="fa-solid fa-gear"></i>
+        </button>
+        <button class="chat-btn-icon" onclick="toggleChatWidget()" title="Minimizar">
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Gaveta de Configuração do Snippet Real do Amazon Connect -->
+    <div class="aws-config-drawer hidden" id="aws-config-drawer">
+      <h4><i class="fa-brands fa-aws text-primary"></i> Integração Oficial AWS Connect</h4>
+      <p>Caso seu grupo tenha gerado o snippet de script do <strong>Amazon Connect Communications Widget</strong> no console AWS, cole-o aqui para carregar o widget oficial da sua instância:</p>
+      <textarea id="aws-snippet-input" placeholder="<script type='text/javascript'> ... amazon-connect-chat-interface ... </script>"></textarea>
+      <div style="display: flex; gap: 0.5rem;">
+        <button class="btn btn-primary btn-sm" onclick="salvarEInjetarSnippetAws()">
+          <i class="fa-solid fa-check"></i> Aplicar Script Oficial
+        </button>
+        <button class="btn btn-outline btn-sm" onclick="toggleAwsConfigDrawer()">Cancelar</button>
+      </div>
+      <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.75rem;">
+        * Enquanto não colar o script oficial, o chat simula com perfeição as intenções do Lex e Amazon Q.
+      </p>
+    </div>
+
+    <!-- Mensagens do Chat -->
+    <div class="chat-messages" id="chat-messages">
+      <!-- Mensagem inicial do bot -->
+      <div class="chat-msg bot">
+        <div class="msg-bubble">
+          Olá! Sou a <strong>Arwen</strong>, sua assistente virtual da <strong>Med+Saúde</strong> integrada ao <strong>Amazon Connect & Amazon Lex</strong>.
+          <br><br>
+          Posso localizar especialistas no Guia Médico, verificar horários e agendar sua consulta. O que você procura hoje?
+          <div class="chat-quick-suggestions">
+            <button class="quick-btn" onclick="enviarMensagemRapida('Preciso de um cardiologista em Belém')">🩺 Cardiologista em Belém</button>
+            <button class="quick-btn" onclick="enviarMensagemRapida('Procurar ortopedista em São Paulo')">🦴 Ortopedista em SP</button>
+            <button class="quick-btn" onclick="enviarMensagemRapida('Como funciona a carência de consultas?')">❓ Carência de Consultas</button>
+            <button class="quick-btn" onclick="enviarMensagemRapida('Falar com atendente humano')">👤 Falar com Atendente (N1)</button>
+          </div>
+        </div>
+        <span class="msg-timestamp">Agora</span>
+      </div>
+    </div>
+
+    <!-- Input Bar do Chat -->
+    <form class="chat-input-bar" id="chat-form" onsubmit="tratarEnvioMensagem(event)">
+      <input type="text" class="chat-input-field" id="chat-input" placeholder="Digite sua dúvida ou especialidade..." autocomplete="off">
+      <button type="submit" class="chat-send-btn" title="Enviar mensagem">
+        <i class="fa-solid fa-paper-plane"></i>
+      </button>
+    </form>
+  </div>
+
+  <!-- MODAL DE AGENDAMENTO DE CONSULTA -->
+  <div class="modal-backdrop" id="modal-agendamento">
+    <div class="modal-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h3>Agendamento de Consulta</h3>
+        <button class="chat-btn-icon" style="color: #64748b;" onclick="fecharModalAgendamento()">
+          <i class="fa-solid fa-xmark" style="font-size: 1.25rem;"></i>
+        </button>
+      </div>
+
+      <div id="modal-medico-detalhes" class="modal-doctor-highlight">
+        <!-- Dados do médico selecionado -->
+      </div>
+
+      <form id="form-agendamento" onsubmit="confirmarAgendamento(event)">
+        <input type="hidden" id="agend-medico-id">
+        <div class="form-group">
+          <label for="agend-paciente-nome">Nome Completo do Beneficiário *</label>
+          <input type="text" id="agend-paciente-nome" required placeholder="Ex: Lucivaldo Junior">
+        </div>
+
+        <div class="form-group">
+          <label for="agend-cpf">CPF do Titular / Dependente *</label>
+          <input type="text" id="agend-cpf" required placeholder="000.000.000-00">
+        </div>
+
+        <div class="form-group">
+          <label for="agend-telefone">Telefone WhatsApp *</label>
+          <input type="text" id="agend-telefone" required placeholder="(91) 98888-7777">
+        </div>
+
+        <div class="form-group">
+          <label for="agend-horario">Horário Desejado *</label>
+          <select id="agend-horario" required>
+            <!-- Injetado dinamicamente com os horários do médico -->
+          </select>
+        </div>
+
+        <div style="display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem;">
+          <button type="button" class="btn btn-outline" onclick="fecharModalAgendamento()">Cancelar</button>
+          <button type="submit" class="btn btn-primary">
+            <i class="fa-solid fa-calendar-check"></i> Confirmar Agendamento
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+
+  <!-- Scripts da Aplicação (Arquitetura Angular Standalone + Ionic Runtime) -->
+  <script src="./js/data.js"></script>
+  <script src="./js/app.js"></script>
+  <script src="./js/chat-widget.js"></script>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

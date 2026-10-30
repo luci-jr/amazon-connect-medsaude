@@ -1,0 +1,43 @@
+<!-- NAVBAR FLUTUANTE RETRÔ-FUTURISTA (ANGULAR SHARED COMPONENT) -->
+<header class="floating-nav-wrapper">
+  <nav class="floating-navbar">
+    <!-- LOGO DA MED+SAÚDE COM BRASÃO DO PARÁ -->
+    <a href="#inicio" class="brand-logo" onclick="navegarPara('inicio')">
+      <div class="logo-icon-box">
+        <img src="./images/logo-medsaude-para.png" alt="Med+Saúde" class="logo-brand-img">
+      </div>
+      <div class="brand-name">
+        Med+<span>Saúde</span>
+      </div>
+    </a>
+
+    <!-- LINKS DE NAVEGAÇÃO DE PÁGINAS (DESKTOP) -->
+    <ul class="nav-links">
+      <li><a href="#inicio" class="nav-link-pill active" onclick="navegarPara('inicio')">Início</a></li>
+      <li><a href="#guia-medico" class="nav-link-pill" onclick="navegarPara('guia-medico')">Guia Médico</a></li>
+      <li><a href="#planos" class="nav-link-pill" onclick="navegarPara('planos')">Planos</a></li>
+      <li><a href="#sobre-nos" class="nav-link-pill" onclick="navegarPara('sobre-nos')">Sobre Nós</a></li>
+      <li><a href="#documentacao" class="nav-link-pill" onclick="navegarPara('documentacao')">Documentação</a></li>
+      <li><a href="#omnichannel-case" class="nav-link-pill" onclick="navegarPara('omnichannel-case')">Arquitetura AWS</a></li>
+    </ul>
+
+    <!-- AÇÕES DA NAVBAR -->
+    <div class="nav-actions">
+      <!-- Botão Simular Chamada de Voz -->
+      <button class="btn-pill-outline" onclick="simularLigacaoVoz()" title="Simular Atendimento por Voz com IA">
+        <i class="fa-solid fa-phone"></i>
+        <span>Voz 0800</span>
+      </button>
+
+      <!-- Botão Alternador de Tema Dark / Light com Película Sépia -->
+      <button class="nav-icon-btn" onclick="alternarTema()" title="Alternar Modo Claro / Escuro">
+        <i class="fa-solid fa-sun" id="theme-icon"></i>
+      </button>
+
+      <!-- Botão Menu Mobile (Drawer) -->
+      <button class="mobile-menu-toggle" onclick="toggleMenuMobile()" title="Abrir Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+</header>

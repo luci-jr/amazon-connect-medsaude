@@ -1,0 +1,26 @@
+[
+  {
+    "pergunta": "Como agendar uma consulta para idoso com dificuldade de locomoção?",
+    "resposta": "Para beneficiários idosos ou com mobilidade reduzida, o agendamento pode ser feito diretamente pela assistente virtual ou canal telefônico de voz. Nossos consultórios credenciados (como o do Dr. Carlos Eduardo, Ortopedista) contam com acessibilidade plena: rampa frontal suave, elevadores para macas e cadeiras de rodas, sanitários adaptados e auxílio na portaria. É possível solicitar o agendamento preferencial em horários matutinos."
+  },
+  {
+    "pergunta": "Quais são os prazos de carência para consultas e exames na Med+Saúde?",
+    "resposta": "Os prazos de carência regulamentados pela ANS são: Urgência e Emergência (24 horas); Consultas médicas e exames simples laboratoriais (30 dias); Exames complexos de imagem, cirurgias e internações (180 dias); Parto a termo (300 dias); Doenças e lesões preexistentes (24 meses)."
+  },
+  {
+    "pergunta": "O que fazer se o médico especialista que procuro não tiver vaga para esta semana?",
+    "resposta": "A assistente virtual pode buscar especialistas da mesma área em bairros vizinhos ou verificar a disponibilidade de Telemedicina imediata. Caso a data ultrapasse os limites da RN 259 da ANS, o transbordo para um atendente humano N1 é acionado para alocar vaga prioritária na rede própria."
+  },
+  {
+    "pergunta": "Qual o preparo necessário para fazer exames cardiológicos no mesmo dia da consulta?",
+    "resposta": "Para exames como Eletrocardiograma (ECG), não é necessário jejum. Para Teste Ergométrico (com a Dra. Ana Silva), recomenda-se trajar roupas esportivas confortáveis e tênis, e abster-se de cafeína, cigarro e alimentos pesados nas 4 horas que antecedem o teste."
+  },
+  {
+    "pergunta": "Como funciona o cancelamento ou reagendamento de consultas?",
+    "resposta": "Cancelamentos e reagendamentos devem ser informados com pelo menos 24 horas de antecedência. Isso pode ser feito em poucos segundos informando seu CPF e número de agendamento diretamente no chat do site ou ligando para a nossa central."
+  },
+  {
+    "pergunta": "O que fazer em caso de dor no peito súbita, perda de força ou falta de ar grave?",
+    "resposta": "Estes são sintomas de alerta vermelho (possível Infarto ou AVC). Não aguarde agendamento eletivo: dirija-se imediatamente ao Pronto Atendimento 24h credenciado mais próximo ou acione o serviço de urgência móvel pelo 192 (SAMU)."
+  }
+]

@@ -1,0 +1,76 @@
+<!-- WIDGET DO CHATBOT FLUTUANTE ARWEN (ANGULAR SHARED COMPONENT) -->
+<!-- Botão Disparador Premium (Arwen - Amazon Connect) -->
+<button class="chat-launcher-btn" id="chat-launcher" onclick="toggleChatWidget()" aria-label="Abrir Assistente Virtual Arwen">
+  <div class="chat-launcher-inner">
+    <i class="fa-solid fa-comment-medical chat-launcher-icon"></i>
+    <span class="chat-launcher-pulse"></span>
+  </div>
+  <span class="chat-launcher-status-dot" title="Arwen Online 24 Horas"></span>
+  <span class="chat-launcher-tooltip">Assistente Arwen • IA Connect</span>
+</button>
+
+<!-- Janela do Chat -->
+<div class="chat-widget-panel hidden" id="chat-panel">
+  <div class="chat-header">
+    <div class="chat-header-info">
+      <div class="chat-bot-avatar">
+        <img src="./images/avatar-arwen.jpg" alt="Arwen" class="chat-bot-avatar-img">
+      </div>
+      <div class="chat-bot-titles">
+        <h4>Arwen <span class="aws-badge-pill" style="font-size: 0.65rem; padding: 0.1rem 0.4rem;">Amazon Connect</span></h4>
+        <p>Guia Médico Virtual & Agendamento</p>
+      </div>
+    </div>
+    <div class="chat-header-actions">
+      <button class="chat-btn-icon" onclick="toggleAwsConfigDrawer()" title="Configurar Snippet Real da AWS">
+        <i class="fa-solid fa-gear"></i>
+      </button>
+      <button class="chat-btn-icon" onclick="toggleChatWidget()" title="Minimizar">
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Gaveta de Configuração do Snippet Real do Amazon Connect -->
+  <div class="aws-config-drawer hidden" id="aws-config-drawer">
+    <h4><i class="fa-brands fa-aws text-primary"></i> Integração Oficial AWS Connect</h4>
+    <p>Caso seu grupo tenha gerado o snippet de script do <strong>Amazon Connect Communications Widget</strong> no console AWS, cole-o aqui para carregar o widget oficial da sua instância:</p>
+    <textarea id="aws-snippet-input" placeholder="<script type='text/javascript'> ... amazon-connect-chat-interface ... </script>"></textarea>
+    <div style="display: flex; gap: 0.5rem;">
+      <button class="btn btn-primary btn-sm" onclick="salvarEInjetarSnippetAws()">
+        <i class="fa-solid fa-check"></i> Aplicar Script Oficial
+      </button>
+      <button class="btn btn-outline btn-sm" onclick="toggleAwsConfigDrawer()">Cancelar</button>
+    </div>
+    <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.75rem;">
+      * Enquanto não colar o script oficial, o chat simula com perfeição as intenções do Lex e Amazon Q.
+    </p>
+  </div>
+
+  <!-- Mensagens do Chat -->
+  <div class="chat-messages" id="chat-messages">
+    <!-- Mensagem inicial do bot -->
+    <div class="chat-msg bot">
+      <div class="msg-bubble">
+        Olá! Sou a <strong>Arwen</strong>, sua assistente virtual da <strong>Med+Saúde</strong> integrada ao <strong>Amazon Connect & Amazon Lex</strong>.
+        <br><br>
+        Posso localizar especialistas no Guia Médico, verificar horários e agendar sua consulta. O que você procura hoje?
+        <div class="chat-quick-suggestions">
+          <button class="quick-btn" onclick="enviarMensagemRapida('Preciso de um cardiologista em Belém')">🩺 Cardiologista em Belém</button>
+          <button class="quick-btn" onclick="enviarMensagemRapida('Procurar ortopedista em São Paulo')">🦴 Ortopedista em SP</button>
+          <button class="quick-btn" onclick="enviarMensagemRapida('Como funciona a carência de consultas?')">❓ Carência de Consultas</button>
+          <button class="quick-btn" onclick="enviarMensagemRapida('Falar com atendente humano')">👤 Falar com Atendente (N1)</button>
+        </div>
+      </div>
+      <span class="msg-timestamp">Agora mesmo</span>
+    </div>
+  </div>
+
+  <!-- Input do Chat -->
+  <div class="chat-input-area">
+    <input type="text" id="chat-user-input" placeholder="Digite uma dúvida ou especialidade..." onkeypress="tratarEnterChat(event)">
+    <button class="chat-send-btn" onclick="enviarMensagemChat()" title="Enviar Mensagem">
+      <i class="fa-solid fa-paper-plane"></i>
+    </button>
+  </div>
+</div>

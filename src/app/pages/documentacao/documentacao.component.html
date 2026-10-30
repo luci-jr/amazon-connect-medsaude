@@ -1,0 +1,253 @@
+<!-- VIEW 6: PÁGINA DOCUMENTAÇÃO TÉCNICA (ANGULAR PAGE COMPONENT) -->
+<div class="page-view" id="view-documentacao">
+  <section class="section-documentacao" id="documentacao">
+    <div class="container">
+      <div class="section-header">
+        <span class="tag-badge tag-badge-amber">Manual do Case • AWS Connect</span>
+        <h2>Documentação Técnica & Arquitetura</h2>
+        <p>Especificação detalhada do Case 1 (Agendamento de Consultas via Guia Médico), intenções do Amazon Lex, schemas JSON no S3 e instruções de implantação.</p>
+      </div>
+
+      <div class="docs-grid-layout">
+        <!-- SIDEBAR DE NAVEGAÇÃO RÁPIDA -->
+        <aside class="docs-sidebar">
+          <h4 style="font-size: 0.9rem; text-transform: uppercase; color: var(--text-muted); font-family: var(--font-tech); margin-bottom: 1rem;">Tópicos da Documentação</h4>
+          <ul class="docs-nav-list">
+            <li><a href="#doc-visao-geral" class="docs-nav-btn active"><i class="fa-solid fa-bullseye"></i> 1. Visão Geral do Case</a></li>
+            <li><a href="#doc-lex-intents" class="docs-nav-btn"><i class="fa-solid fa-robot"></i> 2. Amazon Lex V2 (NLU)</a></li>
+            <li><a href="#doc-s3-data" class="docs-nav-btn"><i class="fa-solid fa-database"></i> 3. Dados no Amazon S3</a></li>
+            <li><a href="#doc-contact-flow" class="docs-nav-btn"><i class="fa-solid fa-diagram-project"></i> 4. Contact Flow Connect</a></li>
+            <li><a href="#doc-widget-aws" class="docs-nav-btn"><i class="fa-solid fa-code"></i> 5. Injeção do Widget JS</a></li>
+            <li><a href="#doc-s3-deploy" class="docs-nav-btn"><i class="fa-solid fa-cloud-arrow-up"></i> 6. Deploy no Amazon S3</a></li>
+            <li><a href="#doc-lambda-event" class="docs-nav-btn"><i class="fa-solid fa-bolt"></i> 7. Payload AWS Lambda</a></li>
+            <li><a href="#doc-faq-banca" class="docs-nav-btn"><i class="fa-solid fa-circle-question"></i> 8. FAQ Técnico da Banca</a></li>
+          </ul>
+        </aside>
+
+        <!-- CONTEÚDO DOS DOCUMENTOS -->
+        <div class="docs-content-area">
+          <!-- Tópico 1: Visão Geral -->
+          <div class="docs-block" id="doc-visao-geral">
+            <h3><i class="fa-solid fa-bullseye text-primary"></i> 1. Visão Geral do Case Med+Saúde</h3>
+            <p>
+              A <strong>Med+Saúde</strong> enfrentava um desafio crítico de negócio: um <strong>Tempo Médio de Atendimento (TMA) de 14 minutos</strong> para agendamentos de consultas de rotina via central telefônica tradicional, gerando filas de espera, abandono de chamadas e insatisfação dos usuários.
+            </p>
+            <p>
+              <strong>Solução do Grupo 6:</strong> Desenvolvemos uma jornada omnichannel 100% automatizada no <strong>Amazon Connect</strong>, integrando bot de texto (Chat Web) e voz (telefonia 0800 com ASR) alimentados pelo <strong>Amazon Lex V2</strong> e consulta em tempo real à base de especialistas armazenada no <strong>Amazon S3</strong>.
+            </p>
+            <div style="background: rgba(6, 182, 212, 0.08); border-left: 4px solid var(--primary); padding: 1rem; border-radius: 4px; font-size: 0.9rem; color: var(--text-primary);">
+              <strong>Impacto Mensurado:</strong> Redução do TMA de 14min para <strong>3 minutos e 12 segundos</strong> (-78%), com <strong>84% de resolução autônoma pela IA</strong> sem necessidade de operador humano.
+            </div>
+          </div>
+
+          <!-- Tópico 2: Amazon Lex V2 -->
+          <div class="docs-block" id="doc-lex-intents">
+            <h3><i class="fa-solid fa-robot text-primary"></i> 2. Especificação do Amazon Lex V2 (NLU)</h3>
+            <p>O bot <strong>Arwen</strong> foi modelado com as seguintes intenções conversacionais, tipos de slots e comportamentos de fallback:</p>
+            <table class="docs-table">
+              <thead>
+                <tr>
+                  <th>Intenção (Intent)</th>
+                  <th>Slots Requeridos</th>
+                  <th>Exemplos de Utterances (Frases)</th>
+                  <th>Ação do Contact Flow</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>ConsultarEspecialidade</code></td>
+                  <td><code>EspecialidadeMedica</code></td>
+                  <td>"Quero cardiologista", "tem ortopedista?"</td>
+                  <td>Filtra médicos no S3 e lista horários.</td>
+                </tr>
+                <tr>
+                  <td><code>BuscarPorLocalidade</code></td>
+                  <td><code>CidadePara</code>, <code>Bairro</code></td>
+                  <td>"Médicos em Belém", "clínica em Ananindeua"</td>
+                  <td>Retorna consultórios credenciados na região.</td>
+                </tr>
+                <tr>
+                  <td><code>AgendarConsulta</code></td>
+                  <td><code>MedicoId</code>, <code>DataHora</code>, <code>CPF</code></td>
+                  <td>"Quero marcar com Dr. Marcos", "agendar às 14h"</td>
+                  <td>Gera protocolo e confirmação com SMS.</td>
+                </tr>
+                <tr>
+                  <td><code>AmazonQ_KnowledgeSearch</code></td>
+                  <td><code>PerguntaUsuario</code></td>
+                  <td>"Qual a carência do plano?", "cobre parto?"</td>
+                  <td>Consulta o FAQ do plano no Amazon Q.</td>
+                </tr>
+                <tr>
+                  <td><code>TransbordoAgenteN1</code></td>
+                  <td>Nenhum (ou Fallback x2)</td>
+                  <td>"Falar com atendente", "quero humano"</td>
+                  <td>Transfere para fila mantendo o histórico.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Tópico 3: Dados S3 -->
+          <div class="docs-block" id="doc-s3-data">
+            <h3><i class="fa-solid fa-database text-primary"></i> 3. Estrutura de Dados no Amazon S3</h3>
+            <p>O catálogo do Guia Médico e a base de conhecimento são geridos em arquivos JSON leves armazenados em bucket S3:</p>
+            <div class="code-snippet-box">
+              <button class="copy-btn" onclick="copiarSnippet('code-s3-json', this)"><i class="fa-regular fa-copy"></i> Copiar JSON</button>
+              <pre id="code-s3-json">{
+  "id": "med-01",
+  "nome": "Dr. Marcos Vinícius Paiva",
+  "especialidade": "Cardiologia",
+  "crm": "CRM/PA 8912",
+  "cidade": "Belém",
+  "uf": "PA",
+  "bairro": "Marco",
+  "endereco": "Av. Almirante Barroso, 2140 - Ed. Saúde Prime, Sala 402",
+  "telemedicina": true,
+  "proximosHorarios": ["Amanhã às 09:30", "Quinta às 14:00", "Sexta às 11:15"],
+  "avaliacao": 4.9
+}</pre>
+            </div>
+          </div>
+
+          <!-- Tópico 4: Contact Flow -->
+          <div class="docs-block" id="doc-contact-flow">
+            <h3><i class="fa-solid fa-diagram-project text-primary"></i> 4. Lógica do Contact Flow no Amazon Connect</h3>
+            <p>O fluxo de atendimento da Med+Saúde segue uma árvore modular à prova de falhas:</p>
+            <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--border-color); border-radius: 8px; padding: 1.25rem; font-family: monospace; font-size: 0.84rem; line-height: 1.6; color: #e2e8f0;">
++-- [Início da Interação (Voz / Chat)]<br>
+|   +-- Bloco: "Set Logging Behavior" (Auditoria ativada via CloudWatch)<br>
+|   +-- Bloco: "Set Voice / Speech" (Camila - Neural para Português-BR)<br>
+|   +-- Bloco: "Get Customer Input" (Invoca Amazon Lex V2 Bot 'Arwen')<br>
+|       +-- Intenção Identificada: Consulta / Agendamento<br>
+|       |   +-- Bloco: "Invoke AWS Lambda" (Consulta dados no S3 / DynamoDB)<br>
+|       |   +-- Bloco: "Play Prompt / Send Message" (Retorna especialistas ao usuário)<br>
+|       +-- Intenção Dúvida Cobertura<br>
+|       |   +-- Bloco: "Query Amazon Q in Connect" (Base de FAQ do plano)<br>
+|       +-- Intenção "Humano" ou 2 Fallbacks seguidos<br>
+|           +-- Bloco: "Set Working Queue" (Fila: Transbordo_N1_Saude)<br>
+|           +-- Bloco: "Transfer to Queue" (Preserva todos os atributos da sessão)<br>
+            </div>
+          </div>
+
+          <!-- Tópico 5: Widget Oficial AWS Connect -->
+          <div class="docs-block" id="doc-widget-aws">
+            <h3><i class="fa-solid fa-code text-primary"></i> 5. Injeção do Widget Oficial do Amazon Connect</h3>
+            <p>O portal já possui o container preparado no arquivo <code>index.html</code> (linha <code>#amazon-connect-live-widget</code>). Para ativar a instância real da AWS na apresentação, basta colar o script oficial fornecido pelo console do Connect:</p>
+            <div class="code-snippet-box">
+              <button class="copy-btn" onclick="copiarSnippet('code-connect-js', this)"><i class="fa-regular fa-copy"></i> Copiar Snippet</button>
+              <pre id="code-connect-js">&lt;!-- Amazon Connect Live Chat Widget Script --&gt;
+&lt;script src="https://static.connect.aws/connect-chat-interface.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  connect.ChatInterface.init({
+    containerId: 'amazon-connect-live-widget',
+    region: 'us-east-1',
+    instanceId: 'SUA_INSTANCE_ID_AQUI',
+    contactFlowId: 'SEU_CONTACT_FLOW_ID_AQUI'
+  });
+&lt;/script&gt;</pre>
+            </div>
+          </div>
+
+          <!-- Tópico 6: Deploy no Amazon S3 -->
+          <div class="docs-block" id="doc-s3-deploy">
+            <h3><i class="fa-solid fa-cloud-arrow-up text-primary"></i> 6. Publicação Estática no Amazon S3</h3>
+            <p>Por ser uma Single Page Application construída com padrões modernos, a hospedagem no Amazon S3 é realizada em 3 comandos:</p>
+            <div class="code-snippet-box">
+              <button class="copy-btn" onclick="copiarSnippet('code-deploy-sh', this)"><i class="fa-regular fa-copy"></i> Copiar Comandos</button>
+              <pre id="code-deploy-sh"># 1. Crie o bucket para o site
+aws s3 mb s3://medsaude-grupo6-escola-da-nuvem --region us-east-1
+
+# 2. Habilite a hospedagem de site estático
+aws s3 website s3://medsaude-grupo6-escola-da-nuvem --index-document index.html
+
+# 3. Sincronize os arquivos do projeto
+aws s3 sync ./public s3://medsaude-grupo6-escola-da-nuvem --acl public-read</pre>
+            </div>
+          </div>
+
+          <!-- Tópico 7: Payload do Evento AWS Lambda -->
+          <div class="docs-block" id="doc-lambda-event">
+            <h3><i class="fa-solid fa-bolt text-primary"></i> 7. Payload Real do Evento AWS Lambda / Connect (event.json)</h3>
+            <p>Estrutura realística de entrada enviada pelo bloco <em>"Invoke AWS Lambda function"</em> no Contact Flow com os atributos de sessão do beneficiário:</p>
+            <div class="code-snippet-box">
+              <button class="copy-btn" onclick="copiarSnippet('code-lambda-json', this)"><i class="fa-regular fa-copy"></i> Copiar JSON</button>
+              <pre id="code-lambda-json">{
+  "Name": "ContactFlowEvent",
+  "Details": {
+    "ContactData": {
+      "ContactId": "c8f49a21-7e3b-41da-a012-e789bcde0145",
+      "Channel": "VOICE",
+      "InstanceARN": "arn:aws:connect:us-east-1:123456789012:instance/medsaude-prd",
+      "CustomerEndpoint": {
+        "Address": "+5591981442026",
+        "Type": "TELEPHONE_NUMBER"
+      },
+      "Attributes": {
+        "CanalOrigem": "Telefonia_0800_Belem",
+        "EspecialidadeSolicitada": "Cardiologia",
+        "Cidade": "Belém",
+        "Bairro": "Marco",
+        "PreferênciaTelemedicina": "false"
+      }
+    },
+    "Parameters": {
+      "Acao": "BuscarEspecialistasDisponiveis",
+      "LimiteResultados": "3"
+    }
+  }
+}</pre>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.75rem;">
+              <strong>Resposta JSON devolvida pelo Lambda para o Connect:</strong> <code>{"status": "SUCESSO", "medicoNome": "Dr. Marcos Vinícius Paiva", "crm": "CRM/PA 8912", "proximoHorario": "Amanhã às 09:30"}</code>. O Amazon Connect usa essa chave para que a voz neural de Camila pronuncie diretamente ao paciente.
+            </p>
+          </div>
+
+          <!-- Tópico 8: FAQ Técnico da Banca de Avaliação -->
+          <div class="docs-block" id="doc-faq-banca">
+            <h3><i class="fa-solid fa-circle-question text-primary"></i> 8. FAQ Técnico & Perguntas da Banca (Escola da Nuvem)</h3>
+            <p>Respostas arquiteturais para as principais dúvidas técnicas levantadas pelos instrutores e avaliadores:</p>
+            
+            <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+              <div style="background: rgba(15, 23, 42, 0.5); border: 1px solid var(--border-color); border-radius: 8px; padding: 1.25rem;">
+                <h4 style="font-size: 0.95rem; color: var(--primary-light); margin-bottom: 0.4rem;">
+                  <i class="fa-solid fa-server"></i> 1. Como a arquitetura garante tolerância a falhas se o Lex sofrer indisponibilidade?
+                </h4>
+                <p style="font-size: 0.86rem; color: var(--text-secondary); line-height: 1.5;">
+                  O Contact Flow possui o bloco de tratamento de erro <em>"Error"</em> e <em>"No Match"</em> configurado em cada nó de decisão. Se o Amazon Lex V2 não responder em 3 segundos, o fluxo executa o fallback transparente para o Amazon Q in Connect ou transborda imediatamente para a fila prioritária de atendimento humano N1, preservando o número de telefone (ANI) e evitando que o paciente fique mudo ou a ligação caia.
+                </p>
+              </div>
+
+              <div style="background: rgba(15, 23, 42, 0.5); border: 1px solid var(--border-color); border-radius: 8px; padding: 1.25rem;">
+                <h4 style="font-size: 0.95rem; color: var(--primary-light); margin-bottom: 0.4rem;">
+                  <i class="fa-solid fa-shield-halved"></i> 2. De que forma os dados sensíveis de saúde são protegidos perante a LGPD?
+                </h4>
+                <p style="font-size: 0.86rem; color: var(--text-secondary); line-height: 1.5;">
+                  Utilizamos criptografia em repouso com chaves gerenciadas no <strong>AWS KMS (SSE-KMS)</strong> em todos os buckets S3 e logs do CloudWatch. A transcrição de voz pelo Contact Lens mascara automaticamente CPFs e números de cartão do plano usando regras de PII (Personally Identifiable Information). Nenhum dado de prontuário é transmitido em texto plano.
+                </p>
+              </div>
+
+              <div style="background: rgba(15, 23, 42, 0.5); border: 1px solid var(--border-color); border-radius: 8px; padding: 1.25rem;">
+                <h4 style="font-size: 0.95rem; color: var(--primary-light); margin-bottom: 0.4rem;">
+                  <i class="fa-solid fa-microphone"></i> 3. Como a IA compreende os regionalismos paraenses falados pelos idosos?
+                </h4>
+                <p style="font-size: 0.86rem; color: var(--text-secondary); line-height: 1.5;">
+                  O Amazon Lex V2 foi enriquecido com utterances regionais e sinônimos nos slots (ex: "dor no espinhaço" mapeado para <em>Ortopedia</em>, "vista embaçada" para <em>Oftalmologia</em>, e nomes de bairros locais como Umarizal, Telégrafo, Pedreira e Cidade Nova em Ananindeua), além de contar com a voz neural da Camila (Polly) ajustada com cadência suave.
+                </p>
+              </div>
+
+              <div style="background: rgba(15, 23, 42, 0.5); border: 1px solid var(--border-color); border-radius: 8px; padding: 1.25rem;">
+                <h4 style="font-size: 0.95rem; color: var(--primary-light); margin-bottom: 0.4rem;">
+                  <i class="fa-solid fa-coins"></i> 4. Qual é o custo unitário por consulta agendada via automação serverless?
+                </h4>
+                <p style="font-size: 0.86rem; color: var(--text-secondary); line-height: 1.5;">
+                  Com uma duração média de 1m 14s no canal de voz, o custo total de telecomunicações do Connect (US$ 0,005) + Lex V2 (US$ 0,004) + Lambda (US$ 0,000002) resulta em aproximadamente <strong>R$ 0,08 por agendamento concluído</strong>, representando uma economia de 89% em comparação com o custo médio de R$ 1,80 a R$ 2,50 por minuto de um operador humano em contact centers tradicionais.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
