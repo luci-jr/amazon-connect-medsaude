@@ -7,8 +7,11 @@
   <img src="https://img.shields.io/badge/AWS-Amazon%20S3-232F3E?style=for-the-badge&logo=amazon-s3&logoColor=FF9900" alt="Amazon S3" />
   <img src="https://img.shields.io/badge/AWS-CloudFront-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=FF9900" alt="Amazon CloudFront" />
   <img src="https://img.shields.io/badge/Frontend-Vanilla%20JS%20%7C%20CSS3%20%7C%20HTML5-0284c7?style=for-the-badge&logo=javascript&logoColor=white" alt="Stack Web" />
-  <img src="https://img.shields.io/badge/Licen%C3%A7a-Educacional-10b981?style=for-the-badge" alt="Licença" />
+  <img src="https://img.shields.io/badge/Demo%20Online-GitHub%20Pages-2563eb?style=for-the-badge&logo=githubpages&logoColor=white" alt="Demo Online" />
+  <img src="https://img.shields.io/badge/Licen%C3%A7a-MIT-10b981?style=for-the-badge" alt="Licença" />
 </p>
+
+> 🌐 **Acesse a Demonstração Online no GitHub Pages:** [https://luci-jr.github.io/amazon-connect-medsaude/](https://luci-jr.github.io/amazon-connect-medsaude/)
 
 ---
 

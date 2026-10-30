@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "build": "node build.js"
+    "build": "node build.js",
+    "deploy": "node build.js && git push origin $(git subtree split --prefix public main):gh-pages --force"
   },
   "keywords": [
     "amazon-connect",
