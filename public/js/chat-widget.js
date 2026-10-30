@@ -178,7 +178,7 @@ function processarMensagemLexClientSide(textoOriginal) {
     texto === 'começar'
   ) {
     responseData.intent = 'Saudacao';
-    responseData.reply = `Olá! Sou a **Arwen**, assistente virtual inteligente da **Med+Saúde** integrada ao **Amazon Connect & Amazon Lex**.\n\nComo posso ajudar você hoje?\n- 🩺 Consultar Guia Médico (ex: *"Preciso de cardiologista em Belém"*)\n- 📅 Agendar uma consulta médica\n- ❓ Tirar dúvidas de cobertura, carência ou boletos\n- 👤 Falar com um Atendente Humano N1`;
+    responseData.reply = `Olá! Sou a **Arwen**, sua assistente virtual da **Med+Saúde**.\n\nComo posso lhe ajudar hoje?`;
     return responseData;
   }
 
