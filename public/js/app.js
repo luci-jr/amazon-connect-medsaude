@@ -25,12 +25,18 @@ function iniciarApp() {
 
   // Fechar dropdowns ao clicar fora ou apertar Escape
   document.addEventListener('click', () => {
-    document.querySelectorAll('.custom-select-wrapper.open').forEach(w => w.classList.remove('open'));
+    document.querySelectorAll('.custom-select-wrapper.open').forEach(w => {
+      w.classList.remove('open');
+      w.closest('.search-field')?.classList.remove('has-open-select');
+    });
   });
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-      document.querySelectorAll('.custom-select-wrapper.open').forEach(w => w.classList.remove('open'));
+      document.querySelectorAll('.custom-select-wrapper.open').forEach(w => {
+        w.classList.remove('open');
+        w.closest('.search-field')?.classList.remove('has-open-select');
+      });
     }
   });
 }
@@ -151,6 +157,7 @@ function sincronizarCustomSelect(selectId) {
       menu.querySelectorAll('.custom-select-item').forEach(it => it.classList.remove('selected'));
       item.classList.add('selected');
       wrapper.classList.remove('open');
+      wrapper.closest('.search-field')?.classList.remove('has-open-select');
 
       select.dispatchEvent(new Event('change', { bubbles: true }));
       if (typeof aplicarFiltros === 'function' && (selectId === 'select-especialidade' || selectId === 'select-cidade')) {
@@ -226,9 +233,13 @@ function inicializarCustomSelect(selectId) {
     e.stopPropagation();
     const isOpen = wrapper.classList.contains('open');
     document.querySelectorAll('.custom-select-wrapper.open').forEach(w => {
-      if (w !== wrapper) w.classList.remove('open');
+      if (w !== wrapper) {
+        w.classList.remove('open');
+        w.closest('.search-field')?.classList.remove('has-open-select');
+      }
     });
     wrapper.classList.toggle('open', !isOpen);
+    wrapper.closest('.search-field')?.classList.toggle('has-open-select', !isOpen);
   });
 
   trigger.addEventListener('keydown', (e) => {

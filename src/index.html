@@ -112,8 +112,8 @@
 
     @media (max-width: 768px) {
       #floating-nav-wrapper.floating-nav-wrapper {
-        top: 0.65rem !important;
-        width: calc(100% - 1.25rem) !important;
+        top: 0.5rem !important;
+        width: calc(100% - 1rem) !important;
       }
       #chat-launcher.chat-launcher-btn {
         bottom: 84px !important;
@@ -122,6 +122,15 @@
       #chat-panel.chat-widget-panel {
         bottom: 78px !important;
         right: 0.5rem !important;
+      }
+      .chat-launcher-tooltip {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+      }
+      body.chat-is-open #chat-launcher.chat-launcher-btn,
+      #chat-launcher.chat-launcher-btn.chat-open {
+        display: none !important;
       }
     }
   </style>
@@ -363,20 +372,12 @@
           </button>
         </div>
 
-        <!-- Botão Central Voz 0800 -->
-        <button class="nav-icon-btn" onclick="simularLigacaoVoz()" title="Central Telefônica de Voz 0800 (Amazon Connect)">
-          <i class="fa-solid fa-headset"></i>
-        </button>
 
         <!-- Botão Entrar -->
         <button class="btn btn-pill-outline" onclick="simularLoginBeneficiario()">
           <i class="fa-regular fa-user"></i> Entrar
         </button>
 
-        <!-- Botão Menu Mobile Hambúrguer (Visível em Celulares) -->
-        <button class="mobile-menu-toggle" id="btn-menu-mobile" onclick="toggleMenuMobile()" title="Abrir Menu">
-          <i class="fa-solid fa-bars"></i>
-        </button>
       </div>
     </nav>
   </header>

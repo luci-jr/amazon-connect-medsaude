@@ -1,15 +1,14 @@
 # 🏥 Med+Saúde — Portal do Beneficiário & Guia Médico Omnichannel
-### 🎓 Projeto em Equipe • Curso de Amazon Connect promovido pela Escola da Nuvem (Squad Grupo 6)
 
-<p align="center">
-  <img src="https://img.shields.io/badge/AWS-Amazon%20Connect-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=FF9900" alt="Amazon Connect" />
-  <img src="https://img.shields.io/badge/AWS-Amazon%20Lex%20V2-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=FF9900" alt="Amazon Lex V2" />
-  <img src="https://img.shields.io/badge/AWS-Amazon%20S3-232F3E?style=for-the-badge&logo=amazon-s3&logoColor=FF9900" alt="Amazon S3" />
-  <img src="https://img.shields.io/badge/AWS-CloudFront-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=FF9900" alt="Amazon CloudFront" />
-  <img src="https://img.shields.io/badge/Frontend-Vanilla%20JS%20%7C%20CSS3%20%7C%20HTML5-0284c7?style=for-the-badge&logo=javascript&logoColor=white" alt="Stack Web" />
-  <img src="https://img.shields.io/badge/Demo%20Online-GitHub%20Pages-2563eb?style=for-the-badge&logo=githubpages&logoColor=white" alt="Demo Online" />
-  <img src="https://img.shields.io/badge/Licen%C3%A7a-MIT-10b981?style=for-the-badge" alt="Licença" />
-</p>
+## 🎓 Projeto em Equipe • Curso de Amazon Connect promovido pela Escola da Nuvem (Squad Grupo 6)
+
+![Amazon Connect](https://img.shields.io/badge/AWS-Amazon%20Connect-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=FF9900)
+![Amazon Lex V2](https://img.shields.io/badge/AWS-Amazon%20Lex%20V2-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=FF9900)
+![Amazon S3](https://img.shields.io/badge/AWS-Amazon%20S3-232F3E?style=for-the-badge&logo=amazon-s3&logoColor=FF9900)
+![Amazon CloudFront](https://img.shields.io/badge/AWS-CloudFront-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=FF9900)
+![Stack Web](https://img.shields.io/badge/Frontend-Vanilla%20JS%20%7C%20CSS3%20%7C%20HTML5-0284c7?style=for-the-badge&logo=javascript&logoColor=white)
+![Demo Online](https://img.shields.io/badge/Demo%20Online-GitHub%20Pages-2563eb?style=for-the-badge&logo=githubpages&logoColor=white)
+![Licença](https://img.shields.io/badge/Licen%C3%A7a-MIT-10b981?style=for-the-badge)
 
 > 🌐 **Acesse a Demonstração Online no GitHub Pages:** [https://luci-jr.github.io/amazon-connect-medsaude/](https://luci-jr.github.io/amazon-connect-medsaude/)
 
@@ -20,6 +19,7 @@
 Este portal web é o resultado do trabalho prático e integrado desenvolvido pela **Squad Grupo 6** durante o curso de especialização em **Amazon Connect**, promovido pela **Escola da Nuvem**.
 
 A aplicação foi desenhada para materializar o **Case 1 da Med+Saúde** (operadora de planos de saúde fictícia com atuação prioritária em Belém, Ananindeua e região norte do Brasil), simulando em tempo real uma jornada completa de atendimento ao beneficiário:
+
 - 🩺 **Guia Médico Interativo:** Consulta rápida de especialistas clínicos credenciados por especialidade, cidade e bairro com filtros em tempo real.
 - 🤖 **Assistente Conversacional Arwen:** Chatbot com inteligência conversacional (NLU) integrada aos fluxos do **Amazon Lex V2** e acoplamento dinâmico do widget oficial do **Amazon Connect**.
 - 📞 **Canal de Voz Inteligente (0800):** Telefonia em nuvem com reconhecimento de fala contínuo (ASR), reduzindo o Tempo Médio de Atendimento (TMA) de 14 para 3 minutos.
@@ -63,7 +63,7 @@ A aplicação foi desenhada para materializar o **Case 1 da Med+Saúde** (operad
 - 🎨 **Design System Médico & Moderno:** Interface de alta densidade visual com glassmorphism, tipografia refinada e micro-animações suaves.
 - 🌓 **Tema Dinâmico (Modo Escuro & Claro):** Alternador inteligente com persistência das preferências no `localStorage` e película anti-fadiga ocular.
 - 🔠 **Acessibilidade Tipográfica (A- / A / A+):** Controle dinâmico da escala de fontes no elemento raiz (`html`), com botão de reset (`A`) para retornar ao tamanho padrão ideal (16px / 100%).
-- 📱 **Mobile First & PWA Ready:** Navegação adaptativa com drawer deslizante, tab bar inferior nativa tátil e suporte a instalação como web app na tela inicial.
+- 📱 **Mobile First & PWA Ready:** Navegação adaptativa com tab bar inferior nativa tátil e suporte a instalação como web app na tela inicial.
 - 🪟 **Modais & Diálogos Ergonômicos:** Acabamento com cantos suavemente arredondados (`border-radius: 20px`), sombras de profundidade e fechamento rápido.
 
 ---
@@ -103,7 +103,7 @@ Med+Saude/
 │       ├── js/                # Lógica do Guia Médico, acessibilidade e chat
 │       └── images/            # Fotografias, avatares da equipe e assets visuais
 │
-└── public/                    # BUNDLE COMPILADO (Pronto para Deploy no S3)
+└── public/                    # BUNDLE COMPILADO (Pronto para Deploy no S3 e GitHub Pages)
     ├── index.html
     ├── css/style.css
     ├── js/
@@ -112,13 +112,15 @@ Med+Saude/
 
 ---
 
-## 🚀 Como Executar Localmente
+## 🚀 Como Executar Localmente & Deploy
 
 ### Pré-requisitos
+
 - [Node.js](https://nodejs.org/) versão 18 ou superior instalada
 - Gerenciador de pacotes `npm`
+- Git instalado e configurado
 
-### Passo a Passo
+### Executando Localmente
 
 ```bash
 # 1. Clonar ou acessar a pasta do repositório
@@ -137,6 +139,17 @@ npm run dev
 # http://localhost:3000
 ```
 
+### 🌐 Deploy no GitHub Pages
+
+O projeto conta com automação para build e deploy contínuo via script no `package.json`:
+
+```bash
+# Compilar e publicar automaticamente na branch gh-pages
+npm run deploy
+```
+
+> **Como funciona:** O script `npm run deploy` executa `node build.js` (sincronizando `src/` para `public/`) e em seguida realiza o comando `git push origin $(git subtree split --prefix public main):gh-pages --force`, mantendo a versão online sempre atualizada no GitHub Pages.
+
 ---
 
 ## ☁️ Hospedagem Estática no Amazon S3 & CloudFront
@@ -144,14 +157,18 @@ npm run dev
 Como o portal é 100% estático (JAMstack), ele pode ser publicado no **Amazon S3** em menos de 2 minutos:
 
 1. Execute a compilação:
+
    ```bash
    npm run build
    ```
+
 2. Crie um bucket no **Amazon S3** e habilite o recurso **Static website hosting** apontando o documento de índice para `index.html`.
 3. Sincronize a pasta `public/` diretamente para a raiz do bucket via AWS CLI:
+
    ```bash
    aws s3 sync ./public s3://seu-bucket-medsaude --delete
    ```
+
 4. *(Recomendado)* Configure uma distribuição no **Amazon CloudFront** com certificado SSL (ACM) para borda global e HTTPS nativo.
 
 ---
@@ -168,7 +185,5 @@ Como o portal é 100% estático (JAMstack), ele pode ser publicado no **Amazon S
 
 ---
 
-<p align="center">
-  &copy; 2026 <strong>Med+Saúde</strong> • Projeto em Equipe — Curso de Amazon Connect (Escola da Nuvem • Grupo 6)<br>
-  Desenvolvido por | <a href="https://portifolio.lucivaldo.cloud/"><strong>Lucivaldo Junior • Engenheiro de Software</strong></a>
-</p>
+&copy; 2026 **Med+Saúde** • Projeto em Equipe — Curso de Amazon Connect (Escola da Nuvem • Grupo 6)  
+Desenvolvido por | [**Lucivaldo Junior • Engenheiro de Software**](https://portifolio.lucivaldo.cloud/)
