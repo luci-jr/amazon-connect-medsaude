@@ -1,0 +1,178 @@
+<!-- VIEW 4: PÁGINA PLANOS DE SAÚDE (ANGULAR PAGE COMPONENT) -->
+<div class="page-view" id="view-planos">
+  <!-- SEÇÃO PLANOS DE SAÚDE -->
+  <section class="section-guia" id="planos" style="background-color: var(--bg-surface);">
+    <div class="container">
+      <div class="section-header">
+        <span class="tag-badge">Nossos Planos</span>
+        <h2>Planos sob Medida para Você e Sua Família</h2>
+        <p>Ampla cobertura nacional, rede própria e credenciada de excelência.</p>
+      </div>
+
+      <div class="doctors-grid">
+        <div class="doctor-card" style="border-top: 4px solid var(--primary);">
+          <div style="font-family: var(--font-tech); font-size: 0.85rem; color: var(--primary-light); margin-bottom: 0.25rem;">PLANO AMBULATORIAL & HOSPITALAR</div>
+          <h3 style="font-size: 1.4rem; margin-bottom: 0.25rem;">Med+ Básico</h3>
+          <div style="font-family: var(--font-tech); font-size: 1.6rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.75rem;">
+            R$ 189<span style="font-size: 1rem; font-weight: 500; color: var(--text-muted);">,90 /mês</span>
+          </div>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1.5rem;">Atendimento ambulatorial e hospitalar com enfermaria regional (Belém e Ananindeua).</p>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.88rem; margin-bottom: 2rem;">
+            <li><i class="fa-solid fa-check text-primary"></i> Consultas em todas as especialidades</li>
+            <li><i class="fa-solid fa-check text-primary"></i> Pronto Atendimento Virtual 24h via IA Arwen</li>
+            <li><i class="fa-solid fa-check text-primary"></i> Exames laboratoriais e radiografia simples</li>
+            <li><i class="fa-solid fa-check text-primary"></i> Internação em Enfermaria Regional</li>
+          </ul>
+          <button class="btn btn-outline" style="width: 100%; justify-content: center;" onclick="abrirChatComMensagem('Quero saber mais sobre o plano Med+ Básico')">Consultar Detalhes</button>
+        </div>
+
+        <div class="doctor-card" style="border-top: 4px solid var(--secondary); transform: scale(1.02); box-shadow: var(--shadow-lg);">
+          <div class="aws-badge-pill" style="position: absolute; top: 1rem; right: 1rem;">Mais Procurado</div>
+          <div style="font-family: var(--font-tech); font-size: 0.85rem; color: var(--secondary); margin-bottom: 0.25rem;">COBERTURA NACIONAL COMPLETA</div>
+          <h3 style="font-size: 1.4rem; margin-bottom: 0.25rem;">Med+ Especial</h3>
+          <div style="font-family: var(--font-tech); font-size: 1.6rem; font-weight: 800; color: var(--secondary); margin-bottom: 0.75rem;">
+            R$ 349<span style="font-size: 1rem; font-weight: 500; color: var(--text-muted);">,90 /mês</span>
+          </div>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1.5rem;">Quarto individual, cobertura nacional e ampla rede de laboratórios e hospitais.</p>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.88rem; margin-bottom: 2rem;">
+            <li><i class="fa-solid fa-check text-primary"></i> Todas as coberturas do Med+ Básico</li>
+            <li><i class="fa-solid fa-check text-primary"></i> Acomodação em Apartamento Privativo</li>
+            <li><i class="fa-solid fa-check text-primary"></i> Reembolso de consultas e exames</li>
+            <li><i class="fa-solid fa-check text-primary"></i> Cobertura nacional completa com urgência 24h</li>
+            <li><i class="fa-solid fa-check text-primary"></i> Parto e internações de alta complexidade</li>
+          </ul>
+          <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="abrirChatComMensagem('Quero contratar o plano Med+ Especial')">Falar com Consultor</button>
+        </div>
+
+        <div class="doctor-card" style="border-top: 4px solid #f59e0b;">
+          <div style="font-family: var(--font-tech); font-size: 0.85rem; color: #fbbf24; margin-bottom: 0.25rem;">LINHA EXECUTIVA & PREMIUM</div>
+          <h3 style="font-size: 1.4rem; margin-bottom: 0.25rem;">Med+ Premium</h3>
+          <div style="font-family: var(--font-tech); font-size: 1.6rem; font-weight: 800; color: #fbbf24; margin-bottom: 0.75rem;">
+            R$ 599<span style="font-size: 1rem; font-weight: 500; color: var(--text-muted);">,90 /mês</span>
+          </div>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1.5rem;">Centros de referência de ponta, vacinas internacionais, concierge e coleta em casa.</p>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.88rem; margin-bottom: 2rem;">
+            <li><i class="fa-solid fa-check text-primary"></i> Hospitais de primeira linha (Einstein, Sírio, Porto Dias)</li>
+            <li><i class="fa-solid fa-check text-primary"></i> Seguro viagem internacional (US$ 60.000)</li>
+            <li><i class="fa-solid fa-check text-primary"></i> Coleta domiciliar de exames laboratoriais</li>
+            <li><i class="fa-solid fa-check text-primary"></i> Reembolso com teto diferenciado em até 48h</li>
+            <li><i class="fa-solid fa-check text-primary"></i> Atendimento Concierge exclusivo com Arwen VIP</li>
+          </ul>
+          <button class="btn btn-outline" style="width: 100%; justify-content: center;" onclick="abrirChatComMensagem('Quero proposta para o plano Med+ Premium')">Solicitar Proposta</button>
+        </div>
+      </div>
+
+      <!-- SIMULADOR INTERATIVO FICTÍCIO DE MENSALIDADE POR IDADE -->
+      <div class="plan-simulator-card">
+        <div class="section-header" style="text-align: left; margin-bottom: 1rem;">
+          <span class="tag-badge tag-badge-teal">Simulador de Mensalidades</span>
+          <h3>Calcule sua Mensalidade por Idade e Plano</h3>
+          <p>Selecione a categoria desejada e a faixa etária para visualizar os valores oficiais regulamentados pela ANS.</p>
+        </div>
+
+        <div class="plan-calc-grid">
+          <div>
+            <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.4rem;">
+              <i class="fa-solid fa-shield-halved text-primary"></i> Categoria do Plano:
+            </label>
+            <select id="simulador-plano" class="plan-calc-select" onchange="simularPrecoPlano()">
+              <option value="basico">Med+ Básico (Enfermaria Regional PA)</option>
+              <option value="especial" selected>Med+ Especial (Apartamento Nacional)</option>
+              <option value="premium">Med+ Premium (VIP & Concierge)</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.4rem;">
+              <i class="fa-solid fa-user text-primary"></i> Faixa Etária:
+            </label>
+            <select id="simulador-faixa" class="plan-calc-select" onchange="simularPrecoPlano()">
+              <option value="0-18">0 a 18 anos</option>
+              <option value="19-23">19 a 23 anos</option>
+              <option value="24-28">24 a 28 anos</option>
+              <option value="29-33" selected>29 a 33 anos</option>
+              <option value="34-38">34 a 38 anos</option>
+              <option value="39-43">39 a 43 anos</option>
+              <option value="44-48">44 a 48 anos</option>
+              <option value="49-53">49 a 53 anos</option>
+              <option value="54-58">54 a 58 anos</option>
+              <option value="59+">59 anos ou mais</option>
+            </select>
+          </div>
+
+          <div class="plan-price-output">
+            <span style="font-size: 0.78rem; font-family: var(--font-tech); text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.2rem;">Valor da Mensalidade</span>
+            <div class="plan-price-val" id="simulador-resultado-valor">R$ 529,00</div>
+            <span id="simulador-resultado-desc" style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-top: 0.35rem;">Med+ Especial • Faixa: 29-33 anos • Carência zero online</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- MATRIZ COMPARATIVA DE COBERTURAS FICTÍCIA -->
+      <div style="margin-top: 3.5rem;">
+        <div class="section-header" style="text-align: left; margin-bottom: 1rem;">
+          <span class="tag-badge tag-badge-green">Transparência Total</span>
+          <h3>Matriz Comparativa de Coberturas e Benefícios</h3>
+          <p>Confira o comparativo detalhado de cada plano e escolha a melhor opção para sua família ou empresa.</p>
+        </div>
+
+        <div class="finops-table-wrapper">
+          <table class="matrix-table">
+            <thead>
+              <tr>
+                <th>Benefício / Cobertura</th>
+                <th>Med+ Básico</th>
+                <th>Med+ Especial</th>
+                <th>Med+ Premium</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Tipo de Acomodação</strong></td>
+                <td>Enfermaria Coletiva</td>
+                <td>Apartamento Individual</td>
+                <td>Suíte VIP c/ Acompanhante</td>
+              </tr>
+              <tr>
+                <td><strong>Abrangência Geográfica</strong></td>
+                <td>Regional (Pará)</td>
+                <td>Nacional</td>
+                <td>Nacional + Internacional</td>
+              </tr>
+              <tr>
+                <td><strong>Telemedicina 24h c/ IA Arwen</strong></td>
+                <td><i class="fa-solid fa-check text-primary"></i> Ilimitada</td>
+                <td><i class="fa-solid fa-check text-primary"></i> Ilimitada</td>
+                <td><i class="fa-solid fa-check text-primary"></i> Ilimitada VIP</td>
+              </tr>
+              <tr>
+                <td><strong>Parto e Obstetrícia</strong></td>
+                <td><i class="fa-solid fa-xmark text-muted"></i> Não incluso</td>
+                <td><i class="fa-solid fa-check text-primary"></i> Incluso</td>
+                <td><i class="fa-solid fa-check text-primary"></i> Incluso c/ Suite Especial</td>
+              </tr>
+              <tr>
+                <td><strong>Reembolso de Consultas</strong></td>
+                <td><i class="fa-solid fa-xmark text-muted"></i> Sem reembolso</td>
+                <td>R$ 180,00 por consulta</td>
+                <td>R$ 450,00 por consulta</td>
+              </tr>
+              <tr>
+                <td><strong>Coleta Domiciliar de Exames</strong></td>
+                <td><i class="fa-solid fa-xmark text-muted"></i> Não incluso</td>
+                <td>Coparticipação reduzida</td>
+                <td><i class="fa-solid fa-check text-primary"></i> Gratuita e Ilimitada</td>
+              </tr>
+              <tr>
+                <td><strong>Desconto em Medicamentos</strong></td>
+                <td>Até 35% em farmácias</td>
+                <td>Até 50% em farmácias</td>
+                <td>Até 65% em farmácias</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

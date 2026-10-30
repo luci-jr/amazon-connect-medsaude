@@ -1,0 +1,39 @@
+<!-- VIEW 2: PÁGINA GUIA MÉDICO (ANGULAR PAGE COMPONENT) -->
+<div class="page-view" id="view-guia-medico">
+  <!-- SEÇÃO GUIA MÉDICO INTERATIVO -->
+  <section class="section-guia" id="guia-medico">
+    <div class="container">
+      <div class="section-header">
+        <span class="tag-badge">Rede Credenciada Med+Saúde</span>
+        <h2>Guia Médico & Especialistas</h2>
+        <p>Encontre profissionais qualificados, endereços, horários disponíveis e agende sua consulta presencial ou por telemedicina.</p>
+      </div>
+
+      <!-- BARRA DE FILTROS AVANÇADOS -->
+      <div class="filter-bar">
+        <div class="search-input-wrapper">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="input-busca" placeholder="Buscar por médico, sintoma ou bairro..." oninput="aplicarFiltros()">
+        </div>
+
+        <div class="filter-tags" id="filter-chips">
+          <button class="filter-chip active" data-filter="todos" onclick="filtrarPorChip('todos', this)">Todos</button>
+          <button class="filter-chip" data-filter="Cardiologia" onclick="filtrarPorChip('Cardiologia', this)">Cardiologia</button>
+          <button class="filter-chip" data-filter="Ortopedia" onclick="filtrarPorChip('Ortopedia', this)">Ortopedia</button>
+          <button class="filter-chip" data-filter="Dermatologia" onclick="filtrarPorChip('Dermatologia', this)">Dermatologia</button>
+          <button class="filter-chip" data-filter="Pediatria" onclick="filtrarPorChip('Pediatria', this)">Pediatria</button>
+          <button class="filter-chip" data-filter="Ginecologia" onclick="filtrarPorChip('Ginecologia', this)">Ginecologia</button>
+          <button class="filter-chip" data-filter="telemedicina" onclick="filtrarPorChip('telemedicina', this)">Telemedicina</button>
+        </div>
+      </div>
+
+      <!-- STATUS DA LISTAGEM -->
+      <div class="results-count" id="results-count">Carregando especialistas do Amazon S3...</div>
+
+      <!-- GRID DE CARDS DOS MÉDICOS -->
+      <div class="doctors-grid" id="doctors-container">
+        <!-- Injetado dinamicamente via JS -->
+      </div>
+    </div>
+  </section>
+</div>

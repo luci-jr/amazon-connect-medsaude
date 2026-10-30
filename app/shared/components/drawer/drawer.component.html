@@ -1,0 +1,68 @@
+<!-- MENU LATERAL DRAWER MOBILE (ANGULAR SHARED COMPONENT) -->
+<div class="mobile-drawer-backdrop" id="mobile-drawer-backdrop" onclick="fecharMenuMobile()"></div>
+<aside class="mobile-drawer" id="mobile-drawer">
+  <div class="drawer-header">
+    <div class="brand-logo">
+      <div class="logo-icon-box" style="width: 32px; height: 32px;">
+        <img src="./images/logo-medsaude-para.png" alt="Logo" class="logo-brand-img">
+      </div>
+      <div class="brand-name" style="font-size: 1.15rem;">Med+<span>Saúde</span></div>
+    </div>
+    <button class="drawer-close-btn" onclick="fecharMenuMobile()" title="Fechar Menu">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+
+  <div class="drawer-content">
+    <div class="drawer-section-title">Páginas do Portal</div>
+    <ul class="drawer-nav-list">
+      <li>
+        <a href="#inicio" class="drawer-nav-link active" onclick="navegarDrawer('inicio')">
+          <i class="fa-solid fa-house"></i> Início
+        </a>
+      </li>
+      <li>
+        <a href="#guia-medico" class="drawer-nav-link" onclick="navegarDrawer('guia-medico')">
+          <i class="fa-solid fa-stethoscope"></i> Guia Médico
+        </a>
+      </li>
+      <li>
+        <a href="#planos" class="drawer-nav-link" onclick="navegarDrawer('planos')">
+          <i class="fa-solid fa-shield-halved"></i> Planos de Saúde
+        </a>
+      </li>
+      <li>
+        <a href="#sobre-nos" class="drawer-nav-link" onclick="navegarDrawer('sobre-nos')">
+          <i class="fa-solid fa-users"></i> Sobre Nós (Grupo 6)
+        </a>
+      </li>
+      <li>
+        <a href="#documentacao" class="drawer-nav-link" onclick="navegarDrawer('documentacao')">
+          <i class="fa-solid fa-book-bookmark"></i> Documentação Técnica
+        </a>
+      </li>
+      <li>
+        <a href="#omnichannel-case" class="drawer-nav-link" onclick="navegarDrawer('omnichannel-case')">
+          <i class="fa-solid fa-cloud"></i> Arquitetura AWS
+        </a>
+      </li>
+    </ul>
+
+    <div class="drawer-section-title" style="margin-top: 1.5rem;">Canais de Atendimento</div>
+    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+      <button class="btn btn-outline" style="width: 100%; justify-content: center; font-size: 0.88rem;" onclick="simularLigacaoVoz(); fecharMenuMobile();">
+        <i class="fa-solid fa-phone"></i> Central de Voz 0800
+      </button>
+      <button class="btn btn-primary" style="width: 100%; justify-content: center; font-size: 0.88rem;" onclick="abrirChatWidget(); fecharMenuMobile();">
+        <i class="fa-solid fa-robot"></i> Conversar com Arwen
+      </button>
+    </div>
+
+    <div style="margin-top: 2rem; padding-top: 1.25rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+      <span style="font-size: 0.85rem; color: var(--text-muted); font-family: var(--font-tech);">Alternar Tema</span>
+      <button class="nav-icon-btn" onclick="alternarTema()" title="Alternar Modo Claro / Escuro">
+        <i class="fa-solid fa-sun" id="theme-icon-drawer"></i>
+      </button>
+    </div>
+  </div>
+</aside>
