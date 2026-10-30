@@ -804,6 +804,11 @@ body.light-theme .hero-title .text-highlight {
 }
 
 /* Barra de Busca */
+.hero-content {
+  position: relative;
+  z-index: 30;
+}
+
 .hero-search-box {
   background: var(--bg-card);
   backdrop-filter: blur(10px);
@@ -815,12 +820,21 @@ body.light-theme .hero-title .text-highlight {
   gap: 0.75rem;
   flex-wrap: wrap;
   transition: var(--transition);
+  position: relative;
+  z-index: 30;
 }
 
 .search-field {
   flex: 1;
   min-width: 170px;
   position: relative;
+  z-index: 2;
+}
+
+.search-field:focus-within,
+.search-field:has(.custom-select-wrapper.open),
+.search-field.has-open-select {
+  z-index: 100 !important;
 }
 
 .search-field select,
@@ -867,6 +881,11 @@ body.light-theme .hero-title .text-highlight {
   position: relative;
   width: 100%;
   user-select: none;
+  z-index: 2;
+}
+
+.custom-select-wrapper.open {
+  z-index: 1000 !important;
 }
 
 .custom-select-trigger {
@@ -1227,9 +1246,16 @@ body.light-theme .modal-doctor-highlight {
   color: #0c4a6e;
 }
 
-/* Card de Imagem Humanizada Retrô */
+/* Card de Imagem Humanizada Retrô & Cards Laterais */
+.hero-card-side,
+.hero-side-card {
+  position: relative;
+  z-index: 1;
+}
+
 .human-care-card {
   position: relative;
+  z-index: 1;
   border-radius: var(--radius-md);
   overflow: hidden;
   border: 1px solid var(--border-color);
@@ -1908,6 +1934,15 @@ body.light-theme .arch-card-icon {
 .chat-launcher-btn:hover .chat-launcher-tooltip {
   opacity: 1;
   transform: translateY(-50%) translateX(0);
+}
+
+@media (max-width: 960px), (hover: none) {
+  .chat-launcher-tooltip {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
 }
 
 /* Adaptação Harmoniosa para o MODO CLARO (Sépia Suave) */
@@ -3539,7 +3574,7 @@ body.light-theme .plan-price-val {
   }
 
   .mobile-menu-toggle {
-    display: flex;
+    display: none !important;
   }
 
   .mobile-bottom-bar {
@@ -3548,25 +3583,105 @@ body.light-theme .plan-price-val {
 
   .floating-nav-wrapper {
     position: fixed !important;
-    top: 0.65rem !important;
+    top: 0.5rem !important;
     left: 0 !important;
     right: 0 !important;
     margin: 0 auto !important;
-    width: calc(100% - 1.25rem) !important;
+    width: calc(100% - 1rem) !important;
+    max-width: 100% !important;
     z-index: 999999 !important;
+    box-sizing: border-box !important;
   }
 
   .floating-navbar {
-    padding: 0.5rem 0.85rem;
+    padding: 0.4rem 0.65rem !important;
+    border-radius: 18px !important;
+    gap: 0.4rem !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+
+  .brand-logo {
+    gap: 0.45rem !important;
+    flex-shrink: 1 !important;
+    min-width: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  .logo-icon-box {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    border-radius: 9px !important;
+  }
+
+  .brand-name {
+    font-size: 1.12rem !important;
+    white-space: nowrap !important;
+  }
+
+  .nav-actions {
+    gap: 0.35rem !important;
+    flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  .nav-icon-btn {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    font-size: 0.92rem !important;
+    border-radius: 8px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .font-accessibility-group {
+    padding: 2px !important;
+    gap: 1px !important;
+    border-radius: 8px !important;
+    flex-shrink: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+  }
+
+  .font-btn {
+    width: 26px !important;
+    height: 26px !important;
+    font-size: 0.72rem !important;
+    border-radius: 5px !important;
+  }
+
+  /* Ocultar legenda/tooltip do chatbot flutuante no mobile para não atrapalhar */
+  .chat-launcher-tooltip {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  /* Quando o chat está aberto no mobile, oculta o botão launcher para não cobrir a área de digitação */
+  body.chat-is-open #chat-launcher,
+  body.chat-is-open .chat-launcher-btn,
+  #chat-launcher.chat-open,
+  .chat-launcher-btn.chat-open {
+    display: none !important;
   }
 
   /* Elevação do botão do Chatbot Arwen para não cobrir a Bottom Tab Bar */
+  #chat-launcher.chat-launcher-btn,
+  .chat-launcher-btn,
   .chat-bot-launcher {
-    bottom: 78px !important;
+    bottom: 84px !important;
     right: 16px !important;
   }
 
   /* Chatbot em Modal Tela Cheia / App Mobile */
+  #chat-panel.chat-widget-panel,
+  .chat-widget-panel,
   .chat-bot-window {
     width: calc(100vw - 20px) !important;
     height: calc(100vh - 95px) !important;
@@ -3597,6 +3712,39 @@ body.light-theme .plan-price-val {
   /* Botões táteis mínimos de 48px para mobile */
   .btn {
     min-height: 44px;
+  }
+}
+
+/* Telas ultra-compactas (ex: 360px e menores) */
+@media (max-width: 375px) {
+  .floating-nav-wrapper {
+    width: calc(100% - 0.75rem) !important;
+  }
+  .floating-navbar {
+    padding: 0.35rem 0.45rem !important;
+    gap: 0.25rem !important;
+  }
+  .brand-name {
+    font-size: 1.02rem !important;
+  }
+  .logo-icon-box {
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+  }
+  .nav-actions {
+    gap: 0.22rem !important;
+  }
+  .nav-icon-btn {
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    font-size: 0.85rem !important;
+  }
+  .font-btn {
+    width: 23px !important;
+    height: 24px !important;
+    font-size: 0.65rem !important;
   }
 }
 

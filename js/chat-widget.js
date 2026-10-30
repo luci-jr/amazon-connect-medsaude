@@ -10,21 +10,29 @@ let historicoChat = [];
 // 1. Abrir e Fechar Widget
 function toggleChatWidget() {
   const panel = document.getElementById('chat-panel');
+  const launcher = document.getElementById('chat-launcher');
   if (!panel) return;
   chatAberto = !chatAberto;
   if (chatAberto) {
     panel.classList.remove('hidden');
+    launcher?.classList.add('chat-open');
+    document.body.classList.add('chat-is-open');
     document.getElementById('chat-input')?.focus();
   } else {
     panel.classList.add('hidden');
+    launcher?.classList.remove('chat-open');
+    document.body.classList.remove('chat-is-open');
   }
 }
 
 function abrirChatWidget() {
   const panel = document.getElementById('chat-panel');
+  const launcher = document.getElementById('chat-launcher');
   if (!panel) return;
   chatAberto = true;
   panel.classList.remove('hidden');
+  launcher?.classList.add('chat-open');
+  document.body.classList.add('chat-is-open');
   document.getElementById('chat-input')?.focus();
 }
 
