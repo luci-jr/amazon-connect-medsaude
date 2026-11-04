@@ -22,6 +22,7 @@ function iniciarApp() {
   carregarDadosEstaticos();
   inicializarRoteadorSPA();
   inicializarScrollSpyDocumentacao();
+  inicializarBotaoVoltarAoTopo();
 
   // Fechar dropdowns ao clicar fora ou apertar Escape
   document.addEventListener('click', () => {
@@ -435,7 +436,7 @@ function renderizarMedicos(lista) {
               <i class="fa-brands fa-whatsapp" style="font-size: 1.05rem;"></i>
             </a>
           ` : ''}
-          <button class="btn btn-outline btn-sm" onclick="abrirChatComMedico('${med.id}')" title="Agendar via Chat Arwen" style="width: 38px; display: inline-flex; align-items: center; justify-content: center;">
+          <button class="btn btn-outline btn-sm" onclick="abrirChatComMedico('${med.id}')" title="Agendar via Chat Iara" style="width: 38px; display: inline-flex; align-items: center; justify-content: center;">
             <i class="fa-solid fa-comment-dots"></i>
           </button>
         </div>
@@ -697,13 +698,13 @@ function confirmarAgendamento(e) {
   localStorage.setItem('medsaude_agendamentos', JSON.stringify(historico));
 
   fecharModalAgendamento();
-  alert(`🎉 Agendamento Confirmado com Sucesso!\n\nProtocolo: ${protocolo}\nPaciente: ${pacienteNome}\nEspecialista: ${medico.nome}\nData/Horário: ${dataHorario}\n\nUm SMS de confirmação foi simulado.`);
+  alert(`🎉 Agendamento Confirmado com Sucesso!\n\nProtocolo ANS (RN 623): ${protocolo}\nBeneficiário: ${pacienteNome}\nEspecialista: ${medico.nome} (${medico.especialidade})\nLocalidade: ${medico.cidade} - ${medico.uf}\nData/Horário: ${dataHorario}\n\nConsulta registrada no sistema.`);
   document.getElementById('form-agendamento').reset();
 }
 
 // 7. Simulação do Canal de Voz do Amazon Connect
 function simularLigacaoVoz() {
-  alert(`📞 [CANAL VOZ AMAZON CONNECT - ESCOLA DA NUVEM]\n\nIniciando chamada para a Central de Voz 0800 770 2026:\n\n1. O fluxo do Amazon Connect atende a chamada via voz com IA conversacional agêntica.\n2. Exemplo do Case: Um beneficiário idoso diz: "Minha perna tá doendo, preciso de um médico de ossos perto da minha casa".\n3. O Amazon Lex ASR/NLU interpreta a intenção (Ortopedia) sem menus numéricos rígidos.\n4. O bot consulta a base no Amazon S3 e indica os ortopedistas disponíveis.\n5. O beneficiário confirma o agendamento apenas pela voz ou solicita transferência para agente humano N1!`);
+  alert(`📞 [CANAL VOZ AMAZON CONNECT - GUIA MÉDICO MED+SAÚDE]\n\nIniciando chamada para a Central de Atendimento Omnichannel:\n\n1. Abertura e Protocolo (ANS RN 623): A assistente Iara atende e já informa o número de protocolo (#20261102-4571) logo no início.\n2. Cenário de Voz (Idoso em Curitiba): O beneficiário diz em linguagem natural: "Tô com dor no joelho, preciso de um médico de osso aqui em Curitiba".\n3. Reconhecimento NLU (Amazon Lex V2): Compreensão sem menus numéricos rígidos, mapeando para BuscarPorLocalidade (Ortopedia em Curitiba-PR).\n4. Consulta de Conhecimento (Amazon Q in Connect): Busca em tempo real na base do S3 e sugere o Dr. Carlos Eduardo Mendonça.\n5. Desfecho com Transbordo Inteligente: O agendamento é confirmado por voz ou, caso necessário, transferido para a fila AgenteN1 preservando todo o histórico (Novo Decreto do SAC 13.135/2026).`);
 }
 
 function simularLoginBeneficiario() {
@@ -711,7 +712,7 @@ function simularLoginBeneficiario() {
   if (cpf) {
     const agends = JSON.parse(localStorage.getItem('medsaude_agendamentos') || '[]');
     const total = agends.length;
-    alert(`Acesso validado!\n\nBeneficiário ativo na Med+Saúde.\nConsultas agendadas nesta sessão: ${total}\n\nPara agendamentos rápidos via inteligência artificial, converse com a Arwen no chat!`);
+    alert(`Acesso validado!\n\nBeneficiário ativo na Med+Saúde.\nConsultas agendadas nesta sessão: ${total}\n\nPara agendamentos rápidos via inteligência artificial, converse com a Iara no chat!`);
   }
 }
 
@@ -1042,7 +1043,28 @@ function inicializarScrollSpyDocumentacao() {
   atualizarTopicoAtivo();
 }
 
-// 11. Exportações Globais para o Window
+// 11. Botão Voltar ao Topo
+function inicializarBotaoVoltarAoTopo() {
+  const btnTopo = document.getElementById('btn-voltar-topo');
+  if (!btnTopo) return;
+
+  function verificarScrollTopo() {
+    if (window.scrollY > 250) {
+      btnTopo.classList.add('visible');
+    } else {
+      btnTopo.classList.remove('visible');
+    }
+  }
+
+  window.addEventListener('scroll', verificarScrollTopo, { passive: true });
+  verificarScrollTopo();
+}
+
+function voltarAoTopo() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// 12. Exportações Globais para o Window
 window.filtrarPorChip = filtrarPorChip;
 window.filtrarGuiaMedico = filtrarGuiaMedico;
 window.limparFiltrosGuia = limparFiltrosGuia;
@@ -1055,4 +1077,5 @@ window.simularPrecoPlano = simularPrecoPlano;
 window.alternarTema = alternarTema;
 window.ajustarTamanhoFonte = ajustarTamanhoFonte;
 window.resetarTamanhoFonte = resetarTamanhoFonte;
+window.voltarAoTopo = voltarAoTopo;
 

@@ -640,7 +640,7 @@ body.light-theme .font-btn.font-btn-active {
   background: rgba(2, 132, 199, 0.12) !important;
 }
 
-/* Botão Principal Azul Vibrante com Glow (Solicitar / Chat Arwen) */
+/* Botão Principal Azul Vibrante com Glow (Solicitar / Chat Iara) */
 .btn-pill-primary {
   background: linear-gradient(135deg, #1d4ed8, #2563eb);
   color: #ffffff;
@@ -1812,7 +1812,7 @@ body.light-theme .arch-card-icon {
   letter-spacing: 0.04em;
 }
 
-/* ----------------- CHATBOT WIDGET FLUTUANTE (ARWEN - AWS CONNECT) ----------------- */
+/* ----------------- CHATBOT WIDGET FLUTUANTE (IARA - AWS CONNECT) ----------------- */
 .chat-launcher-btn {
   position: fixed !important;
   bottom: 2rem !important;
@@ -3671,7 +3671,7 @@ body.light-theme .plan-price-val {
     display: none !important;
   }
 
-  /* Elevação do botão do Chatbot Arwen para não cobrir a Bottom Tab Bar */
+  /* Elevação do botão do Chatbot Iara para não cobrir a Bottom Tab Bar */
   #chat-launcher.chat-launcher-btn,
   .chat-launcher-btn,
   .chat-bot-launcher {
@@ -3975,4 +3975,611 @@ body.light-theme .docs-active-indicator {
     left: 1rem !important;
     padding: 0 0.85rem;
   }
+}
+
+/* ====================================================================
+   PAINEL DAS 4 FRENTES DE TRABALHO (TRELLO / DOCUMENTAÇÃO TÉCNICA)
+   Design System Espaçoso, Sem Quebra de Botões e com Hierarquia Arejada
+   ==================================================================== */
+#doc-frentes-painel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)) !important;
+  gap: 1.5rem !important;
+  margin-bottom: 2.75rem !important;
+}
+
+@media (min-width: 992px) and (max-width: 1399px) {
+  #doc-frentes-painel {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (min-width: 1400px) {
+  #doc-frentes-painel {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+}
+
+#doc-frentes-painel > div {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease !important;
+}
+
+#doc-frentes-painel > div:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* ==========================================================================
+   BOTÃO VOLTAR AO TOPO (FLUTUANTE GLOBAL & INLINE NOS TÓPICOS)
+   ========================================================================== */
+.btn-floating-topo {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  z-index: 99990;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.25rem;
+  background: rgba(15, 23, 42, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #38bdf8;
+  border: 1.5px solid rgba(56, 189, 248, 0.5);
+  border-radius: 9999px;
+  font-family: var(--font-tech, monospace);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 0 18px rgba(56, 189, 248, 0.25);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px) scale(0.9);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+}
+
+.btn-floating-topo.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.btn-floating-topo:hover {
+  background: #0284c7;
+  color: #ffffff;
+  border-color: #38bdf8;
+  box-shadow: 0 14px 32px rgba(2, 132, 199, 0.55), 0 0 24px rgba(56, 189, 248, 0.45);
+  transform: translateY(-3px) scale(1.05);
+}
+
+.btn-floating-topo:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-floating-topo i {
+  font-size: 1rem;
+  transition: transform 0.25s ease;
+}
+
+.btn-floating-topo:hover i {
+  transform: translateY(-2px);
+}
+
+/* Modo Claro para o botão flutuante */
+body.light-theme .btn-floating-topo {
+  background: rgba(255, 255, 255, 0.95);
+  color: #0284c7;
+  border-color: rgba(2, 132, 199, 0.4);
+  box-shadow: 0 8px 24px rgba(44, 38, 30, 0.15), 0 0 12px rgba(2, 132, 199, 0.15);
+}
+
+body.light-theme .btn-floating-topo:hover {
+  background: #0284c7;
+  color: #ffffff;
+}
+
+/* Botão Topo Inline (cabeçalhos e rodapés de blocos de documentação) */
+.btn-topo-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-family: var(--font-tech, monospace);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1.4;
+  outline: none;
+}
+
+.btn-topo-inline:hover {
+  background: rgba(56, 189, 248, 0.25);
+  color: #ffffff;
+  border-color: #38bdf8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(56, 189, 248, 0.28);
+}
+
+.btn-topo-inline:active {
+  transform: translateY(0);
+}
+
+.btn-topo-inline i {
+  font-size: 0.8rem;
+  transition: transform 0.2s ease;
+}
+
+.btn-topo-inline:hover i {
+  transform: translateY(-2px);
+}
+
+body.light-theme .btn-topo-inline {
+  background: rgba(2, 132, 199, 0.08);
+  color: #0284c7;
+  border-color: rgba(2, 132, 199, 0.3);
+}
+
+body.light-theme .btn-topo-inline:hover {
+  background: #0284c7;
+  color: #ffffff;
+}
+
+@media (max-width: 960px) {
+  .btn-floating-topo {
+    bottom: 84px !important;
+    left: 16px !important;
+    padding: 0.6rem 0.95rem !important;
+    font-size: 0.78rem !important;
+  }
+}
+
+/* ==========================================================================
+   CARDS TEMATIZADOS POR COR DE EQUIPE (DOCUMENTAÇÃO & SOBRE NÓS)
+   ========================================================================== */
+
+/* --- FRENTE A (AZUL: #0284c7 / #38bdf8) --- */
+#frente-a-fluxos,
+.docs-block.docs-theme-blue {
+  border: 1.5px solid rgba(2, 132, 199, 0.45) !important;
+  border-top: 5px solid #0284c7 !important;
+  background: linear-gradient(180deg, rgba(2, 132, 199, 0.08) 0%, rgba(15, 23, 42, 0.75) 180px, var(--bg-card) 100%) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 25px rgba(2, 132, 199, 0.15) !important;
+}
+#frente-a-fluxos:hover,
+.docs-block.docs-theme-blue:hover {
+  border-color: rgba(2, 132, 199, 0.75) !important;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45), 0 0 35px rgba(2, 132, 199, 0.28) !important;
+}
+#frente-a-fluxos .docs-table th,
+.docs-block.docs-theme-blue .docs-table th {
+  color: #38bdf8 !important;
+  border-bottom: 2px solid rgba(2, 132, 199, 0.4) !important;
+}
+
+.team-card.team-card-blue,
+.team-card[data-frente="A"] {
+  border: 1.5px solid rgba(2, 132, 199, 0.35) !important;
+  border-top: 5px solid #0284c7 !important;
+  background: linear-gradient(180deg, rgba(2, 132, 199, 0.07) 0%, rgba(15, 23, 42, 0.75) 150px, var(--bg-card) 100%) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 20px rgba(2, 132, 199, 0.12) !important;
+}
+.team-card.team-card-blue::before,
+.team-card[data-frente="A"]::before {
+  background: linear-gradient(90deg, #0284c7, #38bdf8) !important;
+}
+.team-card.team-card-blue .team-avatar-box,
+.team-card[data-frente="A"] .team-avatar-box {
+  border-color: #0284c7 !important;
+  box-shadow: 0 0 16px rgba(2, 132, 199, 0.4) !important;
+}
+.team-card.team-card-blue:hover,
+.team-card[data-frente="A"]:hover {
+  border-color: #38bdf8 !important;
+  box-shadow: var(--shadow-lg), 0 0 28px rgba(2, 132, 199, 0.35) !important;
+}
+
+/* --- FRENTE B (ROXO: #a855f7 / #c084fc) --- */
+#frente-b-lex,
+.docs-block.docs-theme-purple {
+  border: 1.5px solid rgba(168, 85, 247, 0.45) !important;
+  border-top: 5px solid #a855f7 !important;
+  background: linear-gradient(180deg, rgba(168, 85, 247, 0.08) 0%, rgba(15, 23, 42, 0.75) 180px, var(--bg-card) 100%) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 25px rgba(168, 85, 247, 0.15) !important;
+}
+#frente-b-lex:hover,
+.docs-block.docs-theme-purple:hover {
+  border-color: rgba(168, 85, 247, 0.75) !important;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45), 0 0 35px rgba(168, 85, 247, 0.28) !important;
+}
+#frente-b-lex .docs-table th,
+.docs-block.docs-theme-purple .docs-table th {
+  color: #c084fc !important;
+  border-bottom: 2px solid rgba(168, 85, 247, 0.4) !important;
+}
+
+.team-card.team-card-purple,
+.team-card[data-frente="B"] {
+  border: 1.5px solid rgba(168, 85, 247, 0.35) !important;
+  border-top: 5px solid #a855f7 !important;
+  background: linear-gradient(180deg, rgba(168, 85, 247, 0.07) 0%, rgba(15, 23, 42, 0.75) 150px, var(--bg-card) 100%) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 20px rgba(168, 85, 247, 0.12) !important;
+}
+.team-card.team-card-purple::before,
+.team-card[data-frente="B"]::before {
+  background: linear-gradient(90deg, #9333ea, #c084fc) !important;
+}
+.team-card.team-card-purple .team-avatar-box,
+.team-card[data-frente="B"] .team-avatar-box {
+  border-color: #a855f7 !important;
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.4) !important;
+}
+.team-card.team-card-purple:hover,
+.team-card[data-frente="B"]:hover {
+  border-color: #c084fc !important;
+  box-shadow: var(--shadow-lg), 0 0 28px rgba(168, 85, 247, 0.35) !important;
+}
+
+/* --- FRENTE C (LARANJA: #f97316 / #fb923c) --- */
+#frente-c-dados,
+.docs-block.docs-theme-orange {
+  border: 1.5px solid rgba(249, 115, 22, 0.45) !important;
+  border-top: 5px solid #f97316 !important;
+  background: linear-gradient(180deg, rgba(249, 115, 22, 0.08) 0%, rgba(15, 23, 42, 0.75) 180px, var(--bg-card) 100%) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 25px rgba(249, 115, 22, 0.15) !important;
+}
+#frente-c-dados:hover,
+.docs-block.docs-theme-orange:hover {
+  border-color: rgba(249, 115, 22, 0.75) !important;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45), 0 0 35px rgba(249, 115, 22, 0.28) !important;
+}
+#frente-c-dados .docs-table th,
+.docs-block.docs-theme-orange .docs-table th {
+  color: #fb923c !important;
+  border-bottom: 2px solid rgba(249, 115, 22, 0.4) !important;
+}
+
+.team-card.team-card-orange,
+.team-card[data-frente="C"] {
+  border: 1.5px solid rgba(249, 115, 22, 0.35) !important;
+  border-top: 5px solid #f97316 !important;
+  background: linear-gradient(180deg, rgba(249, 115, 22, 0.07) 0%, rgba(15, 23, 42, 0.75) 150px, var(--bg-card) 100%) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 20px rgba(249, 115, 22, 0.12) !important;
+}
+.team-card.team-card-orange::before,
+.team-card[data-frente="C"]::before {
+  background: linear-gradient(90deg, #ea580c, #fb923c) !important;
+}
+.team-card.team-card-orange .team-avatar-box,
+.team-card[data-frente="C"] .team-avatar-box {
+  border-color: #f97316 !important;
+  box-shadow: 0 0 16px rgba(249, 115, 22, 0.4) !important;
+}
+.team-card.team-card-orange:hover,
+.team-card[data-frente="C"]:hover {
+  border-color: #fb923c !important;
+  box-shadow: var(--shadow-lg), 0 0 28px rgba(249, 115, 22, 0.35) !important;
+}
+
+/* --- FRENTE D (VERDE: #10b981 / #34d399) --- */
+#frente-d-metricas,
+.docs-block.docs-theme-green {
+  border: 1.5px solid rgba(16, 185, 129, 0.45) !important;
+  border-top: 5px solid #10b981 !important;
+  background: linear-gradient(180deg, rgba(16, 185, 129, 0.08) 0%, rgba(15, 23, 42, 0.75) 180px, var(--bg-card) 100%) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 25px rgba(16, 185, 129, 0.15) !important;
+}
+#frente-d-metricas:hover,
+.docs-block.docs-theme-green:hover {
+  border-color: rgba(16, 185, 129, 0.75) !important;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45), 0 0 35px rgba(16, 185, 129, 0.28) !important;
+}
+#frente-d-metricas .docs-table th,
+.docs-block.docs-theme-green .docs-table th {
+  color: #34d399 !important;
+  border-bottom: 2px solid rgba(16, 185, 129, 0.4) !important;
+}
+
+.team-card.team-card-green,
+.team-card[data-frente="D"] {
+  border: 1.5px solid rgba(16, 185, 129, 0.35) !important;
+  border-top: 5px solid #10b981 !important;
+  background: linear-gradient(180deg, rgba(16, 185, 129, 0.07) 0%, rgba(15, 23, 42, 0.75) 150px, var(--bg-card) 100%) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 20px rgba(16, 185, 129, 0.12) !important;
+}
+.team-card.team-card-green::before,
+.team-card[data-frente="D"]::before {
+  background: linear-gradient(90deg, #059669, #34d399) !important;
+}
+.team-card.team-card-green .team-avatar-box,
+.team-card[data-frente="D"] .team-avatar-box {
+  border-color: #10b981 !important;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.4) !important;
+}
+.team-card.team-card-green:hover,
+.team-card[data-frente="D"]:hover {
+  border-color: #34d399 !important;
+  box-shadow: var(--shadow-lg), 0 0 28px rgba(16, 185, 129, 0.35) !important;
+}
+
+/* --- VISÃO GERAL / TODA A SQUAD (AMARELO: #eab308 / #fde047) --- */
+#doc-visao-geral,
+.docs-block.docs-theme-yellow {
+  border: 1.5px solid rgba(234, 179, 8, 0.45) !important;
+  border-top: 5px solid #eab308 !important;
+  background: linear-gradient(180deg, rgba(234, 179, 8, 0.08) 0%, rgba(15, 23, 42, 0.75) 180px, var(--bg-card) 100%) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 25px rgba(234, 179, 8, 0.15) !important;
+}
+#doc-visao-geral:hover,
+.docs-block.docs-theme-yellow:hover {
+  border-color: rgba(234, 179, 8, 0.75) !important;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45), 0 0 35px rgba(234, 179, 8, 0.28) !important;
+}
+#doc-visao-geral .docs-table th,
+.docs-block.docs-theme-yellow .docs-table th {
+  color: #fde047 !important;
+  border-bottom: 2px solid rgba(234, 179, 8, 0.4) !important;
+}
+
+/* --- MATRIZ TRELLO / GOVERNANÇA (CIANO: #06b6d4 / #38bdf8) --- */
+#doc-trello-matriz,
+.docs-block.docs-theme-cyan {
+  border: 1.5px solid rgba(6, 182, 212, 0.45) !important;
+  border-top: 5px solid #06b6d4 !important;
+  background: linear-gradient(180deg, rgba(6, 182, 212, 0.08) 0%, rgba(15, 23, 42, 0.75) 180px, var(--bg-card) 100%) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 25px rgba(6, 182, 212, 0.15) !important;
+}
+#doc-trello-matriz:hover,
+.docs-block.docs-theme-cyan:hover {
+  border-color: rgba(6, 182, 212, 0.75) !important;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45), 0 0 35px rgba(6, 182, 212, 0.28) !important;
+}
+#doc-trello-matriz .docs-table th,
+.docs-block.docs-theme-cyan .docs-table th {
+  color: #38bdf8 !important;
+  border-bottom: 2px solid rgba(6, 182, 212, 0.4) !important;
+}
+
+/* Adaptações do Tema Claro */
+body.light-theme #frente-a-fluxos,
+body.light-theme .docs-block.docs-theme-blue {
+  background: #ffffff !important;
+  border: 1.5px solid rgba(2, 132, 199, 0.4) !important;
+  border-top: 5px solid #0284c7 !important;
+  box-shadow: 0 6px 20px rgba(60, 45, 30, 0.08) !important;
+}
+
+body.light-theme .team-card.team-card-blue,
+body.light-theme .team-card[data-frente="A"] {
+  background: linear-gradient(180deg, rgba(2, 132, 199, 0.08) 0%, #ffffff 150px) !important;
+  border: 1.5px solid rgba(2, 132, 199, 0.35) !important;
+  border-top: 5px solid #0284c7 !important;
+}
+
+body.light-theme #frente-b-lex,
+body.light-theme .docs-block.docs-theme-purple {
+  background: #ffffff !important;
+  border: 1.5px solid rgba(168, 85, 247, 0.4) !important;
+  border-top: 5px solid #9333ea !important;
+  box-shadow: 0 6px 20px rgba(60, 45, 30, 0.08) !important;
+}
+
+body.light-theme .team-card.team-card-purple,
+body.light-theme .team-card[data-frente="B"] {
+  background: linear-gradient(180deg, rgba(168, 85, 247, 0.08) 0%, #ffffff 150px) !important;
+  border: 1.5px solid rgba(168, 85, 247, 0.35) !important;
+  border-top: 5px solid #9333ea !important;
+}
+
+body.light-theme #frente-c-dados,
+body.light-theme .docs-block.docs-theme-orange {
+  background: #ffffff !important;
+  border: 1.5px solid rgba(249, 115, 22, 0.4) !important;
+  border-top: 5px solid #ea580c !important;
+  box-shadow: 0 6px 20px rgba(60, 45, 30, 0.08) !important;
+}
+
+body.light-theme .team-card.team-card-orange,
+body.light-theme .team-card[data-frente="C"] {
+  background: linear-gradient(180deg, rgba(249, 115, 22, 0.08) 0%, #ffffff 150px) !important;
+  border: 1.5px solid rgba(249, 115, 22, 0.35) !important;
+  border-top: 5px solid #ea580c !important;
+}
+
+body.light-theme #frente-d-metricas,
+body.light-theme .docs-block.docs-theme-green {
+  background: #ffffff !important;
+  border: 1.5px solid rgba(16, 185, 129, 0.4) !important;
+  border-top: 5px solid #16a34a !important;
+  box-shadow: 0 6px 20px rgba(60, 45, 30, 0.08) !important;
+}
+
+body.light-theme .team-card.team-card-green,
+body.light-theme .team-card[data-frente="D"] {
+  background: linear-gradient(180deg, rgba(16, 185, 129, 0.08) 0%, #ffffff 150px) !important;
+  border: 1.5px solid rgba(16, 185, 129, 0.35) !important;
+  border-top: 5px solid #16a34a !important;
+}
+
+body.light-theme #doc-visao-geral,
+body.light-theme .docs-block.docs-theme-yellow {
+  background: #ffffff !important;
+  border: 1.5px solid rgba(234, 179, 8, 0.4) !important;
+  border-top: 5px solid #ca8a04 !important;
+  box-shadow: 0 6px 20px rgba(60, 45, 30, 0.08) !important;
+}
+
+body.light-theme #doc-trello-matriz,
+body.light-theme .docs-block.docs-theme-cyan {
+  background: #ffffff !important;
+  border: 1.5px solid rgba(6, 182, 212, 0.4) !important;
+  border-top: 5px solid #0891b2 !important;
+  box-shadow: 0 6px 20px rgba(60, 45, 30, 0.08) !important;
+}
+
+/* ==========================================================================
+   ELEMENTOS INTERNOS COMPATÍVEIS COM O TEMA CLARO (SEM QUEBRAS VISUAIS)
+   ========================================================================== */
+
+/* 1. Painel de 4 Frentes */
+.frente-painel-card {
+  background: rgba(15, 23, 42, 0.65);
+  border-radius: 14px;
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+body.light-theme .frente-painel-card,
+body.light-theme #doc-frentes-painel > div {
+  background: #ffffff !important;
+  box-shadow: 0 4px 18px rgba(60, 45, 30, 0.07) !important;
+}
+
+body.light-theme #doc-frentes-painel p,
+body.light-theme #doc-frentes-painel span {
+  color: #44403c !important;
+}
+
+body.light-theme #doc-frentes-painel code {
+  background: rgba(2, 132, 199, 0.09) !important;
+  color: #0369a1 !important;
+}
+
+/* 2. Banner de Documentação */
+.doc-repo-banner {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--border-color);
+  border-left: 4px solid #f59e0b;
+  border-radius: var(--radius-md);
+  padding: 1.15rem 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+body.light-theme .doc-repo-banner,
+body.light-theme div[style*="border-left: 4px solid #f59e0b"] {
+  background: #ffffff !important;
+  border-color: #dcd3c5 !important;
+  border-left: 4px solid #d97706 !important;
+  box-shadow: 0 4px 14px rgba(60, 45, 30, 0.06) !important;
+}
+
+/* 3. Cards de Segurança HIPAA */
+.hipaa-mini-card {
+  background: rgba(15, 23, 42, 0.6);
+  padding: 0.85rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  transition: all 0.2s ease;
+}
+
+body.light-theme .hipaa-mini-card {
+  background: #ffffff !important;
+  border-color: rgba(16, 185, 129, 0.35) !important;
+  box-shadow: 0 2px 8px rgba(60, 45, 30, 0.06) !important;
+}
+
+body.light-theme .hipaa-mini-card strong {
+  font-weight: 700 !important;
+}
+
+body.light-theme .hipaa-mini-card span {
+  color: #44403c !important;
+}
+
+body.light-theme #doc-hipaa-governanca {
+  background: rgba(16, 185, 129, 0.06) !important;
+  border-color: rgba(16, 185, 129, 0.35) !important;
+}
+
+body.light-theme #doc-hipaa-governanca h4 {
+  color: #047857 !important;
+}
+
+body.light-theme #inicio-hipaa-compliance {
+  background: #ffffff !important;
+  border-color: rgba(16, 185, 129, 0.35) !important;
+  box-shadow: 0 4px 16px rgba(60, 45, 30, 0.06) !important;
+}
+
+/* 4. Bloco ASCII da Árvore de Decisão do Amazon Connect */
+.code-ascii-box {
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.25rem;
+  font-family: var(--font-tech, monospace);
+  font-size: 0.84rem;
+  line-height: 1.6;
+  color: #e2e8f0;
+  margin-bottom: 1.25rem;
+  overflow-x: auto;
+}
+
+body.light-theme .code-ascii-box {
+  background: #f7f3eb !important;
+  border: 1.5px solid #dcd3c5 !important;
+  color: #1c1917 !important;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* 5. FAQ da Banca */
+.faq-box-card {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.25rem;
+}
+
+body.light-theme .faq-box-card {
+  background: #ffffff !important;
+  border-color: #dcd3c5 !important;
+  box-shadow: 0 2px 8px rgba(60, 45, 30, 0.05) !important;
+}
+
+body.light-theme .faq-box-card h5 {
+  color: #047857 !important;
+}
+
+body.light-theme .faq-box-card p {
+  color: #44403c !important;
+}
+
+/* 6. Botões Topo & Rodapés */
+body.light-theme .btn-topo-inline {
+  background: rgba(2, 132, 199, 0.1) !important;
+  color: #0369a1 !important;
+  border: 1.5px solid rgba(2, 132, 199, 0.45) !important;
+  font-weight: 700 !important;
+}
+
+body.light-theme .btn-topo-inline:hover {
+  background: #0284c7 !important;
+  color: #ffffff !important;
+  border-color: #0284c7 !important;
+}
+
+body.light-theme .docs-block-footer {
+  border-top-color: #dcd3c5 !important;
+}
+
+body.light-theme .docs-block-footer span {
+  color: #57534e !important;
 }

@@ -15,7 +15,7 @@ src/
 │   │       ├── footer/            # Rodapé institucional e contatos
 │   │       ├── drawer/            # Menu lateral mobile estilo aplicativo
 │   │       ├── bottom-tabs/       # Tab Bar inferior nativa mobile (Ionic-like)
-│   │       ├── chat-widget/       # Widget oficial do Bot Arwen (Amazon Lex V2)
+│   │       ├── chat-widget/       # Widget oficial do Bot Iara (Amazon Lex V2)
 │   │       └── appointment-modal/ # Modal de agendamento de consultas
 │   ├── pages/                     # Módulos de rota / Views do portal
 │   │   ├── inicio/                # Hero, estatísticas, rede hospitalar do Pará

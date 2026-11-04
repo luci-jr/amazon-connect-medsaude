@@ -14,17 +14,20 @@
 
 ---
 
-## 📌 Sobre o Projeto
+## 📌 Sobre o Projeto & Nota Arquitetural de Escopo
 
-Este portal web é o resultado do trabalho prático e integrado desenvolvido pela **Squad Grupo 6** durante o curso de especialização em **Amazon Connect**, promovido pela **Escola da Nuvem**.
+> **⚠️ Escopo Técnico do Projeto:**  
+> O produto central desenvolvido pela **Squad Grupo 6** é a solução de **Contact Center Omnichannel e Agente Inteligente na AWS (Amazon Connect + Lex V2 + Q in Connect + S3)**.  
+> Este portal web foi concebido e desenvolvido integralmente por **Lucivaldo Junior** com base estrita nos requisitos do documento oficial do **Case 1 (`ca_1` - `Case_1_Guia_Medico_Chat_Online.pdf`)** da **Escola da Nuvem**. Ele atua como **showcase executivo**, simulador da jornada do paciente e central unificada de documentações técnicas de todas as 4 frentes de trabalho.
 
-A aplicação foi desenhada para materializar o **Case 1 da Med+Saúde** (operadora de planos de saúde fictícia com atuação prioritária em Belém, Ananindeua e região norte do Brasil), simulando em tempo real uma jornada completa de atendimento ao beneficiário:
+A aplicação foi desenhada para materializar o **Case 1 da Med+Saúde**, simulando em tempo real uma jornada completa de atendimento ao beneficiário com controles técnicos de segurança compatíveis com **HIPAA & LGPD**:
 
-- 🩺 **Guia Médico Interativo:** Consulta rápida de especialistas clínicos credenciados por especialidade, cidade e bairro com filtros em tempo real.
-- 🤖 **Assistente Conversacional Arwen:** Chatbot com inteligência conversacional (NLU) integrada aos fluxos do **Amazon Lex V2** e acoplamento dinâmico do widget oficial do **Amazon Connect**.
-- 📞 **Canal de Voz Inteligente (0800):** Telefonia em nuvem com reconhecimento de fala contínuo (ASR), reduzindo o Tempo Médio de Atendimento (TMA) de 14 para 3 minutos.
-- 📚 **Base de Conhecimento Amazon Q in Connect:** Motor de pesquisa documental sobre regras de carência, procedimentos da ANS e demonstrativos de coparticipação.
-- 🔄 **Transbordo Humanizado para Agente N1:** Encaminhamento de chamadas e conversas para atendentes humanos com preservação de 100% do contexto histórico.
+- 🩺 **Guia Médico Interativo:** Consulta rápida de especialistas clínicos credenciados por especialidade, cidade (destaque para Curitiba/PR) e rede nacional com filtros em tempo real.
+- 🤖 **Assistente Conversacional Iara:** Chatbot com inteligência conversacional (NLU) integrada aos fluxos do **Amazon Lex V2** (bot `bot-G6`, alias `prod`) e protocolo imediato conforme **ANS RN 623**.
+- 📞 **Canal de Voz Inteligente:** Telefonia em nuvem com reconhecimento de fala contínuo (ASR) e linguagem natural para idosos sem menus rígidos, reduzindo o TMA de 14 para 3 minutos (meta estimada).
+- 📚 **Base de Conhecimento Amazon Q in Connect:** Motor de pesquisa RAG documental direto no arquivo Markdown consolidado do S3, evitando redundâncias.
+- 🛡️ **Governança & Padrão HIPAA:** Criptografia em repouso com **AWS KMS (AES-256)**, dados em trânsito com **TLS 1.2+**, mascaramento de PHI nos fluxos do Contact Flow e logs do CloudWatch, além de políticas de IAM Least Privilege.
+- 🔄 **Transbordo Humanizado para Agente N1:** Encaminhamento de chamadas e conversas para fila única `AgenteN1` com preservação de 100% do contexto histórico (Novo Decreto do SAC nº 13.135/2026 e LGPD).
 
 ---
 
@@ -36,24 +39,31 @@ A aplicação foi desenhada para materializar o **Case 1 da Med+Saúde** (operad
 |       [Guia Médico]       [Planos & Coberturas]       [Acessibilidade A-/A+]      |
 +-----------------------------------------------------------------------------------+
                   |                                                   |
-        (Chat Web Arwen)                                      (Telefonia 0800)
+         (Chat Web Iara)                                      (Canal Voz Telefone)
                   |                                                   |
                   v                                                   v
 +-----------------------------------------------------------------------------------+
 |                           AMAZON CONNECT (CONTACT CENTER)                         |
-|   - Contact Flows Dinâmicos                       - Filas de Atendimento Agente N1|
-|   - Síntese Neural de Voz (Amazon Polly)          - Transbordo Humanizado Contextual|
+|   - Contact Flows Dinâmicos                       - Fila Única: AgenteN1          |
+|   - Síntese Neural de Voz (Amazon Polly - Camila) - Transbordo com Contexto       |
+|   - Protocolo Curto ANS RN 623 (#20261102-4571)   - Prioridade 1 (Emergência/SAMU)|
 +-----------------------------------------------------------------------------------+
                   |                                                   |
-        (Compreensão NLU)                                    (Busca de Dados)
+         (Compreensão NLU)                                  (Busca RAG Direta)
                   |                                                   |
                   v                                                   v
 +-------------------------------+                   +-------------------------------+
-|         AMAZON LEX V2         |                   |      CATÁLOGO MÉDICO S3       |
-| - Intent: ConsultarEspecialid |                   | - Base de Especialistas JSON  |
-| - Intent: AgendarConsulta     |                   | - Clínicas Credenciadas (PA)  |
-| - Intent: AmazonQ_Knowledge   |                   | - Regras de Carência ANS      |
-+-------------------------------+                   +-------------------------------+
+|    AMAZON LEX V2 (bot-G6)     |                   |       AMAZON Q IN CONNECT     |
+| 1. ConsultarEspecialidade     |                   |  - Indexação direta no S3     |
+| 2. BuscarPorLocalidade        |                   |  - Base única Markdown (.md)  |
+| 3. AgendarConsulta            |                   |  - Especialistas Curitiba-PR  |
+| 4. FalarComAtendente          |                   +---------------+---------------+
+| 5. SinaisDeUrgencia           |                                   |
+| 6. OutrosAssuntos             |                                   v
+| 7. DespedidaEncerramento      |                   +-------------------------------+
+| 8. FallbackIntent             |                   |       BUCKET AMAZON S3        |
++-------------------------------+                   | g6-medsaude-guia-medico-dados |
+                                                    +-------------------------------+
 ```
 
 ---
@@ -70,18 +80,18 @@ A aplicação foi desenhada para materializar o **Case 1 da Med+Saúde** (operad
 
 ## 👥 Integrantes da Squad (Grupo 6 — Escola da Nuvem)
 
-O projeto foi planejado e executado de forma colaborativa pela squad, com distribuição de papéis e entregas gerenciadas via **Trello**:
+O projeto foi planejado e executado de forma colaborativa pela squad, com distribuição de papéis em 4 Frentes de trabalho gerenciadas via **Trello**:
 
-| Integrante | Função / Papel Técnico (Trello) | Responsabilidades & Atribuições no Case | Conexões & Portfólio |
+| Integrante | Frente de Atuação (Trello) | Responsabilidades & Atribuições no Case | Conexões & Portfólio |
 | :--- | :--- | :--- | :--- |
-| **Jessica** | **Admin da Squad • Especialista em Bot Lex V2** | Liderança e governança da squad no programa Escola da Nuvem, gestão do fluxo ágil no Trello, modelagem de intenções, slots e prompts no Amazon Lex V2. | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/jessieviana/) |
-| **Lucivaldo Junior** | **Tech Lead, Arquiteto Cloud & Engenheiro de Software** | Liderança técnica da squad, arquitetura da jornada omnichannel no Amazon Connect, engenharia de software do portal Med+Saúde e integração dos serviços AWS (Connect, Lex, Lambda e S3). | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/lucivaldojr/) [![Portfólio](https://img.shields.io/badge/Portf%C3%B3lio-0284c7?style=flat&logo=google-chrome&logoColor=white)](https://portifolio.lucivaldo.cloud/) [![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white)](https://github.com/luci-jr) |
-| **Beth Nascimento** | **Engenharia Cloud & Amazon Connect** | Desenho dos Contact Flows no Amazon Connect, canais de telefonia com IA de voz agêntica, testes de filas de atendimento e regras de horário de operação. | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com) |
-| **Camila Landy** | **Experiência do Paciente & Contact Flow** | Estruturação da jornada do beneficiário no portal e no contact center, alinhamento de acessibilidade, fluxos conversacionais humanizados e redução de atritos. | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com) |
-| **Daniel Villegas** | **Engenharia de Dados & Amazon S3** | Modelagem e estruturação do catálogo médico e clínicas credenciadas no Amazon S3, esquemas JSON para integração rápida e curadoria do Amazon Q in Connect. | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com) |
-| **Felipe** | **DevOps, Infraestrutura & CloudWatch** | Telemetria e observabilidade da arquitetura AWS, rastreamento de Contact Trace Records (CTR), métricas de latência e alarmes de monitoramento no Amazon CloudWatch. | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com) |
-| **Paula Lopes** | **Especialista em Bot Lex & Treinamento NLU** | Desenvolvimento de utterances regionais do Pará, slots de especialidades médicas e calibração das intenções do chatbot Arwen para resolução em autoatendimento. | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com) |
-| **Rebeca** | **QA Lead & Transbordo Humanizado N1** | Homologação de ponta a ponta dos canais de voz e chat, testes de estresse de chamadas simultâneas, validação do transbordo N1 e garantia de qualidade clínica. | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com) |
+| **Daniel Villegas** | 🔵 **Frente A — Fluxos Connect** | Pontos de entrada no Amazon Connect para Voz e Chat, arquitetura de voz para idosos (sem comandos rígidos) e transbordo para N1. | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/danielvillegas63/) |
+| **Rebeca Espinoza Alves** | 🔵 **Frente A — Fluxos Connect** | Contact Flows para Chat online, preservação dos atributos de contexto na tela do atendente e roteamento na fila única AgenteN1. | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com) |
+| **Jessie V** | 🟣 **Frente B — Bot Lex** | Governança ágil da squad, versionamento do bot Lex V2 (bot-G6, alias prod), especificação das 8 intenções, ASR e vocabulário customizado. | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/jessieviana/) |
+| **Ana Paula Tavares Lopes** | 🟣 **Frente B — Bot Lex** | Mapeamento de utterances em linguagem natural, calibração dos slots de Especialidade e Localidade e prompts da assistente Iara. | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com) |
+| **Lucivaldo Junior** | 🟠 **Frente C — Dados & Conhecimento** | Provisionamento do bucket S3, governança da base única .md para o Amazon Q in Connect, engenharia de dados e portal Med+Saúde. | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/lucivaldojr/) [![Portfólio](https://img.shields.io/badge/Portf%C3%B3lio-0284c7?style=flat&logo=google-chrome&logoColor=white)](https://portifolio.lucivaldo.cloud/) [![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white)](https://github.com/luci-jr) |
+| **Felipe Henrique Souza** | 🟠 **Frente C — Dados & Conhecimento** | Modelagem dos dados simulados dos especialistas (Curitiba-PR), conexão com a Knowledge Base do Amazon Q in Connect e indexação RAG. | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com) |
+| **Elizabeth Silva do Nascimento** | 🟢 **Frente D — Métricas & Testes** | Configuração do dashboard no Amazon Connect para TMA e volume, acompanhamento de contenção e roteiro de testes dos 3 cenários. | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com) |
+| **Camila Landy Fernandes** | 🟢 **Frente D — Testes & Apresentação** | Homologação ponta a ponta dos cenários de teste (Chat, Voz e Transbordo N1), conformidade com os critérios de aceite, deck e pitch. | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com) |
 
 ---
 

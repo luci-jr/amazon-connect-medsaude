@@ -168,7 +168,25 @@ app.post('/api/chat/message', (req, res) => {
     context: context || {}
   };
 
-  // 1. Intenção: Transbordo para Agente Humano N1
+  // 1. Intenção: SinaisDeUrgencia (Emergência Clínica - Prioridade 1)
+  if (
+    texto.includes('infart') ||
+    texto.includes('dor no peito') ||
+    texto.includes('falta de ar') ||
+    texto.includes('urgência') ||
+    texto.includes('urgencia') ||
+    texto.includes('emergência') ||
+    texto.includes('emergencia') ||
+    texto.includes('desmaio')
+  ) {
+    responseData.intent = 'SinaisDeUrgencia';
+    responseData.requiresTransfer = true;
+    responseData.priority = 'Prioridade 1';
+    responseData.reply = `🚨 **ATENÇÃO - EMERGÊNCIA MÉDICA DETECTADA:** Se você ou o paciente estiver com dor intensa no peito, falta de ar súbita ou sinais de infarto, ligue imediatamente para o **SAMU (192)** ou dirija-se ao pronto-socorro mais próximo.\n\nEstou transferindo o seu atendimento com **Prioridade 1** para nossa equipe humana no Amazon Connect.`;
+    return res.json(responseData);
+  }
+
+  // 2. Intenção: FalarComAtendente (Transbordo Humano N1)
   if (
     texto.includes('humano') ||
     texto.includes('atendente') ||
@@ -176,15 +194,16 @@ app.post('/api/chat/message', (req, res) => {
     texto.includes('reclamação') ||
     texto.includes('transbordo') ||
     texto.includes('atendente n1') ||
-    texto.includes('falar com alguém')
+    texto.includes('falar com alguém') ||
+    texto.includes('falar com atendente')
   ) {
-    responseData.intent = 'TransbordoAgenteN1';
+    responseData.intent = 'FalarComAtendente';
     responseData.requiresTransfer = true;
-    responseData.reply = `Entendido! Estou transferindo o seu atendimento para um **Agente Humano N1** no Amazon Connect. Todo o seu histórico e contexto da conversa foram preservados para o atendente. Por favor, aguarde na linha. 🎧`;
+    responseData.reply = `Entendido! Estou transferindo o seu atendimento para um **Agente Humano N1** no Amazon Connect. Todo o seu histórico e contexto da conversa foram preservados para o atendente conforme o Decreto SAC 13.135/2026. Por favor, aguarde na linha. 🎧`;
     return res.json(responseData);
   }
 
-  // 2. Intenção: AgendarConsulta
+  // 3. Intenção: AgendarConsulta
   if (
     texto.includes('agendar') ||
     texto.includes('marcar') ||
@@ -196,7 +215,6 @@ app.post('/api/chat/message', (req, res) => {
     // Se informou um médico específico pelo nome ou especialidade
     let medMatch = especialistas.find(m => texto.includes(m.nome.toLowerCase().split(' ')[1]?.toLowerCase() || 'xyz'));
     if (!medMatch) {
-      // Pega qualquer cardiologista ou ortopedista se citado
       if (texto.includes('cardio')) medMatch = especialistas.find(m => m.especialidade === 'Cardiologia');
       else if (texto.includes('ortop')) medMatch = especialistas.find(m => m.especialidade === 'Ortopedia');
       else medMatch = especialistas[0];
@@ -207,10 +225,23 @@ app.post('/api/chat/message', (req, res) => {
     return res.json(responseData);
   }
 
-  // 3. Intenção: ConsultarEspecialidade ou BuscarPorLocalidade
+  // 4. Intenção: DespedidaEncerramento
+  if (
+    texto.includes('obrigad') ||
+    texto.includes('valeu') ||
+    texto.includes('tchau') ||
+    texto.includes('era só isso') ||
+    texto.includes('encerrar')
+  ) {
+    responseData.intent = 'DespedidaEncerramento';
+    responseData.reply = `Por nada! A **Med+Saúde** agradece o seu contato. O protocolo deste atendimento é \`#20261102-4571\`. Tenha um excelente dia e cuide bem da sua saúde! 👋🩺`;
+    return res.json(responseData);
+  }
+
+  // 5. Intenção: ConsultarEspecialidade ou BuscarPorLocalidade
   let especialidadeDetectada = null;
   if (texto.includes('cardio') || texto.includes('coração')) especialidadeDetectada = 'Cardiologia';
-  else if (texto.includes('ortop') || texto.includes('osso') || texto.includes('fratura')) especialidadeDetectada = 'Ortopedia';
+  else if (texto.includes('ortop') || texto.includes('osso') || texto.includes('joelho') || texto.includes('espinhaço') || texto.includes('fratura')) especialidadeDetectada = 'Ortopedia';
   else if (texto.includes('pediat') || texto.includes('criança')) especialidadeDetectada = 'Pediatria';
   else if (texto.includes('derma') || texto.includes('pele')) especialidadeDetectada = 'Dermatologia';
   else if (texto.includes('gineco') || texto.includes('mulher')) especialidadeDetectada = 'Ginecologia e Obstetrícia';
@@ -218,14 +249,15 @@ app.post('/api/chat/message', (req, res) => {
 
   // Detecção de cidade
   let cidadeDetectada = null;
-  if (texto.includes('belém') || texto.includes('belem') || texto.includes('pará') || texto.includes('para')) cidadeDetectada = 'Belém';
+  if (texto.includes('curitiba') || texto.includes('cwb') || texto.includes('pr')) cidadeDetectada = 'Curitiba';
+  else if (texto.includes('belém') || texto.includes('belem') || texto.includes('pará') || texto.includes('para')) cidadeDetectada = 'Belém';
   else if (texto.includes('são paulo') || texto.includes('sao paulo') || texto.includes('sp')) cidadeDetectada = 'São Paulo';
   else if (texto.includes('rio') || texto.includes('rj')) cidadeDetectada = 'Rio de Janeiro';
   else if (texto.includes('belo horizonte') || texto.includes('bh')) cidadeDetectada = 'Belo Horizonte';
   else if (texto.includes('brasília') || texto.includes('brasilia') || texto.includes('df')) cidadeDetectada = 'Brasília';
 
   if (especialidadeDetectada || cidadeDetectada) {
-    responseData.intent = especialidadeDetectada && cidadeDetectada ? 'BuscarPorLocalidadeEEspecialidade' : (especialidadeDetectada ? 'ConsultarEspecialidade' : 'BuscarPorLocalidade');
+    responseData.intent = especialidadeDetectada && cidadeDetectada ? 'BuscarPorLocalidade' : (especialidadeDetectada ? 'ConsultarEspecialidade' : 'BuscarPorLocalidade');
 
     let filtrados = especialistas;
     if (especialidadeDetectada) {
@@ -246,18 +278,7 @@ app.post('/api/chat/message', (req, res) => {
     return res.json(responseData);
   }
 
-  // 4. Intenção: Amazon Q in Connect (Base de conhecimento)
-  const faqMatch = faqs.find(f => 
-    f.palavrasChave.some(k => texto.includes(k.toLowerCase()))
-  );
-
-  if (faqMatch) {
-    responseData.intent = 'AmazonQ_KnowledgeSearch';
-    responseData.reply = `ℹ️ **Base de Conhecimento Med+Saúde (Amazon Q in Connect):**\n\n${faqMatch.resposta}\n\n*Precisa de mais alguma informação ou deseja localizar um médico no Guia?*`;
-    return res.json(responseData);
-  }
-
-  // 5. Saudações
+  // 4. Saudações (Início de Conversa)
   if (
     texto.includes('olá') ||
     texto.includes('ola') ||
@@ -265,10 +286,22 @@ app.post('/api/chat/message', (req, res) => {
     texto.includes('bom dia') ||
     texto.includes('boa tarde') ||
     texto.includes('boa noite') ||
-    texto === 'começar'
+    texto === 'começar' ||
+    texto === 'inicio'
   ) {
-    responseData.intent = 'Saudacao';
-    responseData.reply = `Olá! Sou a **Arwen**, sua assistente virtual da **Med+Saúde**.\n\nComo posso lhe ajudar hoje?`;
+    responseData.intent = 'ConsultarEspecialidade';
+    responseData.reply = `Olá! Sou a **Iara**, sua assistente virtual da **Med+Saúde**.\n\n📌 **Protocolo de Atendimento:** \`#20261102-4571\` (ANS RN 623)\n\nComo posso te ajudar hoje? Posso localizar médicos credenciados por especialidade (como Cardiologia ou Ortopedia em Curitiba), agendar consultas ou tirar dúvidas sobre o plano.`;
+    return res.json(responseData);
+  }
+
+  // 5. Intenção: Amazon Q in Connect (Base de conhecimento)
+  const faqMatch = Array.isArray(faqs) ? faqs.find(f => 
+    Array.isArray(f.palavrasChave) && f.palavrasChave.some(k => texto.includes((k || '').toLowerCase()))
+  ) : null;
+
+  if (faqMatch) {
+    responseData.intent = 'OutrosAssuntos';
+    responseData.reply = `ℹ️ **Base de Conhecimento Med+Saúde (Amazon Q in Connect):**\n\n${faqMatch.resposta}\n\n*Precisa de mais alguma informação ou deseja localizar um especialista no Guia Médico?*`;
     return res.json(responseData);
   }
 
