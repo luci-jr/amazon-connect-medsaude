@@ -3981,32 +3981,54 @@ body.light-theme .docs-active-indicator {
    PAINEL DAS 4 FRENTES DE TRABALHO (TRELLO / DOCUMENTAÇÃO TÉCNICA)
    Design System Espaçoso, Sem Quebra de Botões e com Hierarquia Arejada
    ==================================================================== */
-#doc-frentes-painel {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)) !important;
-  gap: 1.5rem !important;
+#doc-frentes-painel,
+.doc-frentes-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 1.75rem !important;
   margin-bottom: 2.75rem !important;
 }
 
-@media (min-width: 992px) and (max-width: 1399px) {
-  #doc-frentes-painel {
-    grid-template-columns: repeat(2, 1fr) !important;
+@media (max-width: 900px) {
+  #doc-frentes-painel,
+  .doc-frentes-grid {
+    grid-template-columns: 1fr !important;
   }
 }
 
-@media (min-width: 1400px) {
-  #doc-frentes-painel {
+@media (min-width: 1680px) {
+  #doc-frentes-painel,
+  .doc-frentes-grid {
     grid-template-columns: repeat(4, 1fr) !important;
   }
 }
 
-#doc-frentes-painel > div {
+#doc-frentes-painel > div,
+.frente-painel-card {
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease !important;
 }
 
-#doc-frentes-painel > div:hover {
+#doc-frentes-painel > div:hover,
+.frente-painel-card:hover {
   transform: translateY(-4px) !important;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4) !important;
+}
+
+.btn-frente-action {
+  width: 100% !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+  font-size: 0.85rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.03em !important;
+  text-transform: uppercase !important;
+  padding: 0.75rem 1rem !important;
+  border-radius: 8px !important;
+  white-space: nowrap !important;
+  text-decoration: none !important;
+  transition: all 0.25s ease !important;
 }
 
 /* ==========================================================================

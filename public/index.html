@@ -136,7 +136,7 @@
   </style>
 
   <!-- Estilos Customizados & Design System (Angular + Ionic Tokens) -->
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/style.css?v=1793811214730">
 </head>
 <body class="ion-app-root">
   <!-- BARRA DE NAVEGAÇÃO FLUTUANTE EM CÁPSULA (ESTILO ISLAND NAVBAR - FIXA NO VIEWPORT) -->
@@ -1473,7 +1473,7 @@
         </div>
 
         <!-- PAINEL DAS 4 FRENTES DE TRABALHO DO TRELLO (QUADRO EXECUTIVO DE ATRIBUIÇÕES) -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2.75rem;" id="doc-frentes-painel">
+        <div class="doc-frentes-grid" id="doc-frentes-painel">
           
           <!-- CARD FRENTE A -->
           <div class="frente-painel-card" style="border: 1px solid rgba(2, 132, 199, 0.35); border-top: 4px solid #0284c7;">
@@ -1516,8 +1516,8 @@
                 </li>
               </ul>
             </div>
-            <a href="#frente-a-fluxos" class="btn btn-outline btn-sm" style="width: 100%; justify-content: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 600; padding: 0.65rem 1rem; border-color: rgba(2, 132, 199, 0.5); color: #38bdf8; background: rgba(2, 132, 199, 0.08); text-transform: uppercase; letter-spacing: 0.03em; border-radius: 8px;">
-              <span>Ver Entregas da Frente A</span> <i class="fa-solid fa-arrow-down"></i>
+            <a href="#frente-a-fluxos" class="btn btn-outline btn-sm btn-frente-action" style="border-color: rgba(2, 132, 199, 0.5); color: #38bdf8; background: rgba(2, 132, 199, 0.08);">
+              <span style="white-space: nowrap;">Ver Entregas da Frente A</span> <i class="fa-solid fa-arrow-down"></i>
             </a>
           </div>
 
@@ -1562,8 +1562,8 @@
                 </li>
               </ul>
             </div>
-            <a href="#frente-b-lex" class="btn btn-outline btn-sm" style="width: 100%; justify-content: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 600; padding: 0.65rem 1rem; border-color: rgba(168, 85, 247, 0.5); color: #c084fc; background: rgba(168, 85, 247, 0.08); text-transform: uppercase; letter-spacing: 0.03em; border-radius: 8px;">
-              <span>Ver Entregas da Frente B</span> <i class="fa-solid fa-arrow-down"></i>
+            <a href="#frente-b-lex" class="btn btn-outline btn-sm btn-frente-action" style="border-color: rgba(168, 85, 247, 0.5); color: #c084fc; background: rgba(168, 85, 247, 0.08);">
+              <span style="white-space: nowrap;">Ver Entregas da Frente B</span> <i class="fa-solid fa-arrow-down"></i>
             </a>
           </div>
 
@@ -1608,8 +1608,8 @@
                 </li>
               </ul>
             </div>
-            <a href="#frente-c-dados" class="btn btn-outline btn-sm" style="width: 100%; justify-content: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 600; padding: 0.65rem 1rem; border-color: rgba(249, 115, 22, 0.5); color: #fb923c; background: rgba(249, 115, 22, 0.08); text-transform: uppercase; letter-spacing: 0.03em; border-radius: 8px;">
-              <span>Ver Entregas da Frente C</span> <i class="fa-solid fa-arrow-down"></i>
+            <a href="#frente-c-dados" class="btn btn-outline btn-sm btn-frente-action" style="border-color: rgba(249, 115, 22, 0.5); color: #fb923c; background: rgba(249, 115, 22, 0.08);">
+              <span style="white-space: nowrap;">Ver Entregas da Frente C</span> <i class="fa-solid fa-arrow-down"></i>
             </a>
           </div>
 
@@ -1654,8 +1654,8 @@
                 </li>
               </ul>
             </div>
-            <a href="#frente-d-metricas" class="btn btn-outline btn-sm" style="width: 100%; justify-content: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 600; padding: 0.65rem 1rem; border-color: rgba(16, 185, 129, 0.5); color: #34d399; background: rgba(16, 185, 129, 0.08); text-transform: uppercase; letter-spacing: 0.03em; border-radius: 8px;">
-              <span>Ver Entregas da Frente D</span> <i class="fa-solid fa-arrow-down"></i>
+            <a href="#frente-d-metricas" class="btn btn-outline btn-sm btn-frente-action" style="border-color: rgba(16, 185, 129, 0.5); color: #34d399; background: rgba(16, 185, 129, 0.08);">
+              <span style="white-space: nowrap;">Ver Entregas da Frente D</span> <i class="fa-solid fa-arrow-down"></i>
             </a>
           </div>
         </div>
@@ -2724,9 +2724,9 @@ aws s3 sync ./public s3://g6-medsaude-portal-site-197977933424-us-west-2-an --ac
   </button>
 
   <!-- Scripts da Aplicação (Arquitetura Angular Standalone + Ionic Runtime) -->
-  <script src="./js/data.js"></script>
-  <script src="./js/app.js"></script>
-  <script src="./js/chat-widget.js"></script>
-  <script type="module" src="./main.js"></script>
+  <script src="./js/data.js?v=1793811214730"></script>
+  <script src="./js/app.js?v=1793811214730"></script>
+  <script src="./js/chat-widget.js?v=1793811214730"></script>
+  <script type="module" src="./main.js?v=1793811214730"></script>
 </body>
 </html>

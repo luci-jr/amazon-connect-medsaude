@@ -24,8 +24,15 @@ function build() {
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
   });
 
-  // 2. Copiar index.html, manifest.json, favicon.ico para public/
-  fs.copyFileSync(path.join(SRC_DIR, 'index.html'), path.join(PUBLIC_DIR, 'index.html'));
+  // 2. Copiar index.html, manifest.json, favicon.ico para public/ com Cache-Buster dinâmico
+  const cacheBuster = Date.now();
+  let indexHtml = fs.readFileSync(path.join(SRC_DIR, 'index.html'), 'utf8');
+  indexHtml = indexHtml.replace(/href="\.\/css\/style\.css(\?[^"]*)?"/g, `href="./css/style.css?v=${cacheBuster}"`);
+  indexHtml = indexHtml.replace(/src="\.\/js\/app\.js(\?[^"]*)?"/g, `src="./js/app.js?v=${cacheBuster}"`);
+  indexHtml = indexHtml.replace(/src="\.\/js\/chat-widget\.js(\?[^"]*)?"/g, `src="./js/chat-widget.js?v=${cacheBuster}"`);
+  indexHtml = indexHtml.replace(/src="\.\/js\/data\.js(\?[^"]*)?"/g, `src="./js/data.js?v=${cacheBuster}"`);
+  indexHtml = indexHtml.replace(/src="\.\/main\.js(\?[^"]*)?"/g, `src="./main.js?v=${cacheBuster}"`);
+  fs.writeFileSync(path.join(PUBLIC_DIR, 'index.html'), indexHtml, 'utf8');
 
   if (fs.existsSync(path.join(SRC_DIR, 'manifest.json'))) {
     fs.copyFileSync(path.join(SRC_DIR, 'manifest.json'), path.join(PUBLIC_DIR, 'manifest.json'));
