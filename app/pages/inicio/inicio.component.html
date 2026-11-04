@@ -1,0 +1,383 @@
+<!-- VIEW 1: PÁGINA INÍCIO (ANGULAR PAGE COMPONENT) -->
+<div class="page-view active" id="view-inicio">
+  <!-- HERO SECTION -->
+  <section class="hero-section" id="inicio">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <!-- BADGE REGIONAL RETRÔ IDÊNTICO À REFERÊNCIA -->
+        <div class="hero-region-pill">
+          <span class="region-dot"></span>
+          Atendimento em Belém, Ananindeua e Região • Grupo 6 (Escola da Nuvem)
+        </div>
+
+        <!-- AVISO DE ESCOPO: O PROJETO É O AGENTE NA AWS; O SITE É O SHOWCASE E CENTRAL DE DOCUMENTAÇÃO -->
+        <div style="background: rgba(2, 132, 199, 0.12); border: 1px solid rgba(2, 132, 199, 0.35); border-left: 3px solid #0284c7; border-radius: 6px; padding: 0.65rem 0.95rem; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.75rem;">
+          <i class="fa-solid fa-server" style="color: #38bdf8; font-size: 1.1rem; flex-shrink: 0;"></i>
+          <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0; line-height: 1.45;">
+            <strong style="color: var(--text-primary);">Showcase Técnico & Central de Documentação:</strong> O projeto central do <strong>Grupo 6</strong> é a solução de <strong>Contact Center Omnichannel e Agente Inteligente na AWS (Amazon Connect + Lex V2 + Q in Connect + S3)</strong>. Este portal foi desenvolvido por <strong>Lucivaldo Junior</strong> com base no <strong>Case 1 (<code>ca_1</code>)</strong> para simular o paciente, centralizar as documentações do grupo e validar a jornada omnichannel.
+          </p>
+        </div>
+        <h1 class="hero-title">
+          Encontre o especialista ideal sem filas no <span class="text-highlight">Guia Médico</span>.
+        </h1>
+        <p class="hero-subtitle">
+          Localize cardiologistas, ortopedistas e clínicas por especialidade e localidade. Agende sua consulta em segundos conversando com nosso assistente virtual no Chat ou por Voz.
+        </p>
+
+        <!-- BUSCA RÁPIDA DO GUIA MÉDICO -->
+        <div class="hero-search-box">
+          <div class="search-field">
+            <i class="fa-solid fa-stethoscope field-icon"></i>
+            <select id="select-especialidade" onchange="aplicarFiltros()">
+              <option value="todas">Todas as Especialidades</option>
+            </select>
+          </div>
+          <div class="search-field">
+            <i class="fa-solid fa-location-dot field-icon"></i>
+            <select id="select-cidade" onchange="aplicarFiltros()">
+              <option value="todas">Todas as Cidades</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" onclick="filtrarEIrParaGuia()">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            Buscar Especialistas
+          </button>
+        </div>
+
+        <div class="hero-highlights">
+          <div class="highlight-item">
+            <i class="fa-solid fa-bolt highlight-icon text-accent"></i>
+            <span>Agendamento Imediato</span>
+          </div>
+          <div class="highlight-item">
+            <i class="fa-solid fa-shield-halved highlight-icon text-secondary"></i>
+            <span>Rede Própria & Credenciada</span>
+          </div>
+          <div class="highlight-item">
+            <i class="fa-solid fa-video highlight-icon text-primary"></i>
+            <span>Telemedicina 24 Horas</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD LATERAL DE STATUS DO ATENDIMENTO & FOTO MÉDICA ACOLHEDORA -->
+      <div class="hero-side-card">
+        <div class="human-care-card">
+          <img src="./images/atendimento-humanizado.jpg" alt="Equipe Médica Med+Saúde" class="human-care-img">
+          <div class="human-care-overlay">
+            <span class="care-badge-tag"><i class="fa-solid fa-heart-pulse"></i> Cuidado Humanizado</span>
+            <p>Especialistas dedicados ao seu bem-estar físico e emocional em todo o Pará.</p>
+          </div>
+        </div>
+
+        <div class="channel-preview-card">
+          <div class="preview-header">
+            <span class="live-indicator"></span>
+            <div>
+              <h3 class="preview-title">Contact Center Inteligente</h3>
+              <p class="preview-subtitle">Omnichannel Integrado ao Amazon Connect</p>
+            </div>
+          </div>
+
+          <div class="channels-status-list">
+            <div class="channel-status-item" onclick="abrirChatWidget()" style="cursor: pointer;">
+              <div class="channel-icon">
+                <i class="fa-solid fa-robot"></i>
+              </div>
+              <div class="channel-details">
+                <h4>Chat Online (Amazon Lex)</h4>
+                <p>Interpretação de linguagem natural e busca no S3 em tempo real.</p>
+              </div>
+              <span class="aws-badge-pill" style="margin-left: auto;">Online</span>
+            </div>
+
+            <div class="channel-status-item" onclick="simularLigacaoVoz()" style="cursor: pointer;">
+              <div class="channel-icon" style="background: rgba(2, 132, 199, 0.2); color: #38bdf8; border: 1px solid rgba(2, 132, 199, 0.35);">
+                <i class="fa-solid fa-headset"></i>
+              </div>
+              <div class="channel-details">
+                <h4>Canal de Voz (IA Agêntica)</h4>
+                <p>Sem menus rígidos: compreensão de fala natural para idosos e urgências.</p>
+              </div>
+              <span class="aws-badge-pill" style="margin-left: auto;">Disponível</span>
+            </div>
+
+            <div class="channel-status-item">
+              <div class="channel-icon" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.35);">
+                <i class="fa-solid fa-brain"></i>
+              </div>
+              <div class="channel-details">
+                <h4>Amazon Q in Connect</h4>
+                <p>Base de conhecimento integrada e respostas de cobertura e carência.</p>
+              </div>
+              <span class="aws-badge-pill" style="margin-left: auto;">Sincronizado</span>
+            </div>
+
+            <div class="channel-status-item">
+              <div class="channel-icon" style="background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.35);">
+                <i class="fa-solid fa-user-doctor"></i>
+              </div>
+              <div class="channel-details">
+                <h4>Transbordo Humano N1</h4>
+                <p>Transferência humanizada preservando o histórico completo na tela do agente.</p>
+              </div>
+              <span class="aws-badge-pill" style="margin-left: auto;">Fila Reduzida</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ATALHOS RÁPIDOS E APRESENTAÇÃO DO CASE 1 NA HOME -->
+  <section style="padding: 4.5rem 0; background: var(--bg-surface); border-top: 1px solid var(--border-color);">
+    <div class="container">
+      <div class="section-header">
+        <span class="tag-badge">Escola da Nuvem • Case 1</span>
+        <h2>Solução Omnichannel com Inteligência Artificial</h2>
+        <p>Conectando beneficiários a especialistas através de Chatbot Lex, Telefonia Inteligente e Amazon Q in Connect.</p>
+      </div>
+
+      <div class="arch-cards-grid" style="margin-bottom: 2rem;">
+        <div class="arch-card" onclick="navegarPara('guia-medico')" style="cursor: pointer;">
+          <div class="arch-card-icon">
+            <i class="fa-solid fa-stethoscope"></i>
+          </div>
+          <h3>Guia Médico Interativo</h3>
+          <p>Consulte especialistas por bairro, especialidade e telemedicina com agendamento direto e sem filas.</p>
+          <span class="arch-card-tag">Acessar Guia →</span>
+        </div>
+
+        <div class="arch-card" onclick="navegarPara('omnichannel-case')" style="cursor: pointer;">
+          <div class="arch-card-icon" style="background: rgba(2, 132, 199, 0.25); color: #38bdf8;">
+            <i class="fa-solid fa-cloud"></i>
+          </div>
+          <h3>Arquitetura Amazon Connect</h3>
+          <p>Descubra como o Amazon Lex e o Contact Center em nuvem reduziram 78% do tempo de atendimento.</p>
+          <span class="arch-card-tag tag-blue">Ver Arquitetura →</span>
+        </div>
+
+        <div class="arch-card" onclick="navegarPara('sobre-nos')" style="cursor: pointer;">
+          <div class="arch-card-icon" style="background: rgba(16, 185, 129, 0.25); color: #34d399;">
+            <i class="fa-solid fa-users"></i>
+          </div>
+          <h3>Integrantes do Grupo 6</h3>
+          <p>Conheça os profissionais da Escola da Nuvem responsáveis pelo desenvolvimento e engenharia da solução.</p>
+          <span class="arch-card-tag tag-green">Conhecer Equipe →</span>
+        </div>
+
+        <div class="arch-card" onclick="navegarPara('documentacao')" style="cursor: pointer;">
+          <div class="arch-card-icon" style="background: rgba(245, 158, 11, 0.25); color: #fbbf24;">
+            <i class="fa-solid fa-book-bookmark"></i>
+          </div>
+          <h3>Documentações Técnicas</h3>
+          <p>Acesse o dossiê da Frente C, governança HIPAA, intents do Lex, estrutura S3 e matriz de entregas do projeto.</p>
+          <span class="arch-card-tag tag-amber">Ver Documentações →</span>
+        </div>
+      </div>
+
+      <!-- SEÇÃO DE GOVERNANÇA, SEGURANÇA E TRATAMENTO DE DADOS COMPATÍVEL COM HIPAA -->
+      <div style="margin-top: 3.5rem; padding: 2.5rem; border: 1px solid var(--border-color); border-radius: var(--radius-md);" id="inicio-hipaa-compliance">
+        <div class="section-header" style="text-align: center; margin-bottom: 2rem;">
+          <span class="tag-badge tag-badge-green"><i class="fa-solid fa-shield-halved"></i> Governança de Dados</span>
+          <h2>Tratamento de Dados Compatível com HIPAA & LGPD</h2>
+          <p style="max-width: 780px; margin: 0 auto;">
+            A arquitetura do <strong>Grupo 6</strong> foi implementada seguindo rigorosas salvaguardas técnicas e diretrizes de conformidade da <strong>HIPAA (Health Insurance Portability and Accountability Act)</strong> e <strong>LGPD</strong> para proteção absoluta de dados de saúde e PHI (Protected Health Information).
+          </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem;">
+          <!-- Card 1: Criptografia -->
+          <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.35rem;">
+            <div style="width: 42px; height: 42px; border-radius: 8px; background: rgba(2, 132, 199, 0.15); color: #38bdf8; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: 0.85rem;">
+              <i class="fa-solid fa-lock"></i>
+            </div>
+            <h4 style="font-size: 0.98rem; color: var(--text-primary); margin-bottom: 0.4rem;">Criptografia KMS & TLS 1.2+</h4>
+            <p style="font-size: 0.83rem; color: var(--text-secondary); line-height: 1.5; margin: 0;">
+              Gravações e base do Guia Médico no Amazon S3 criptografados em repouso com <strong>AWS KMS (AES-256)</strong>. Sessões de voz, chat e APIs trafegam com <strong>TLS 1.2+</strong> ponta a ponta.
+            </p>
+          </div>
+
+          <!-- Card 2: Proteção de PHI -->
+          <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.35rem;">
+            <div style="width: 42px; height: 42px; border-radius: 8px; background: rgba(16, 185, 129, 0.15); color: #34d399; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: 0.85rem;">
+              <i class="fa-solid fa-user-shield"></i>
+            </div>
+            <h4 style="font-size: 0.98rem; color: var(--text-primary); margin-bottom: 0.4rem;">Proteção de PHI & Mascaramento</h4>
+            <p style="font-size: 0.83rem; color: var(--text-secondary); line-height: 1.5; margin: 0;">
+              Mascaramento e anonimização de informações clínicas sensíveis (sintomas, CPF) nos fluxos do Contact Flow, prevenindo exposição de PHI em texto plano no <strong>Amazon CloudWatch</strong>.
+            </p>
+          </div>
+
+          <!-- Card 3: IAM Least Privilege -->
+          <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.35rem;">
+            <div style="width: 42px; height: 42px; border-radius: 8px; background: rgba(245, 158, 11, 0.15); color: #fbbf24; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: 0.85rem;">
+              <i class="fa-solid fa-id-badge"></i>
+            </div>
+            <h4 style="font-size: 0.98rem; color: var(--text-primary); margin-bottom: 0.4rem;">IAM Least Privilege & RBAC</h4>
+            <p style="font-size: 0.83rem; color: var(--text-secondary); line-height: 1.5; margin: 0;">
+              Políticas de menor privilégio no <strong>AWS IAM</strong>: separação estrita de perfis de atendentes (fila <code>AgenteN1</code>), bot Lex V2 e leitura restrita do bucket S3 sem permissão pública.
+            </p>
+          </div>
+
+          <!-- Card 4: Auditoria CloudTrail -->
+          <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.35rem;">
+            <div style="width: 42px; height: 42px; border-radius: 8px; background: rgba(168, 85, 247, 0.15); color: #c084fc; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: 0.85rem;">
+              <i class="fa-solid fa-clipboard-check"></i>
+            </div>
+            <h4 style="font-size: 0.98rem; color: var(--text-primary); margin-bottom: 0.4rem;">Auditoria & Rastreabilidade</h4>
+            <p style="font-size: 0.83rem; color: var(--text-secondary); line-height: 1.5; margin: 0;">
+              Trilha de eventos via <strong>AWS CloudTrail</strong> com retenção controlada dos registros de rastreamento de contato (CTR) para auditorias técnicas e conformidade regulatória.
+            </p>
+          </div>
+        </div>
+
+        <div style="margin-top: 1.5rem; background: rgba(2, 132, 199, 0.08); border: 1px dashed rgba(2, 132, 199, 0.35); border-radius: 8px; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+          <span style="font-size: 0.86rem; color: var(--text-secondary);">
+            <i class="fa-solid fa-file-shield text-primary"></i> Documento técnico oficial: <code>documentacoes/GOVERNANCA_HIPAA_E_SEGURANCA.md</code>
+          </span>
+          <button class="btn btn-primary btn-sm" onclick="navegarPara('documentacao')">
+            <i class="fa-solid fa-book-open"></i> Acessar Documentações Técnicas
+          </button>
+        </div>
+      </div>
+
+      <!-- SEÇÃO FICTÍCIA: NÚMEROS E IMPACTO INSTITUCIONAL MED+SAÚDE NO PARÁ -->
+      <div style="margin-top: 4rem; padding-top: 3rem; border-top: 1px solid var(--border-color);">
+        <div class="section-header" style="text-align: center; margin-bottom: 2rem;">
+          <span class="tag-badge">Números da Operadora</span>
+          <h2>Impacto e Cobertura no Estado do Pará</h2>
+          <p>Conectando vidas a cuidados de saúde humanizados com infraestrutura médica e tecnológica de ponta.</p>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stats-card">
+            <div class="stats-card-val">145.000+</div>
+            <div class="stats-card-label">Beneficiários Ativos no Pará</div>
+          </div>
+          <div class="stats-card">
+            <div class="stats-card-val">520+</div>
+            <div class="stats-card-label">Médicos Cooperados & Clínicas</div>
+          </div>
+          <div class="stats-card">
+            <div class="stats-card-val">32</div>
+            <div class="stats-card-label">Hospitais & Prontos-Socorros</div>
+          </div>
+          <div class="stats-card">
+            <div class="stats-card-val">99,98%</div>
+            <div class="stats-card-label">Disponibilidade na AWS</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEÇÃO FICTÍCIA: HOSPITAIS E CENTROS MÉDICOS DE REFERÊNCIA -->
+      <div style="margin-top: 3.5rem;">
+        <div class="section-header" style="text-align: center; margin-bottom: 2rem;">
+          <span class="tag-badge tag-badge-blue">Rede Credenciada Pará</span>
+          <h2>Principais Hospitais e Centros de Diagnóstico</h2>
+          <p>Atendimento emergencial e agendado com tecnologia e acolhimento em Belém e Região Metropolitana.</p>
+        </div>
+
+        <div class="hospitals-grid">
+          <div class="hospital-card">
+            <div class="hospital-icon"><i class="fa-solid fa-hospital"></i></div>
+            <div class="hospital-details">
+              <h4>Hospital Porto Dias</h4>
+              <p>Av. Almirante Barroso, Marco • Belém<br>Pronto Atendimento Adulto/Infantil 24h & UTI de Alta Complexidade.</p>
+            </div>
+          </div>
+
+          <div class="hospital-card">
+            <div class="hospital-icon" style="background: rgba(16, 185, 129, 0.15); color: #34d399;"><i class="fa-solid fa-square-plus"></i></div>
+            <div class="hospital-details">
+              <h4>Hospital Guadalupe</h4>
+              <p>R. Arcipreste Manoel Teodoro, Campina • Belém<br>Centro Cirúrgico Avançado, Maternidade e Centro Cardiológico.</p>
+            </div>
+          </div>
+
+          <div class="hospital-card">
+            <div class="hospital-icon" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24;"><i class="fa-solid fa-truck-medical"></i></div>
+            <div class="hospital-details">
+              <h4>Hospital Metropolitano</h4>
+              <p>Rodovia BR-316, Km 3 • Ananindeua<br>Referência em Ortopedia, Traumatologia e Medicina Diagnóstica.</p>
+            </div>
+          </div>
+
+          <div class="hospital-card">
+            <div class="hospital-icon" style="background: rgba(239, 68, 68, 0.15); color: #f87171;"><i class="fa-solid fa-heart-pulse"></i></div>
+            <div class="hospital-details">
+              <h4>Clínica Som Diagnósticos</h4>
+              <p>Tv. Dom Romualdo de Seixas, Umarizal • Belém<br>Ressonância Magnética, Tomografia Computadorizada e Laboratório.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEÇÃO FICTÍCIA: DEPOIMENTOS DE BENEFICIÁRIOS DO PARÁ -->
+      <div style="margin-top: 4rem; padding-top: 3rem; border-top: 1px solid var(--border-color);">
+        <div class="section-header" style="text-align: center; margin-bottom: 2rem;">
+          <span class="tag-badge tag-badge-green">Experiência do Paciente</span>
+          <h2>O que Dizem Nossos Beneficiários</h2>
+          <p>Histórias reais de quem precisou de agilidade e foi atendido sem filas pela nossa inteligência artificial.</p>
+        </div>
+
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <div>
+              <div class="testimonial-stars">
+                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+              </div>
+              <p class="testimonial-text">
+                "Eu tinha receio de usar robô por causa da minha idade, mas liguei pro 0800 e a voz da Iara me entendeu perfeitamente! Falei que precisava de ortopedista aqui em Curitiba e ela me indicou o Dr. Carlos Eduardo com protocolo imediato. Nota mil!"
+              </p>
+            </div>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">DM</div>
+              <div class="testimonial-info">
+                <h4>Dona Dirce Mendes, 68 anos</h4>
+                <span>Aposentada • Bairro Batel, Curitiba/PR</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div>
+              <div class="testimonial-stars">
+                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+              </div>
+              <p class="testimonial-text">
+                "No meio da correria do trabalho precisei agendar um ortopedista pra uma lesão no joelho. Pelo chat aqui no celular, em 40 segundos escolhi o horário em Ananindeua e já recebi o protocolo no WhatsApp."
+              </p>
+            </div>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar" style="background: linear-gradient(135deg, #0284c7, #2563eb);">CS</div>
+              <div class="testimonial-info">
+                <h4>Carlos Eduardo Siqueira, 38 anos</h4>
+                <span>Engenheiro Civil • Cidade Nova, Ananindeua/PA</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div>
+              <div class="testimonial-stars">
+                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+              </div>
+              <p class="testimonial-text">
+                "Como médico cooperado, percebi uma queda de mais de 40% no não comparecimento às consultas. Os pacientes chegam informados, com guia autorizada e dados já integrados ao sistema."
+              </p>
+            </div>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar" style="background: linear-gradient(135deg, #059669, #10b981);">PA</div>
+              <div class="testimonial-info">
+                <h4>Dr. Paulo Sérgio Alencar</h4>
+                <span>Cardiologista Credenciado • CRM/PA 6720</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
