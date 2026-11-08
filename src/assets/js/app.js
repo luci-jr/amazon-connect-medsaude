@@ -718,22 +718,6 @@ function simularLoginBeneficiario() {
 
 // 8. Roteador de Múltiplas Páginas (SPA Views) e Tópicos Internos
 const TOPIC_PAGE_MAP_JS = {
-  // Tópicos da Documentação Técnica
-  'doc-visao-geral': 'documentacao',
-  'doc-lex-intents': 'documentacao',
-  'doc-s3-data': 'documentacao',
-  'doc-contact-flow': 'documentacao',
-  'doc-widget-aws': 'documentacao',
-  'doc-s3-deploy': 'documentacao',
-  'doc-lambda-event': 'documentacao',
-  'doc-faq-banca': 'documentacao',
-
-  // Tópicos da Arquitetura AWS
-  'aws-canais': 'omnichannel-case',
-  'aws-metricas': 'omnichannel-case',
-  'aws-telemetria': 'omnichannel-case',
-  'aws-finops': 'omnichannel-case',
-
   // Tópicos de Planos de Saúde
   'planos-cards': 'planos',
   'planos-simulador': 'planos',
@@ -752,7 +736,7 @@ function navegarPara(target) {
   if (!target) target = 'inicio';
   const cleanTarget = target.replace('#', '');
 
-  const rotasPrincipais = ['inicio', 'guia-medico', 'planos', 'sobre-nos', 'documentacao', 'omnichannel-case'];
+  const rotasPrincipais = ['inicio', 'guia-medico', 'planos', 'sobre-nos'];
   let pageId = cleanTarget;
   let subElementId = null;
 

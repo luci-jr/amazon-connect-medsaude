@@ -1,35 +1,17 @@
 /**
  * Med+Saúde - AppRoutes (Angular SPA Routing Pattern)
- * Gerenciador de rotas e transições suaves entre as 6 abas do portal
+ * Gerenciador de rotas e transições suaves entre as 4 abas do portal
  */
 
 export const ROUTES = [
   { path: 'inicio', title: 'Início • Med+Saúde', viewId: 'view-inicio' },
   { path: 'guia-medico', title: 'Guia Médico • Med+Saúde', viewId: 'view-guia-medico' },
   { path: 'planos', title: 'Planos de Saúde • Med+Saúde', viewId: 'view-planos' },
-  { path: 'sobre-nos', title: 'Sobre Nós • Grupo 6 (Escola da Nuvem)', viewId: 'view-sobre-nos' },
-  { path: 'documentacao', title: 'Documentação Técnica • Amazon Connect', viewId: 'view-documentacao' },
-  { path: 'omnichannel-case', title: 'Arquitetura AWS • Med+Saúde', viewId: 'view-omnichannel-case' }
+  { path: 'sobre-nos', title: 'Sobre Nós • Grupo 6 (Escola da Nuvem)', viewId: 'view-sobre-nos' }
 ];
 
 // Mapeamento de subtópicos e seções internas para suas respectivas páginas
 const TOPIC_PAGE_MAP = {
-  // Tópicos da Documentação Técnica
-  'doc-visao-geral': 'documentacao',
-  'doc-lex-intents': 'documentacao',
-  'doc-s3-data': 'documentacao',
-  'doc-contact-flow': 'documentacao',
-  'doc-widget-aws': 'documentacao',
-  'doc-s3-deploy': 'documentacao',
-  'doc-lambda-event': 'documentacao',
-  'doc-faq-banca': 'documentacao',
-
-  // Tópicos da Arquitetura AWS
-  'aws-canais': 'omnichannel-case',
-  'aws-metricas': 'omnichannel-case',
-  'aws-telemetria': 'omnichannel-case',
-  'aws-finops': 'omnichannel-case',
-
   // Tópicos de Planos de Saúde
   'planos-cards': 'planos',
   'planos-simulador': 'planos',

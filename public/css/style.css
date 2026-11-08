@@ -1819,17 +1819,17 @@ body.light-theme .arch-card-icon {
   right: 2rem !important;
   top: auto !important;
   left: auto !important;
-  width: 64px;
-  height: 64px;
+  width: 54px;
+  height: 54px;
   border-radius: 50%;
   background: linear-gradient(135deg, #0284c7 0%, #2563eb 50%, #4338ca 100%);
-  border: 1.5px solid rgba(255, 255, 255, 0.28);
+  border: 1.5px solid rgba(255, 255, 255, 0.55);
   color: #ffffff;
   display: flex !important;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.45), 0 0 20px rgba(56, 189, 248, 0.35);
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4), 0 0 16px rgba(56, 189, 248, 0.25);
   z-index: 2147483647 !important;
   transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
   padding: 0;
@@ -1837,8 +1837,9 @@ body.light-theme .arch-card-icon {
 }
 
 .chat-launcher-btn:hover {
-  transform: scale(1.1) translateY(-3px);
-  box-shadow: 0 16px 38px rgba(37, 99, 235, 0.6), 0 0 28px rgba(56, 189, 248, 0.55);
+  transform: scale(1.08) translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.55), 0 0 22px rgba(56, 189, 248, 0.4);
 }
 
 .chat-launcher-btn:active {
@@ -1853,11 +1854,43 @@ body.light-theme .arch-card-icon {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
+  overflow: hidden;
   z-index: 2;
 }
 
+.chat-launcher-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 20%;
+  transition: transform 0.35s ease;
+  display: block;
+}
+
+.chat-launcher-btn:hover .chat-launcher-avatar {
+  transform: scale(1.08);
+}
+
+.chat-launcher-close-icon {
+  display: none;
+  font-size: 1.35rem;
+  color: #ffffff;
+  transition: transform 0.3s ease;
+}
+
+.chat-launcher-btn.chat-open .chat-launcher-avatar,
+body.chat-is-open #chat-launcher .chat-launcher-avatar {
+  display: none;
+}
+
+.chat-launcher-btn.chat-open .chat-launcher-close-icon,
+body.chat-is-open #chat-launcher .chat-launcher-close-icon {
+  display: block;
+}
+
 .chat-launcher-icon {
-  font-size: 1.7rem;
+  font-size: 1.5rem;
   color: #ffffff;
   transition: transform 0.3s ease;
   filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.25));
@@ -1896,14 +1929,14 @@ body.light-theme .arch-card-icon {
 /* Indicador de Status Online 24/7 (Elegante, sem badge feio de texto) */
 .chat-launcher-status-dot {
   position: absolute;
-  bottom: 2px;
-  right: 2px;
-  width: 15px;
-  height: 15px;
+  bottom: 0px;
+  right: 0px;
+  width: 13px;
+  height: 13px;
   background: #10b981;
-  border: 2.5px solid #0b1329;
+  border: 2px solid #0b1329;
   border-radius: 50%;
-  box-shadow: 0 0 10px #10b981;
+  box-shadow: 0 0 8px #10b981;
   z-index: 4;
 }
 
@@ -1948,8 +1981,8 @@ body.light-theme .arch-card-icon {
 /* Adaptação Harmoniosa para o MODO CLARO (Sépia Suave) */
 body.light-theme .chat-launcher-btn {
   background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
-  border: 2.5px solid #ffffff;
-  box-shadow: 0 12px 28px rgba(2, 132, 199, 0.35), 0 4px 12px rgba(44, 38, 30, 0.15);
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35), 0 3px 8px rgba(44, 38, 30, 0.15);
 }
 
 body.light-theme .chat-launcher-btn:hover {
