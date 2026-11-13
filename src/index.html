@@ -1642,35 +1642,47 @@
             headerMessage: '\u200B'
           }
         });
-        amazon_connect('customStyles', {
-          global: {
-            frameWidth: '380px',
-            frameHeight: '620px',
-            textColor: '#0f172a',
-            fontSize: '14px',
-            typeface: "'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
-          },
-          header: {
-            headerTextColor: 'transparent',
-            headerBackgroundColor: '#0891B2'
-          },
-          transcript: {
-            widgetBackgroundColor: '#f8fafc',
-            agentChatBubbleColor: '#ffffff',
-            agentMessageTextColor: '#0f172a',
-            customerChatBubbleColor: '#0891B2',
-            customerMessageTextColor: '#ffffff'
-          },
-          footer: {
-            footerBackgroundColor: '#ffffff',
-            buttonBackgroundColor: '#0891B2',
-            buttonTextColor: '#ffffff'
-          },
-          logo: {
-            logoMaxHeight: '80px',
-            logoMaxWidth: '100%'
+        function getEstilosConnect(tema) {
+          const isDark = tema === 'dark';
+          return {
+            global: {
+              frameWidth: '380px',
+              frameHeight: '620px',
+              textColor: isDark ? '#f8fafc' : '#0f172a',
+              fontSize: '14px',
+              typeface: "'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+            },
+            header: {
+              headerTextColor: 'transparent',
+              headerBackgroundColor: '#0891B2'
+            },
+            transcript: {
+              widgetBackgroundColor: isDark ? '#0b1120' : '#f8fafc',
+              agentChatBubbleColor: isDark ? '#1e293b' : '#ffffff',
+              agentMessageTextColor: isDark ? '#f8fafc' : '#0f172a',
+              customerChatBubbleColor: '#0891B2',
+              customerMessageTextColor: '#ffffff'
+            },
+            footer: {
+              footerBackgroundColor: isDark ? '#0b1120' : '#ffffff',
+              buttonBackgroundColor: '#0891B2',
+              buttonTextColor: '#ffffff'
+            },
+            logo: {
+              logoMaxHeight: '80px',
+              logoMaxWidth: '100%'
+            }
+          };
+        }
+
+        window.atualizarTemaConnect = function (tema) {
+          if (typeof amazon_connect === 'function') {
+            amazon_connect('customStyles', getEstilosConnect(tema));
           }
-        });
+        };
+
+        const temaInicial = localStorage.getItem('medsaude_theme') || (document.body && document.body.classList.contains('light-theme') ? 'light' : 'dark');
+        amazon_connect('customStyles', getEstilosConnect(temaInicial));
         amazon_connect('snippetId', 'QVFJREFIZ1NqZWV5MTExbXUwZXRHZUlvQ2NPT3RQZ1k4bTl0VDhTaTZYcy9YcFVCVHdFayttUEpFNmlJZkdOL3FRd1Jld0R5QUFBQWJqQnNCZ2txaGtpRzl3MEJCd2FnWHpCZEFnRUFNRmdHQ1NxR1NJYjNEUUVIQVRBZUJnbGdoa2dCWlFNRUFTNHdFUVFNNXV5ODdRYnVQSVphK0lYN0FnRVFnQ3ZaTFFNdVMwVDYrcXRjNGxvM2xGVFRZbHhpV2dnL2hXczZCSTcwZ092NGNzY3g0N1pJVFNEZEllS0c6Om1xOEI2L0NTV3Mwd1U5aW1vK0dmSUI5QTlaSTJndVlwT3k2bm1PUGJQd1Y4YlA3MmRNbEMyN24zMVYrRm01Ly9PMnYwZGZpMDk3RDNXSTJIdjBWU2l1M0poSFhpZFU5MUpUUmJEQmExcjFwenNhTHljSFdkQ2NYYXpSSkFQQmdoY2pWcm9YTnBBUXBUemtwTWRkQVY3ZEVCSzJZWW5NOD0=');
         amazon_connect('supportedMessagingContentTypes', ['text/plain', 'text/markdown', 'application/vnd.amazonaws.connect.message.interactive', 'application/vnd.amazonaws.connect.message.interactive.response']);
       </script>

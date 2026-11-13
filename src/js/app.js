@@ -124,6 +124,11 @@ function aplicarTema(tema) {
       iconDrawer.style.color = '#f59e0b';
     }
   }
+
+  // Sincroniza dinamicamente o tema Dark/Light com o Widget do Amazon Connect
+  if (typeof window.atualizarTemaConnect === 'function') {
+    window.atualizarTemaConnect(tema);
+  }
 }
 
 // 1.2 Dropdowns Customizados com Bordas Arredondadas (Glassmorphism)
