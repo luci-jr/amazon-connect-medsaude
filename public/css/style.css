@@ -4729,3 +4729,20 @@ iframe[id*="amazon-connect"],
   max-height: calc(100vh - 90px) !important;
 }
 
+@media (max-width: 640px) {
+  #amazon-connect-chat-wrapper,
+  #amazon-connect-widget-frame,
+  div[id*="amazon-connect"][style*="position: fixed"] {
+    right: 12px !important;
+    bottom: 74px !important;
+    max-width: calc(100vw - 24px) !important;
+  }
+  iframe[id*="amazon-connect"],
+  #amazon-connect-chat-widget-iframe,
+  #amazon-connect-chat-iframe {
+    max-width: calc(100vw - 24px) !important;
+    width: 100% !important;
+    max-height: calc(100vh - 84px) !important;
+  }
+}
+
