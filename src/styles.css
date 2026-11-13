@@ -4660,6 +4660,9 @@ button[id*="amazon-connect"] {
   height: 60px !important;
   border-radius: 50% !important;
   cursor: pointer !important;
+  position: fixed !important;
+  bottom: 84px !important;
+  right: 1.5rem !important;
 }
 
 #amazon-connect-chat-button:hover,
@@ -4687,11 +4690,14 @@ button[id*="amazon-connect"].active svg {
   padding: 6px !important;
 }
 
-/* Container do Widget & Iframe com acabamento moderno sem quebra de scroll */
+/* Container do Widget & Iframe com acabamento moderno sem quebra de scroll e elevado do rodapé */
 #amazon-connect-chat-wrapper,
+#amazon-connect-widget-frame,
 div[id*="amazon-connect"][style*="position: fixed"],
 div[id*="amazon-connect-live-widget"] {
   z-index: 999999 !important;
+  bottom: 84px !important;
+  right: 1.5rem !important;
 }
 
 iframe[id*="amazon-connect"],
