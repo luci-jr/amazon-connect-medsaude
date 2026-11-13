@@ -4663,6 +4663,7 @@ button[id*="amazon-connect"] {
   position: fixed !important;
   bottom: 84px !important;
   right: 1.5rem !important;
+  z-index: 999990 !important;
 }
 
 #amazon-connect-chat-button:hover,
@@ -4680,14 +4681,15 @@ div[id*="amazon-connect"] button svg {
   transition: opacity 0.2s ease !important;
 }
 
-/* Quando aberto (aria-expanded="true" ou classe active), mostra o botão de fechar com fundo escuro sutil */
-#amazon-connect-chat-button[aria-expanded="true"] svg,
-button[id*="amazon-connect"][aria-expanded="true"] svg,
-button[id*="amazon-connect"].active svg {
-  opacity: 1 !important;
-  background: rgba(15, 23, 42, 0.7) !important;
-  border-radius: 50% !important;
-  padding: 6px !important;
+/* Quando o frame do chat estiver aberto (.show), oculta o botão flutuante para NÃO sobrepor o botão 'Iniciar uma chamada' */
+body:has(#amazon-connect-widget-frame.show) #amazon-connect-chat-button,
+body:has(#amazon-connect-widget-frame.show) button[id*="amazon-connect"],
+body:has(#amazon-connect-widget-frame.show) div[id*="amazon-connect"] button,
+body:has(.acFrameContainer.show) button[id*="amazon-connect"],
+#amazon-connect-live-widget:has(.show) button {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 /* Container do Widget & Iframe com acabamento moderno sem quebra de scroll e elevado do rodapé */
@@ -4695,7 +4697,7 @@ button[id*="amazon-connect"].active svg {
 #amazon-connect-widget-frame,
 div[id*="amazon-connect"][style*="position: fixed"],
 div[id*="amazon-connect-live-widget"] {
-  z-index: 999999 !important;
+  z-index: 1000000 !important;
   bottom: 84px !important;
   right: 1.5rem !important;
 }
