@@ -1,0 +1,48 @@
+<!-- MODAL DE AGENDAMENTO DE CONSULTA (ANGULAR SHARED COMPONENT) -->
+<div class="modal-backdrop hidden" id="modal-agendamento">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3><i class="fa-solid fa-calendar-check text-primary"></i> Agendar Consulta</h3>
+      <button class="chat-btn-icon" style="color: var(--text-muted);" onclick="fecharModalAgendamento()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="modal-doctor-highlight">
+        <h4 id="modal-doc-nome" style="color: var(--primary-light); margin-bottom: 0.2rem;">Carregando médico...</h4>
+        <p id="modal-doc-info" style="font-size: 0.82rem; color: var(--text-secondary);">Especialidade • Local</p>
+      </div>
+
+      <form id="form-agendamento" onsubmit="confirmarAgendamento(event)">
+        <div class="search-field" style="margin-bottom: 0.85rem;">
+          <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.3rem;">Selecione o Horário:</label>
+          <select id="modal-select-horario" required style="width: 100%; padding: 0.6rem; border-radius: 6px; background: var(--bg-surface); border: 1px solid var(--border-color); color: var(--text-primary); font-family: inherit;">
+            <!-- Opções injetadas via JS -->
+          </select>
+        </div>
+
+        <div class="search-field" style="margin-bottom: 0.85rem;">
+          <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.3rem;">Nome Completo do Paciente:</label>
+          <input type="text" id="modal-input-nome" required placeholder="Ex: Maria de Souza" style="width: 100%; padding: 0.6rem; border-radius: 6px; background: var(--bg-surface); border: 1px solid var(--border-color); color: var(--text-primary); font-family: inherit;">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1.25rem;">
+          <div>
+            <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.3rem;">CPF:</label>
+            <input type="text" id="modal-input-cpf" required placeholder="000.000.000-00" style="width: 100%; padding: 0.6rem; border-radius: 6px; background: var(--bg-surface); border: 1px solid var(--border-color); color: var(--text-primary); font-family: inherit;">
+          </div>
+          <div>
+            <label style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.3rem;">Celular / WhatsApp:</label>
+            <input type="tel" id="modal-input-telefone" required placeholder="(91) 99999-9999" style="width: 100%; padding: 0.6rem; border-radius: 6px; background: var(--bg-surface); border: 1px solid var(--border-color); color: var(--text-primary); font-family: inherit;">
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 0.75rem; justify-content: flex-end;">
+          <button type="button" class="btn btn-outline btn-sm" onclick="fecharModalAgendamento()">Cancelar</button>
+          <button type="submit" class="btn btn-primary btn-sm">Confirmar Agendamento</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
