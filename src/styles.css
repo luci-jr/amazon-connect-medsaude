@@ -4638,3 +4638,69 @@ body.light-theme .docs-block-footer {
 body.light-theme .docs-block-footer span {
   color: #57534e !important;
 }
+
+/* =========================================================================
+   ESTILIZAÇÃO PREMIUM AMAZON CONNECT COMMUNICATIONS WIDGET
+   Avatar da Iara, Bordas Arredondadas, Sombra e Eliminação de Scrollbars
+   ========================================================================= */
+
+/* Botão Disparador Oficial AWS Connect com Foto/Ícone da Iara */
+#amazon-connect-chat-button,
+div[id*="amazon-connect"] button[id*="button"],
+div[id*="amazon-connect"] button,
+button[id*="amazon-connect"] {
+  background-image: url('../images/avatar-iara.jpg') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  border: 3px solid #0891b2 !important;
+  box-shadow: 0 8px 24px rgba(8, 145, 178, 0.45) !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  width: 60px !important;
+  height: 60px !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+}
+
+#amazon-connect-chat-button:hover,
+div[id*="amazon-connect"] button:hover,
+button[id*="amazon-connect"]:hover {
+  transform: scale(1.08) !important;
+  box-shadow: 0 12px 30px rgba(8, 145, 178, 0.6) !important;
+}
+
+/* Oculta o ícone SVG padrão para dar foco total ao rosto da assistente Iara */
+#amazon-connect-chat-button svg,
+button[id*="amazon-connect"] svg,
+div[id*="amazon-connect"] button svg {
+  opacity: 0 !important;
+  transition: opacity 0.2s ease !important;
+}
+
+/* Quando aberto (aria-expanded="true" ou classe active), mostra o botão de fechar com fundo escuro sutil */
+#amazon-connect-chat-button[aria-expanded="true"] svg,
+button[id*="amazon-connect"][aria-expanded="true"] svg,
+button[id*="amazon-connect"].active svg {
+  opacity: 1 !important;
+  background: rgba(15, 23, 42, 0.7) !important;
+  border-radius: 50% !important;
+  padding: 6px !important;
+}
+
+/* Container do Widget & Iframe com acabamento moderno sem quebra de scroll */
+#amazon-connect-chat-wrapper,
+div[id*="amazon-connect"][style*="position: fixed"],
+div[id*="amazon-connect-live-widget"] {
+  z-index: 999999 !important;
+}
+
+iframe[id*="amazon-connect"],
+#amazon-connect-chat-iframe {
+  border-radius: 20px !important;
+  box-shadow: 0 20px 48px -8px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.12) !important;
+  border: none !important;
+  overflow: hidden !important;
+  max-width: calc(100vw - 24px) !important;
+  max-height: calc(100vh - 90px) !important;
+}
+
