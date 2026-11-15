@@ -4749,7 +4749,7 @@ div[class*="acWidgetContainer"] button:not(:first-of-type) {
   transform: scale(1.15) !important;
 }
 
-/* Chip/Pill oficial discreto [ 🎧 Iara ] */
+/* Chip/Pill oficial discreto [ 🎧 Iara ] - Exclusivo para Mobile */
 .btn-chat-mobile-pill,
 .btn-chat-restore-pill {
   position: fixed !important;
@@ -4763,7 +4763,7 @@ div[class*="acWidgetContainer"] button:not(:first-of-type) {
   font-weight: 700 !important;
   border-radius: 999px !important;
   padding: 0.38rem 0.85rem !important;
-  display: inline-flex !important;
+  display: none !important;
   align-items: center !important;
   gap: 0.45rem !important;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6), 0 0 10px rgba(8, 145, 178, 0.35) !important;
@@ -4785,7 +4785,15 @@ div[class*="acWidgetContainer"] button:not(:first-of-type) {
   box-shadow: 0 6px 20px rgba(8, 145, 178, 0.5) !important;
 }
 
-/* No mobile: oculta completamente o botão circular grande para deixar SOMENTE a pílula [ 🎧 Iara ] */
+/* No desktop (> 768px): a pílula móvel é estritamente oculta */
+@media (min-width: 769px) {
+  .btn-chat-mobile-pill,
+  .btn-chat-restore-pill {
+    display: none !important;
+  }
+}
+
+/* No mobile (<= 768px): oculta completamente o botão circular grande para deixar SOMENTE a pílula [ 🎧 Iara ] */
 @media (max-width: 768px) {
   #amazon-connect-open-widget-button,
   #amazon-connect-close-widget-button,
@@ -4799,6 +4807,10 @@ div[class*="acWidgetContainer"] button:not(:first-of-type) {
     width: 0 !important;
     height: 0 !important;
     overflow: hidden !important;
+  }
+
+  .btn-chat-mobile-pill {
+    display: inline-flex !important;
   }
 
   body.chat-is-open .btn-chat-mobile-pill,
