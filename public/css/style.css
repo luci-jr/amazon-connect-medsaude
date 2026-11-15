@@ -4965,6 +4965,32 @@ body.light-theme .nav-timer-val {
   }
 }
 
+/* Quando o cronômetro do pitch está ativo: no mobile, oculta controles secundários (tema, fontes, entrar) */
+@media (max-width: 768px) {
+  body.pitch-timer-active #theme-toggle,
+  body.pitch-timer-active .font-accessibility-group,
+  body.pitch-timer-active .floating-navbar .btn-pill-outline {
+    display: none !important;
+  }
+
+  body.pitch-timer-active .nav-pitch-timer {
+    display: inline-flex !important;
+    padding: 0.28rem 0.65rem !important;
+    gap: 0.45rem !important;
+  }
+
+  body.pitch-timer-active .nav-timer-val {
+    font-size: 0.95rem !important;
+    font-weight: 800 !important;
+  }
+
+  body.pitch-timer-active .nav-timer-btn {
+    width: 26px !important;
+    height: 26px !important;
+    font-size: 0.72rem !important;
+  }
+}
+
 /* CRONÔMETRO STICKY (Compacto, topo da seção pitch) */
 .pitch-timer-container {
   position: sticky;

@@ -1191,6 +1191,9 @@ function iniciarPitchTimer() {
     }
   }, 1000);
 
+  // Ativa estado do cronômetro (no mobile, oculta botões de tema e fonte para dar espaço)
+  document.body.classList.add('pitch-timer-active');
+
   // Integra automaticamente o cronômetro à barra de menu superior
   const navTimer = document.getElementById('nav-pitch-timer');
   if (navTimer) {
@@ -1214,6 +1217,10 @@ function pararPitchTimer() {
     pitchTimerInterval = null;
   }
   pitchSegundosRestantes = 600; // Reseta cravado para 10 minutos (meta oficial)
+
+  // Desativa estado do cronômetro (restaura botões no mobile)
+  document.body.classList.remove('pitch-timer-active');
+
   atualizarDisplayPitch();
 
   // Oculta da barra de navegação ao parar
