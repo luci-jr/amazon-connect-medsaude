@@ -24,7 +24,6 @@ function iniciarApp() {
   inicializarScrollSpyDocumentacao();
   inicializarBotaoVoltarAoTopo();
   blindarAmazonConnectMobile();
-  inicializarCronometroArrastavel();
 
   // Fechar dropdowns ao clicar fora ou apertar Escape
   document.addEventListener('click', () => {
@@ -819,13 +818,7 @@ function navegarPara(target) {
     }
   });
 
-  // 5. Visibilidade do Cronômetro Flutuante (apenas na aba de apresentação)
-  const floatingPill = document.getElementById('pitch-floating-pill');
-  if (floatingPill) {
-    floatingPill.style.display = (pageId === 'apresentacao') ? 'inline-flex' : 'none';
-  }
-
-  // 6. Atualizar URL com histórico
+  // 5. Atualizar URL com histórico
   const finalHash = subElementId ? `#${subElementId}` : `#${pageId}`;
   if (window.location.hash !== finalHash) {
     history.pushState(null, null, finalHash);
@@ -1135,37 +1128,31 @@ function formatarTempoPitch(segundos) {
 function atualizarDisplayPitch() {
   const formatted = formatarTempoPitch(pitchSegundosRestantes);
   const display = document.getElementById('pitch-timer-display');
-  const pillDisplay = document.getElementById('pitch-pill-time');
-  const pill = document.getElementById('pitch-floating-pill');
-  const icon = document.getElementById('pitch-icon-toggle');
+  const bannerIcon = document.getElementById('banner-icon-toggle');
+  const bannerText = document.getElementById('banner-text-toggle');
   const navTimer = document.getElementById('nav-pitch-timer');
   const navDisplay = document.getElementById('nav-timer-val');
   const navIcon = document.getElementById('nav-icon-toggle');
 
-  if (display) display.textContent = formatted;
-  if (pillDisplay) pillDisplay.textContent = formatted;
-  if (navDisplay) navDisplay.textContent = formatted;
-
-  if (pill) {
-    if (pitchTimerInterval) {
-      pill.classList.add('running');
-      pill.classList.remove('paused');
-    } else {
-      pill.classList.remove('running');
-      pill.classList.add('paused');
-    }
-
+  if (display) {
+    display.textContent = formatted;
     if (pitchSegundosRestantes <= 60 && pitchSegundosRestantes > 0) {
-      pill.classList.add('danger');
-      if (display) display.style.color = '#f59e0b';
+      display.style.color = '#f59e0b';
     } else if (pitchSegundosRestantes === 0) {
-      pill.classList.add('danger');
-      if (display) display.style.color = '#ef4444';
+      display.style.color = '#ef4444';
     } else {
-      pill.classList.remove('danger');
-      if (display) display.style.color = '';
+      display.style.color = '';
     }
   }
+
+  if (bannerIcon) {
+    bannerIcon.className = pitchTimerInterval ? 'fa-solid fa-pause' : 'fa-solid fa-play';
+  }
+  if (bannerText) {
+    bannerText.textContent = pitchTimerInterval ? 'Pausar' : 'Iniciar';
+  }
+
+  if (navDisplay) navDisplay.textContent = formatted;
 
   if (navTimer) {
     if (pitchTimerInterval) {
@@ -1187,9 +1174,6 @@ function atualizarDisplayPitch() {
     }
   }
 
-  if (icon) {
-    icon.className = pitchTimerInterval ? 'fa-solid fa-pause' : 'fa-solid fa-play';
-  }
   if (navIcon) {
     navIcon.className = pitchTimerInterval ? 'fa-solid fa-pause' : 'fa-solid fa-play';
   }
@@ -1248,72 +1232,23 @@ function togglePitchTimer() {
   }
 }
 
-function resetarPitchTimer(minutos = 10) {
-  pausarPitchTimer();
-  pitchSegundosRestantes = Math.round(minutos * 60);
-  atualizarDisplayPitch();
+function reiniciarPitchTimer() {
+  const estavaRodando = !!pitchTimerInterval;
+  if (pitchTimerInterval) {
+    clearInterval(pitchTimerInterval);
+    pitchTimerInterval = null;
+  }
+  pitchSegundosRestantes = 600; // 10 minutos cravados
+
+  if (estavaRodando) {
+    iniciarPitchTimer();
+  } else {
+    atualizarDisplayPitch();
+  }
 }
 
-// 12.3 Sistema de Arrastar (Draggable) do Cronômetro Flutuante com Suporte a Mouse e Touch
-function inicializarCronometroArrastavel() {
-  const pill = document.getElementById('pitch-floating-pill');
-  if (!pill) return;
-
-  let isDragging = false;
-  let startPointerX = 0, startPointerY = 0;
-  let currentTranslateX = 0, currentTranslateY = 0;
-  let tempTranslateX = 0, tempTranslateY = 0;
-
-  function onStart(e) {
-    // Não iniciar drag se clicou em um botão interno (play/pause/reset)
-    if (e.target.closest('.pitch-pill-btn')) return;
-
-    isDragging = true;
-    pill.classList.add('is-dragging');
-
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-
-    startPointerX = clientX;
-    startPointerY = clientY;
-
-    document.addEventListener('mousemove', onMove, { passive: false });
-    document.addEventListener('mouseup', onEnd);
-    document.addEventListener('touchmove', onMove, { passive: false });
-    document.addEventListener('touchend', onEnd);
-  }
-
-  function onMove(e) {
-    if (!isDragging) return;
-    if (e.cancelable) e.preventDefault();
-
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-
-    const deltaX = clientX - startPointerX;
-    const deltaY = clientY - startPointerY;
-
-    tempTranslateX = currentTranslateX + deltaX;
-    tempTranslateY = currentTranslateY + deltaY;
-
-    pill.style.transform = `translate3d(${tempTranslateX}px, ${tempTranslateY}px, 0)`;
-  }
-
-  function onEnd() {
-    if (!isDragging) return;
-    isDragging = false;
-    pill.classList.remove('is-dragging');
-    currentTranslateX = tempTranslateX;
-    currentTranslateY = tempTranslateY;
-
-    document.removeEventListener('mousemove', onMove);
-    document.removeEventListener('mouseup', onEnd);
-    document.removeEventListener('touchmove', onMove);
-    document.removeEventListener('touchend', onEnd);
-  }
-
-  pill.addEventListener('mousedown', onStart);
-  pill.addEventListener('touchstart', onStart, { passive: false });
+function resetarPitchTimer(minutos = 10) {
+  reiniciarPitchTimer();
 }
 
 // 12. Exportações Globais para o Window
@@ -1333,6 +1268,7 @@ window.voltarAoTopo = voltarAoTopo;
 window.iniciarPitchTimer = iniciarPitchTimer;
 window.pausarPitchTimer = pausarPitchTimer;
 window.togglePitchTimer = togglePitchTimer;
+window.reiniciarPitchTimer = reiniciarPitchTimer;
 window.resetarPitchTimer = resetarPitchTimer;
 window.pararPitchTimer = pararPitchTimer;
 

@@ -149,7 +149,7 @@
   </style>
 
   <!-- Estilos Customizados & Design System (Angular + Ionic Tokens) -->
-  <link rel="stylesheet" href="./css/style.css?v=1794771728688">
+  <link rel="stylesheet" href="./css/style.css?v=1794772506202">
 </head>
 
 <body class="ion-app-root">
@@ -1561,14 +1561,12 @@
                 <div class="pitch-timer-val" id="pitch-timer-display">10:00</div>
               </div>
               <div class="pitch-timer-controls">
-                <button type="button" class="pitch-timer-btn btn-play" onclick="iniciarPitchTimer()">
-                  <i class="fa-solid fa-play"></i> Iniciar
+                <button type="button" class="pitch-timer-btn btn-play" id="btn-banner-pitch-toggle" onclick="togglePitchTimer()" title="Iniciar / Pausar Cronômetro">
+                  <i class="fa-solid fa-play" id="banner-icon-toggle"></i>
+                  <span id="banner-text-toggle">Iniciar</span>
                 </button>
-                <button type="button" class="pitch-timer-btn" onclick="pausarPitchTimer()">
-                  <i class="fa-solid fa-pause"></i> Pausar
-                </button>
-                <button type="button" class="pitch-timer-btn" onclick="resetarPitchTimer(10)">
-                  <i class="fa-solid fa-rotate-left"></i> 10 Min
+                <button type="button" class="pitch-timer-btn" onclick="reiniciarPitchTimer()" title="Reiniciar para 10 Minutos">
+                  <i class="fa-solid fa-rotate-left"></i> Reiniciar
                 </button>
                 <button type="button" class="pitch-timer-btn btn-stop" onclick="pararPitchTimer()" title="Parar Apresentação (Stop)">
                   <i class="fa-solid fa-stop"></i> Parar
@@ -2088,23 +2086,6 @@
 
 
 
-  <!-- CRONÔMETRO FLUTUANTE EXECUTIVO ARRASTÁVEL (DIRETO NO BODY - 100% FIXED NO VIEWPORT) -->
-  <aside class="pitch-floating-pill" id="pitch-floating-pill" aria-label="Cronômetro Flutuante do Pitch" style="display: none;">
-    <div class="pitch-pill-status">
-      <span class="pitch-pill-dot" id="pitch-pill-dot"></span>
-      <span class="pitch-pill-label">PITCH</span>
-    </div>
-    <div class="pitch-pill-display" id="pitch-pill-time">10:00</div>
-    <div class="pitch-pill-btns">
-      <button type="button" class="pitch-pill-btn btn-play-pause" id="pitch-btn-toggle" onclick="togglePitchTimer()" title="Iniciar / Pausar Cronômetro">
-        <i class="fa-solid fa-play" id="pitch-icon-toggle"></i>
-      </button>
-      <button type="button" class="pitch-pill-btn btn-stop-timer" onclick="pararPitchTimer()" title="Parar Apresentação (Stop)">
-        <i class="fa-solid fa-stop"></i>
-      </button>
-    </div>
-  </aside>
-
   <!-- Botão Flutuante Voltar ao Topo (Global - Lado Inferior Esquerdo) -->
   <button id="btn-voltar-topo" class="btn-floating-topo" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
     title="Voltar ao início da página" aria-label="Voltar ao topo da página">
@@ -2113,10 +2094,10 @@
   </button>
 
   <!-- Scripts da Aplicação (Arquitetura Angular Standalone + Ionic Runtime) -->
-  <script src="./js/data.js?v=1794771728688"></script>
-  <script src="./js/app.js?v=1794771728688"></script>
-  <script src="./js/chat-widget.js?v=1794771728688"></script>
-  <script type="module" src="./main.js?v=1794771728688"></script>
+  <script src="./js/data.js?v=1794772506202"></script>
+  <script src="./js/app.js?v=1794772506202"></script>
+  <script src="./js/chat-widget.js?v=1794772506202"></script>
+  <script type="module" src="./main.js?v=1794772506202"></script>
 </body>
 
 </html>
