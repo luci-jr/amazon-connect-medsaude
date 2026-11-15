@@ -1068,7 +1068,7 @@ function voltarAoTopo() {
 // 12.1 Blindagem de Viewport Mobile para Amazon Connect Communications Widget
 function blindarAmazonConnectMobile() {
   function ajustarFrameConnect() {
-    if (window.innerWidth <= 640) {
+    if (window.innerWidth <= 768) {
       const iframes = document.querySelectorAll(
         'iframe[id*="amazon-connect"], iframe[class*="acFrame"], iframe[src*="connect"]'
       );
@@ -1079,6 +1079,12 @@ function blindarAmazonConnectMobile() {
           chatAbertoMobile = true;
         }
       });
+
+      if (chatAbertoMobile) {
+        document.body.classList.add('connect-chat-open');
+      } else {
+        document.body.classList.remove('connect-chat-open');
+      }
 
       const containers = document.querySelectorAll(
         'div[class*="acWidgetContainer"], div[class*="acFrameContainer"], div[class*="acContainer"], #amazon-connect-chat-wrapper, #amazon-connect-widget-frame'
@@ -1098,14 +1104,20 @@ function blindarAmazonConnectMobile() {
           el.style.setProperty('bottom', '70px', 'important');
           el.style.setProperty('top', 'auto', 'important');
           el.style.setProperty('pointer-events', 'auto', 'important');
+          el.style.setProperty('touch-action', 'pan-y', 'important');
+          el.style.setProperty('overscroll-behavior', 'contain', 'important');
         } else {
           el.style.removeProperty('width');
           el.style.removeProperty('max-width');
           el.style.removeProperty('height');
           el.style.removeProperty('max-height');
+          el.style.removeProperty('touch-action');
+          el.style.removeProperty('overscroll-behavior');
           el.style.setProperty('pointer-events', 'none', 'important');
         }
       });
+    } else {
+      document.body.classList.remove('connect-chat-open');
     }
   }
 

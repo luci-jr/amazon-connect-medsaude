@@ -4900,7 +4900,14 @@ iframe[id*="amazon-connect"],
   pointer-events: auto;
 }
 
-@media (max-width: 640px) {
+/* Quando o chat da Connect estiver aberto no mobile, bloqueia o scroll do body de fundo */
+body.connect-chat-open {
+  overflow: hidden !important;
+  overscroll-behavior: none !important;
+  touch-action: none !important;
+}
+
+@media (max-width: 768px) {
   #amazon-connect-chat-wrapper,
   #amazon-connect-widget-frame,
   div[class*="acFrameContainer"],
@@ -4908,16 +4915,23 @@ iframe[id*="amazon-connect"],
     pointer-events: none !important;
   }
 
+  /* Quando o chat está aberto no mobile, garante captura total do toque e rolagem interna no modal */
+  body.connect-chat-open div[class*="acFrameContainer"],
+  body.connect-chat-open div[class*="acWidgetContainer"],
+  body.connect-chat-open #amazon-connect-chat-wrapper,
+  body.connect-chat-open #amazon-connect-widget-frame,
   #amazon-connect-chat-wrapper *,
   #amazon-connect-widget-frame *,
   div[class*="acFrameContainer"] *,
   div[class*="acWidgetContainer"] * {
-    pointer-events: auto;
+    pointer-events: auto !important;
   }
 
   /* Modal de Diálogo Mobile Compacto (Ocupa ~58% da altura, sem cobrir o topo da tela) */
   div[class*="acFrameContainer"]:has(iframe[style*="height"]),
-  div[class*="acWidgetContainer"]:has(iframe[style*="height"]) {
+  div[class*="acWidgetContainer"]:has(iframe[style*="height"]),
+  body.connect-chat-open div[class*="acFrameContainer"],
+  body.connect-chat-open div[class*="acWidgetContainer"] {
     position: fixed !important;
     left: auto !important;
     right: 12px !important;
@@ -4934,6 +4948,9 @@ iframe[id*="amazon-connect"],
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75), 0 0 16px rgba(8, 145, 178, 0.3) !important;
     z-index: 1000000 !important;
     pointer-events: auto !important;
+    touch-action: pan-y !important;
+    overscroll-behavior: contain !important;
+    -webkit-overflow-scrolling: touch !important;
   }
 
   iframe[id*="amazon-connect"],
@@ -4951,9 +4968,13 @@ iframe[id*="amazon-connect"],
     left: 0 !important;
     margin: 0 !important;
     border: none !important;
-    border-radius: 16px !important;
+    border-radius: 18px !important;
     box-sizing: border-box !important;
     display: block !important;
+    pointer-events: auto !important;
+    touch-action: pan-y !important;
+    overscroll-behavior: contain !important;
+    -webkit-overflow-scrolling: touch !important;
   }
 }
 
