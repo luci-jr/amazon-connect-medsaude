@@ -1998,9 +1998,9 @@
             headerMessage: 'Iara – Assistente Virtual'
           }
         });
-        var isMobileConnect = window.innerWidth <= 640;
-        var dynamicConnectWidth = isMobileConnect ? Math.min(window.innerWidth - 16, 380) + 'px' : '380px';
-        var dynamicConnectHeight = isMobileConnect ? Math.min(window.innerHeight - 84, 560) + 'px' : '620px';
+        var isMobileConnect = window.innerWidth <= 768;
+        var dynamicConnectWidth = isMobileConnect ? Math.min(window.innerWidth - 24, 360) + 'px' : '380px';
+        var dynamicConnectHeight = isMobileConnect ? Math.min(Math.round(window.innerHeight * 0.58), 450) + 'px' : '620px';
 
         amazon_connect('customStyles', {
           global: {

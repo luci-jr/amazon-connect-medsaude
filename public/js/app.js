@@ -1087,14 +1087,14 @@ function blindarAmazonConnectMobile() {
       containers.forEach(el => {
         if (!el) return;
         if (chatAbertoMobile) {
-          const maxW = Math.max(280, window.innerWidth - 16) + 'px';
-          const maxH = Math.max(380, window.innerHeight - 84) + 'px';
-          el.style.setProperty('width', 'calc(100vw - 16px)', 'important');
+          const maxW = Math.min(360, window.innerWidth - 24) + 'px';
+          const maxH = Math.min(450, Math.round(window.innerHeight * 0.58)) + 'px';
+          el.style.setProperty('width', maxW, 'important');
           el.style.setProperty('max-width', maxW, 'important');
           el.style.setProperty('height', maxH, 'important');
           el.style.setProperty('max-height', maxH, 'important');
-          el.style.setProperty('left', '8px', 'important');
-          el.style.setProperty('right', '8px', 'important');
+          el.style.setProperty('left', 'auto', 'important');
+          el.style.setProperty('right', '12px', 'important');
           el.style.setProperty('bottom', '70px', 'important');
           el.style.setProperty('top', 'auto', 'important');
           el.style.setProperty('pointer-events', 'auto', 'important');

@@ -4915,22 +4915,23 @@ iframe[id*="amazon-connect"],
     pointer-events: auto;
   }
 
-  /* Aplica dimensões apenas quando o iframe do chat estiver visivelmente aberto */
+  /* Modal de Diálogo Mobile Compacto (Ocupa ~58% da altura, sem cobrir o topo da tela) */
   div[class*="acFrameContainer"]:has(iframe[style*="height"]),
   div[class*="acWidgetContainer"]:has(iframe[style*="height"]) {
     position: fixed !important;
-    left: 8px !important;
-    right: 8px !important;
+    left: auto !important;
+    right: 12px !important;
     bottom: 70px !important;
     top: auto !important;
-    width: calc(100vw - 16px) !important;
-    max-width: calc(100vw - 16px) !important;
-    height: calc(100dvh - 84px) !important;
-    max-height: calc(100dvh - 84px) !important;
-    margin: 0 auto !important;
+    width: min(360px, calc(100vw - 24px)) !important;
+    max-width: min(360px, calc(100vw - 24px)) !important;
+    height: min(450px, 58dvh) !important;
+    max-height: min(450px, 58dvh) !important;
+    margin: 0 !important;
     box-sizing: border-box !important;
     overflow: hidden !important;
-    border-radius: 16px !important;
+    border-radius: 18px !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75), 0 0 16px rgba(8, 145, 178, 0.3) !important;
     z-index: 1000000 !important;
     pointer-events: auto !important;
   }
