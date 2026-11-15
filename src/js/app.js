@@ -24,6 +24,7 @@ function iniciarApp() {
   inicializarScrollSpyDocumentacao();
   inicializarBotaoVoltarAoTopo();
   blindarAmazonConnectMobile();
+  inicializarChatMobileArrastavelEFechar();
 
   // Fechar dropdowns ao clicar fora ou apertar Escape
   document.addEventListener('click', () => {
@@ -1155,6 +1156,17 @@ function atualizarDisplayPitch() {
     bannerText.textContent = pitchTimerInterval ? 'Pausar' : 'Iniciar';
   }
 
+  const bannerBtn = document.getElementById('btn-banner-pitch-toggle');
+  if (bannerBtn) {
+    if (pitchTimerInterval) {
+      bannerBtn.classList.remove('btn-play');
+      bannerBtn.classList.add('btn-pause');
+    } else {
+      bannerBtn.classList.remove('btn-pause');
+      bannerBtn.classList.add('btn-play');
+    }
+  }
+
   if (navDisplay) navDisplay.textContent = formatted;
 
   if (navTimer) {
@@ -1261,22 +1273,137 @@ function resetarPitchTimer(minutos = 10) {
   reiniciarPitchTimer();
 }
 
-// Vinculação explícita de eventos de clique e toque para garantir execução no mobile
-function vincularBotoesPitchTimer() {
-  const bannerBtn = document.getElementById('btn-banner-pitch-toggle');
-  if (bannerBtn && !bannerBtn.dataset.bound) {
-    bannerBtn.dataset.bound = 'true';
-    bannerBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      togglePitchTimer();
+// 12.3 Sistema Mobile: Chat Flutuante Arrastável com o Dedo & Botão com 'X' para Fechar
+function inicializarChatMobileArrastavelEFechar() {
+  function buscarBotaoConnect() {
+    return document.querySelector(
+      '#amazon-connect-chat-button, button[id*="amazon-connect"], div[id*="amazon-connect"] button, div[class*="acWidgetContainer"] button'
+    );
+  }
+
+  let tentativas = 0;
+  const intervalo = setInterval(() => {
+    tentativas++;
+    const chatBtn = buscarBotaoConnect();
+    if (chatBtn) {
+      clearInterval(intervalo);
+      aplicarArrastoEBotaoFechar(chatBtn);
+    } else if (tentativas > 40) {
+      clearInterval(intervalo);
+    }
+  }, 500);
+
+  function aplicarArrastoEBotaoFechar(btn) {
+    if (btn.dataset.dragReady) return;
+    btn.dataset.dragReady = 'true';
+
+    // 1. Injetar o botão 'x' discreto no canto superior do botão do chat
+    let closeBtn = document.getElementById('btn-fechar-chat-apresentacao');
+    if (!closeBtn) {
+      closeBtn = document.createElement('button');
+      closeBtn.id = 'btn-fechar-chat-apresentacao';
+      closeBtn.className = 'btn-chat-dismiss-corner';
+      closeBtn.title = 'Fechar/Ocultar assistente durante a apresentação';
+      closeBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+      closeBtn.setAttribute('aria-label', 'Ocultar assistente');
+
+      function fecharHandler(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        ocultarChatApresentacao(btn);
+      }
+
+      closeBtn.addEventListener('click', fecharHandler);
+      closeBtn.addEventListener('touchend', fecharHandler);
+
+      btn.appendChild(closeBtn);
+    }
+
+    // 2. Sistema de arrasto com o dedo no mobile (Touch Drag)
+    let isDragging = false;
+    let startX = 0, startY = 0;
+    let currentX = 0, currentY = 0;
+    let deltaMove = 0;
+
+    btn.addEventListener('touchstart', (e) => {
+      if (e.target.closest('#btn-fechar-chat-apresentacao')) return;
+      const touch = e.touches[0];
+      startX = touch.clientX - currentX;
+      startY = touch.clientY - currentY;
+      deltaMove = 0;
+      isDragging = false;
+    }, { passive: true });
+
+    btn.addEventListener('touchmove', (e) => {
+      if (e.target.closest('#btn-fechar-chat-apresentacao')) return;
+      const touch = e.touches[0];
+      const newX = touch.clientX - startX;
+      const newY = touch.clientY - startY;
+      deltaMove += Math.abs(touch.clientX - (startX + currentX)) + Math.abs(touch.clientY - (startY + currentY));
+
+      if (deltaMove > 8) {
+        isDragging = true;
+        currentX = newX;
+        currentY = newY;
+        btn.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+        btn.style.transition = 'none';
+      }
+    }, { passive: true });
+
+    btn.addEventListener('touchend', (e) => {
+      if (isDragging) {
+        e.preventDefault();
+        e.stopPropagation();
+        btn.style.transition = 'transform 0.2s ease';
+        setTimeout(() => { isDragging = false; }, 120);
+      }
     });
   }
 }
 
+function ocultarChatApresentacao(btn) {
+  const target = btn || document.querySelector(
+    '#amazon-connect-chat-button, button[id*="amazon-connect"], div[id*="amazon-connect"] button, div[class*="acWidgetContainer"] button'
+  );
+  if (target) {
+    target.classList.add('chat-oculto-apresentacao');
+    target.style.setProperty('display', 'none', 'important');
+  }
+
+  let restoreBtn = document.getElementById('btn-restaurar-chat-apresentacao');
+  if (!restoreBtn) {
+    restoreBtn = document.createElement('button');
+    restoreBtn.id = 'btn-restaurar-chat-apresentacao';
+    restoreBtn.className = 'btn-chat-restore-pill';
+    restoreBtn.innerHTML = '<i class="fa-solid fa-headset"></i> <span>Iara</span>';
+    restoreBtn.title = 'Reexibir Assistente Virtual';
+    restoreBtn.addEventListener('click', () => {
+      restaurarChatApresentacao(target);
+    });
+    document.body.appendChild(restoreBtn);
+  } else {
+    restoreBtn.style.display = 'inline-flex';
+  }
+}
+
+function restaurarChatApresentacao(btn) {
+  const target = btn || document.querySelector(
+    '#amazon-connect-chat-button, button[id*="amazon-connect"], div[id*="amazon-connect"] button, div[class*="acWidgetContainer"] button'
+  );
+  if (target) {
+    target.classList.remove('chat-oculto-apresentacao');
+    target.style.removeProperty('display');
+  }
+  const restoreBtn = document.getElementById('btn-restaurar-chat-apresentacao');
+  if (restoreBtn) {
+    restoreBtn.style.display = 'none';
+  }
+}
+
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', vincularBotoesPitchTimer);
+  document.addEventListener('DOMContentLoaded', inicializarChatMobileArrastavelEFechar);
 } else {
-  vincularBotoesPitchTimer();
+  inicializarChatMobileArrastavelEFechar();
 }
 
 // 12. Exportações Globais para o Window
@@ -1299,4 +1426,6 @@ window.togglePitchTimer = togglePitchTimer;
 window.reiniciarPitchTimer = reiniciarPitchTimer;
 window.resetarPitchTimer = resetarPitchTimer;
 window.pararPitchTimer = pararPitchTimer;
+window.ocultarChatApresentacao = ocultarChatApresentacao;
+window.restaurarChatApresentacao = restaurarChatApresentacao;
 
