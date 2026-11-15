@@ -4818,36 +4818,29 @@ iframe[id*="amazon-connect"],
   letter-spacing: 0.05em;
 }
 
-/* CRONÔMETRO FLUTUANTE DE CANTO & ARRASTÁVEL (DRAGGABLE - FEEDBACK DO DESENVOLVEDOR & CAMILA) */
+/* CRONÔMETRO FLUTUANTE DE CANTO & ARRASTÁVEL (DRAGGABLE NO BODY - 100% FIXED) */
 .pitch-floating-pill {
   position: fixed !important;
   top: 86px;
   right: 24px;
-  z-index: 999995 !important;
+  z-index: 9999999 !important;
   display: inline-flex;
   align-items: center;
   gap: 0.65rem;
   padding: 0.45rem 0.85rem;
-  background: rgba(15, 23, 42, 0.94);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1.5px solid rgba(6, 182, 212, 0.5);
+  background: rgba(15, 23, 42, 0.96);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1.5px solid rgba(6, 182, 212, 0.55);
   border-radius: 999px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.55), 0 0 18px rgba(6, 182, 212, 0.3);
-  transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.15s ease;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(6, 182, 212, 0.35);
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
   user-select: none;
   -webkit-user-select: none;
   pointer-events: auto;
   cursor: grab;
   touch-action: none;
-}
-
-.pitch-floating-pill.is-dragging {
-  cursor: grabbing !important;
-  transform: scale(1.06) !important;
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.75), 0 0 32px rgba(6, 182, 212, 0.6) !important;
-  border-color: #38bdf8 !important;
-  transition: none !important;
+  will-change: transform;
 }
 
 body.light-theme .pitch-floating-pill {
@@ -4857,9 +4850,15 @@ body.light-theme .pitch-floating-pill {
 }
 
 .pitch-floating-pill:hover {
-  transform: translateY(-2px) scale(1.02);
   border-color: #38bdf8;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.65), 0 0 24px rgba(6, 182, 212, 0.45);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.7), 0 0 26px rgba(6, 182, 212, 0.5);
+}
+
+.pitch-floating-pill.is-dragging {
+  cursor: grabbing !important;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.8), 0 0 34px rgba(6, 182, 212, 0.7) !important;
+  border-color: #38bdf8 !important;
+  transition: none !important;
 }
 
 .pitch-pill-status {

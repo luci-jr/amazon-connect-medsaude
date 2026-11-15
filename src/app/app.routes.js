@@ -7,7 +7,8 @@ export const ROUTES = [
   { path: 'inicio', title: 'Início • Med+Saúde', viewId: 'view-inicio' },
   { path: 'guia-medico', title: 'Guia Médico • Med+Saúde', viewId: 'view-guia-medico' },
   { path: 'planos', title: 'Planos de Saúde • Med+Saúde', viewId: 'view-planos' },
-  { path: 'sobre-nos', title: 'Sobre Nós • Grupo 6 (Escola da Nuvem)', viewId: 'view-sobre-nos' }
+  { path: 'sobre-nos', title: 'Sobre Nós • Grupo 6 (Escola da Nuvem)', viewId: 'view-sobre-nos' },
+  { path: 'apresentacao', title: 'Apresentação do Projeto • Med+Saúde', viewId: 'view-apresentacao' }
 ];
 
 // Mapeamento de subtópicos e seções internas para suas respectivas páginas
@@ -23,7 +24,13 @@ const TOPIC_PAGE_MAP = {
 
   // Tópicos do Guia Médico
   'guia-busca': 'guia-medico',
-  'guia-lista': 'guia-medico'
+  'guia-lista': 'guia-medico',
+
+  // Tópicos de Apresentação
+  'apresentacao-pitch': 'apresentacao',
+  'apresentacao-arquitetura': 'apresentacao',
+  'apresentacao-roteiro': 'apresentacao',
+  'apresentacao-checklist': 'apresentacao'
 };
 
 export class RouterService {
@@ -37,7 +44,8 @@ export class RouterService {
       this.navegarPara(hash);
     });
 
-    const hashInicial = window.location.hash.replace('#', '') || 'inicio';
+    const savedTab = localStorage.getItem('medsaude_last_tab');
+    const hashInicial = window.location.hash.replace('#', '') || savedTab || 'inicio';
     this.navegarPara(hashInicial);
   }
 
@@ -71,6 +79,9 @@ export class RouterService {
 
     const route = ROUTES.find(r => r.path === pageId) || ROUTES[0];
     this.currentRoute = route.path;
+    try {
+      localStorage.setItem('medsaude_last_tab', route.path);
+    } catch (e) {}
 
     // 1. Alterna a visualização ativa da página
     document.querySelectorAll('.page-view').forEach(view => {

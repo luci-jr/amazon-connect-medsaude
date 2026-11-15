@@ -1524,24 +1524,6 @@
 
       <!-- VIEW 6: APRESENTAÇÃO DO PROJETO & ROTEIRO DA BANCA -->
       <div class="page-view" id="view-apresentacao" style="display: none;">
-
-        <!-- CRONÔMETRO FLUTUANTE DE CANTO (FIXED - EXATAMENTE COMO A CAMILA SUGERIU) -->
-        <aside class="pitch-floating-pill" id="pitch-floating-pill" aria-label="Cronômetro Flutuante do Pitch">
-          <div class="pitch-pill-status">
-            <span class="pitch-pill-dot" id="pitch-pill-dot"></span>
-            <span class="pitch-pill-label">PITCH</span>
-          </div>
-          <div class="pitch-pill-display" id="pitch-pill-time">10:00</div>
-          <div class="pitch-pill-btns">
-            <button type="button" class="pitch-pill-btn btn-play-pause" id="pitch-btn-toggle" onclick="togglePitchTimer()" title="Iniciar / Pausar Cronômetro">
-              <i class="fa-solid fa-play" id="pitch-icon-toggle"></i>
-            </button>
-            <button type="button" class="pitch-pill-btn" onclick="resetarPitchTimer(10)" title="Reiniciar para 10 Min">
-              <i class="fa-solid fa-rotate-left"></i>
-            </button>
-          </div>
-        </aside>
-
         <section class="section-apresentacao" id="apresentacao">
           <div class="container">
             <!-- HEADER DA APRESENTAÇÃO -->
@@ -2092,6 +2074,23 @@
 
 
 
+
+  <!-- CRONÔMETRO FLUTUANTE EXECUTIVO ARRASTÁVEL (DIRETO NO BODY - 100% FIXED NO VIEWPORT) -->
+  <aside class="pitch-floating-pill" id="pitch-floating-pill" aria-label="Cronômetro Flutuante do Pitch" style="display: none;">
+    <div class="pitch-pill-status">
+      <span class="pitch-pill-dot" id="pitch-pill-dot"></span>
+      <span class="pitch-pill-label">PITCH</span>
+    </div>
+    <div class="pitch-pill-display" id="pitch-pill-time">10:00</div>
+    <div class="pitch-pill-btns">
+      <button type="button" class="pitch-pill-btn btn-play-pause" id="pitch-btn-toggle" onclick="togglePitchTimer()" title="Iniciar / Pausar Cronômetro">
+        <i class="fa-solid fa-play" id="pitch-icon-toggle"></i>
+      </button>
+      <button type="button" class="pitch-pill-btn" onclick="resetarPitchTimer(10)" title="Reiniciar para 10 Min">
+        <i class="fa-solid fa-rotate-left"></i>
+      </button>
+    </div>
+  </aside>
 
   <!-- Botão Flutuante Voltar ao Topo (Global - Lado Inferior Esquerdo) -->
   <button id="btn-voltar-topo" class="btn-floating-topo" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"

@@ -766,6 +766,10 @@ function navegarPara(target) {
     }
   }
 
+  try {
+    localStorage.setItem('medsaude_last_tab', pageId);
+  } catch (e) {}
+
   // 1. Alternar visualização da página ativa de forma instantânea e absoluta
   const views = document.querySelectorAll('.page-view');
   views.forEach(v => {
@@ -815,7 +819,13 @@ function navegarPara(target) {
     }
   });
 
-  // 5. Atualizar URL com histórico
+  // 5. Visibilidade do Cronômetro Flutuante (apenas na aba de apresentação)
+  const floatingPill = document.getElementById('pitch-floating-pill');
+  if (floatingPill) {
+    floatingPill.style.display = (pageId === 'apresentacao') ? 'inline-flex' : 'none';
+  }
+
+  // 6. Atualizar URL com histórico
   const finalHash = subElementId ? `#${subElementId}` : `#${pageId}`;
   if (window.location.hash !== finalHash) {
     history.pushState(null, null, finalHash);
@@ -887,7 +897,12 @@ function inicializarRoteadorSPA() {
     navegarPara(hash);
   });
 
-  const hashInicial = window.location.hash.replace('#', '') || 'inicio';
+  let savedTab = null;
+  try {
+    savedTab = localStorage.getItem('medsaude_last_tab');
+  } catch (e) {}
+
+  const hashInicial = window.location.hash.replace('#', '') || savedTab || 'inicio';
   navegarPara(hashInicial);
 }
 
@@ -1199,32 +1214,24 @@ function inicializarCronometroArrastavel() {
   if (!pill) return;
 
   let isDragging = false;
-  let startX = 0, startY = 0, initialLeft = 0, initialTop = 0;
+  let startPointerX = 0, startPointerY = 0;
+  let currentTranslateX = 0, currentTranslateY = 0;
+  let tempTranslateX = 0, tempTranslateY = 0;
 
   function onStart(e) {
     // Não iniciar drag se clicou em um botão interno (play/pause/reset)
     if (e.target.closest('.pitch-pill-btn')) return;
 
     isDragging = true;
+    pill.classList.add('is-dragging');
 
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
     const clientY = e.touches ? e.touches[0].clientY : e.clientY;
 
-    const rect = pill.getBoundingClientRect();
-    startX = clientX;
-    startY = clientY;
-    initialLeft = rect.left;
-    initialTop = rect.top;
+    startPointerX = clientX;
+    startPointerY = clientY;
 
-    // Converte right/bottom para coordenadas absolutas de tela para permitir arrasto livre
-    pill.style.right = 'auto';
-    pill.style.bottom = 'auto';
-    pill.style.left = `${initialLeft}px`;
-    pill.style.top = `${initialTop}px`;
-
-    pill.classList.add('is-dragging');
-
-    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mousemove', onMove, { passive: false });
     document.addEventListener('mouseup', onEnd);
     document.addEventListener('touchmove', onMove, { passive: false });
     document.addEventListener('touchend', onEnd);
@@ -1232,37 +1239,26 @@ function inicializarCronometroArrastavel() {
 
   function onMove(e) {
     if (!isDragging) return;
+    if (e.cancelable) e.preventDefault();
 
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
     const clientY = e.touches ? e.touches[0].clientY : e.clientY;
 
-    const deltaX = clientX - startX;
-    const deltaY = clientY - startY;
+    const deltaX = clientX - startPointerX;
+    const deltaY = clientY - startPointerY;
 
-    if (Math.abs(deltaX) > 3 || Math.abs(deltaY) > 3) {
-      if (e.cancelable) e.preventDefault();
-    }
+    tempTranslateX = currentTranslateX + deltaX;
+    tempTranslateY = currentTranslateY + deltaY;
 
-    let newLeft = initialLeft + deltaX;
-    let newTop = initialTop + deltaY;
-
-    // Manter dentro das dimensões visíveis da tela (bounds)
-    const pillWidth = pill.offsetWidth;
-    const pillHeight = pill.offsetHeight;
-    const maxLeft = window.innerWidth - pillWidth - 8;
-    const maxTop = window.innerHeight - pillHeight - 8;
-
-    newLeft = Math.max(8, Math.min(newLeft, maxLeft));
-    newTop = Math.max(8, Math.min(newTop, maxTop));
-
-    pill.style.left = `${newLeft}px`;
-    pill.style.top = `${newTop}px`;
+    pill.style.transform = `translate3d(${tempTranslateX}px, ${tempTranslateY}px, 0)`;
   }
 
   function onEnd() {
     if (!isDragging) return;
     isDragging = false;
     pill.classList.remove('is-dragging');
+    currentTranslateX = tempTranslateX;
+    currentTranslateY = tempTranslateY;
 
     document.removeEventListener('mousemove', onMove);
     document.removeEventListener('mouseup', onEnd);
@@ -1271,7 +1267,7 @@ function inicializarCronometroArrastavel() {
   }
 
   pill.addEventListener('mousedown', onStart);
-  pill.addEventListener('touchstart', onStart, { passive: true });
+  pill.addEventListener('touchstart', onStart, { passive: false });
 }
 
 // 12. Exportações Globais para o Window
