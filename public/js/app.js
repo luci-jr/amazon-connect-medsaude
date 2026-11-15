@@ -1106,7 +1106,7 @@ function blindarAmazonConnectMobile() {
   ajustarFrameConnect();
 }
 
-// 12.2 Cronômetro Interativo do Pitch (Aba Apresentação)
+// 12.2 Cronômetro Interativo do Pitch (Aba Apresentação - Sincronizado com Pill Flutuante)
 let pitchTimerInterval = null;
 let pitchSegundosRestantes = 600; // 10 minutos cravados (meta oficial do pitch Grupo 6)
 
@@ -1116,21 +1116,58 @@ function formatarTempoPitch(segundos) {
   return `${String(min).padStart(2, '0')}:${String(seg).padStart(2, '0')}`;
 }
 
+function atualizarDisplayPitch() {
+  const formatted = formatarTempoPitch(pitchSegundosRestantes);
+  const display = document.getElementById('pitch-timer-display');
+  const pillDisplay = document.getElementById('pitch-pill-time');
+  const pill = document.getElementById('pitch-floating-pill');
+  const icon = document.getElementById('pitch-icon-toggle');
+
+  if (display) display.textContent = formatted;
+  if (pillDisplay) pillDisplay.textContent = formatted;
+
+  if (pill) {
+    if (pitchTimerInterval) {
+      pill.classList.add('running');
+      pill.classList.remove('paused');
+    } else {
+      pill.classList.remove('running');
+      pill.classList.add('paused');
+    }
+
+    if (pitchSegundosRestantes <= 60 && pitchSegundosRestantes > 0) {
+      pill.classList.add('danger');
+      if (display) display.style.color = '#f59e0b';
+    } else if (pitchSegundosRestantes === 0) {
+      pill.classList.add('danger');
+      if (display) display.style.color = '#ef4444';
+    } else {
+      pill.classList.remove('danger');
+      if (display) display.style.color = '';
+    }
+  }
+
+  if (icon) {
+    if (pitchTimerInterval) {
+      icon.className = 'fa-solid fa-pause';
+    } else {
+      icon.className = 'fa-solid fa-play';
+    }
+  }
+}
+
 function iniciarPitchTimer() {
   if (pitchTimerInterval) return;
-  const display = document.getElementById('pitch-timer-display');
   pitchTimerInterval = setInterval(() => {
     if (pitchSegundosRestantes > 0) {
       pitchSegundosRestantes--;
-      if (display) display.textContent = formatarTempoPitch(pitchSegundosRestantes);
+      atualizarDisplayPitch();
     } else {
       pausarPitchTimer();
-      if (display) {
-        display.textContent = '00:00';
-        display.style.color = '#ef4444';
-      }
+      atualizarDisplayPitch();
     }
   }, 1000);
+  atualizarDisplayPitch();
 }
 
 function pausarPitchTimer() {
@@ -1138,16 +1175,21 @@ function pausarPitchTimer() {
     clearInterval(pitchTimerInterval);
     pitchTimerInterval = null;
   }
+  atualizarDisplayPitch();
+}
+
+function togglePitchTimer() {
+  if (pitchTimerInterval) {
+    pausarPitchTimer();
+  } else {
+    iniciarPitchTimer();
+  }
 }
 
 function resetarPitchTimer(minutos = 10) {
   pausarPitchTimer();
   pitchSegundosRestantes = Math.round(minutos * 60);
-  const display = document.getElementById('pitch-timer-display');
-  if (display) {
-    display.textContent = formatarTempoPitch(pitchSegundosRestantes);
-    display.style.color = '';
-  }
+  atualizarDisplayPitch();
 }
 
 // 12. Exportações Globais para o Window
@@ -1166,5 +1208,6 @@ window.resetarTamanhoFonte = resetarTamanhoFonte;
 window.voltarAoTopo = voltarAoTopo;
 window.iniciarPitchTimer = iniciarPitchTimer;
 window.pausarPitchTimer = pausarPitchTimer;
+window.togglePitchTimer = togglePitchTimer;
 window.resetarPitchTimer = resetarPitchTimer;
 
