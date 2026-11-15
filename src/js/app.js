@@ -1108,7 +1108,7 @@ function blindarAmazonConnectMobile() {
 
 // 12.2 Cronômetro Interativo do Pitch (Aba Apresentação)
 let pitchTimerInterval = null;
-let pitchSegundosRestantes = 600; // 10 minutos padrão
+let pitchSegundosRestantes = 570; // 9 minutos e 30 segundos (meta oficial do pitch Grupo 6)
 
 function formatarTempoPitch(segundos) {
   const min = Math.floor(segundos / 60);

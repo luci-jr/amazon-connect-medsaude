@@ -4798,7 +4798,7 @@ iframe[id*="amazon-connect"],
    SEÇÃO APRESENTAÇÃO DO PROJETO (ROTEIRO OFICIAL DO PITCH & BANCA)
    ========================================================================= */
 .section-apresentacao {
-  padding: 3rem 0 6rem 0;
+  padding: 2rem 0 6rem 0;
   position: relative;
 }
 
@@ -4818,33 +4818,41 @@ iframe[id*="amazon-connect"],
   letter-spacing: 0.05em;
 }
 
+/* CRONÔMETRO STICKY FLUTUANTE (Compacto, desce com a rolagem - Feedback Camila) */
 .pitch-timer-container {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.9));
-  border: 1.5px solid rgba(8, 145, 178, 0.3);
-  border-radius: 20px;
-  padding: 1.5rem 2rem;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+  position: sticky;
+  top: 90px;
+  z-index: 99990;
+  background: rgba(15, 23, 42, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(8, 145, 178, 0.45);
+  border-radius: 18px;
+  padding: 0.75rem 1.4rem;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45), 0 0 18px rgba(8, 145, 178, 0.2);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1.5rem;
-  margin: 2rem 0 3rem 0;
-  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1.5rem auto 2.5rem auto;
+  max-width: 900px;
+  transition: all 0.25s ease;
 }
 
 body.light-theme .pitch-timer-container {
-  background: #ffffff;
-  border-color: #e2e8f0;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.96);
+  border-color: rgba(8, 145, 178, 0.35);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
 .pitch-timer-val {
   font-family: var(--font-tech, monospace);
-  font-size: 2.75rem;
+  font-size: clamp(1.75rem, 3.2vw, 2.25rem);
   font-weight: 800;
   color: #06b6d4;
+  line-height: 1;
   letter-spacing: 0.05em;
-  text-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+  text-shadow: 0 0 16px rgba(6, 182, 212, 0.4);
 }
 
 body.light-theme .pitch-timer-val {
@@ -4855,17 +4863,17 @@ body.light-theme .pitch-timer-val {
 .pitch-timer-controls {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.5rem;
   flex-wrap: wrap;
 }
 
 .pitch-timer-btn {
-  padding: 0.55rem 1rem;
-  font-size: 0.88rem;
+  padding: 0.48rem 0.85rem;
+  font-size: 0.82rem;
   font-weight: 700;
-  border-radius: 9px;
+  border-radius: 8px;
   border: 1px solid var(--border-color);
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.06);
   color: var(--text-primary);
   cursor: pointer;
   display: inline-flex;
@@ -4889,6 +4897,87 @@ body.light-theme .pitch-timer-val {
 .pitch-timer-btn.btn-play:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 14px rgba(8, 145, 178, 0.4);
+}
+
+/* BLOCOS ESTILO SLIDE (Títulos ampliados e preenchimento de tela - Feedback Camila) */
+.pitch-timeline-step {
+  background: var(--bg-surface, #1e293b);
+  border: 1.5px solid var(--border-color, rgba(255, 255, 255, 0.09));
+  border-radius: 22px;
+  padding: clamp(1.75rem, 3.5vw, 3rem);
+  margin-bottom: 2.5rem;
+  position: relative;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease;
+  scroll-margin-top: 140px;
+}
+
+.pitch-timeline-step:hover {
+  border-color: rgba(8, 145, 178, 0.5);
+  box-shadow: 0 16px 40px rgba(8, 145, 178, 0.15);
+}
+
+.pitch-step-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.pitch-step-pill {
+  font-family: var(--font-tech, monospace);
+  font-size: clamp(0.78rem, 1.5vw, 0.88rem);
+  font-weight: 800;
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  letter-spacing: 0.04em;
+}
+
+.pitch-speaker-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: clamp(0.85rem, 1.8vw, 1.05rem);
+  font-weight: 800;
+  color: #38bdf8;
+  background: rgba(6, 182, 212, 0.12);
+  border: 1px solid rgba(6, 182, 212, 0.35);
+  padding: 0.38rem 0.95rem;
+  border-radius: 999px;
+}
+
+.pitch-slide-title {
+  font-size: clamp(1.6rem, 3.2vw, 2.4rem) !important;
+  font-family: var(--font-retro, 'Plus Jakarta Sans', sans-serif);
+  font-weight: 800;
+  line-height: 1.25;
+  color: #ffffff;
+  margin: 0.6rem 0 1rem 0;
+  letter-spacing: -0.02em;
+}
+
+body.light-theme .pitch-slide-title {
+  color: #0f172a;
+}
+
+.pitch-slide-punchline {
+  font-size: clamp(1.05rem, 2vw, 1.26rem);
+  line-height: 1.6;
+  color: var(--text-primary);
+  margin: 0.75rem 0 1.25rem 0;
+  font-weight: 500;
+}
+
+.pitch-visual-card {
+  border-radius: 14px;
+  padding: 1.35rem;
+  margin-top: 1.25rem;
+  transition: all 0.25s ease;
 }
 
 .pitch-card-grid {
@@ -4927,300 +5016,29 @@ body.light-theme .pitch-timer-val {
   margin-bottom: 1.25rem;
 }
 
-.pitch-timeline-step {
-  background: var(--bg-surface, #1e293b);
-  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
-  border-radius: 18px;
-  padding: 1.75rem;
-  margin-bottom: 1.5rem;
-  position: relative;
-  transition: all 0.25s ease;
-}
-
-.pitch-timeline-step:hover {
-  border-color: rgba(16, 185, 129, 0.4);
-}
-
-.pitch-step-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1rem;
-  flex-wrap: wrap;
-}
-
-.pitch-step-pill {
-  font-family: var(--font-tech, monospace);
-  font-size: 0.8rem;
-  font-weight: 800;
-  padding: 0.25rem 0.75rem;
-  border-radius: 999px;
-  background: rgba(16, 185, 129, 0.15);
-  color: #10b981;
-  border: 1px solid rgba(16, 185, 129, 0.3);
-}
-
-.pitch-script-box {
-  background: rgba(0, 0, 0, 0.25);
-  border-left: 3px solid #06b6d4;
-  padding: 1rem 1.25rem;
-  border-radius: 0 10px 10px 0;
-  margin-top: 1rem;
-  font-size: 0.92rem;
-  line-height: 1.5;
-  color: var(--text-secondary);
-}
-
-body.light-theme .pitch-script-box {
-  background: #f8fafc;
-}
-
-.pitch-checklist {
-  list-style: none;
-  padding: 0;
-  margin: 1.5rem 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1rem;
-}
-
-.pitch-checklist-item {
-  background: var(--bg-surface, #1e293b);
-  border: 1px solid var(--border-color);
-  padding: 1rem 1.25rem;
-  border-radius: 12px;
-  display: flex;
-  align-items: flex-start;
-  gap: 0.85rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.pitch-checklist-item:hover {
-  border-color: var(--primary);
-}
-
-.pitch-checklist-item input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  accent-color: #06b6d4;
-  cursor: pointer;
-  margin-top: 2px;
-}
-
-/* =========================================================================
-   SEÇÃO APRESENTAÇÃO DO PROJETO (ROTEIRO OFICIAL DO PITCH & BANCA)
-   ========================================================================= */
-.section-apresentacao {
-  padding: 3rem 0 6rem 0;
-  position: relative;
-}
-
-.pitch-hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: rgba(8, 145, 178, 0.12);
-  border: 1px solid rgba(8, 145, 178, 0.35);
-  color: #38bdf8;
-  font-size: 0.85rem;
-  font-weight: 700;
-  padding: 0.35rem 1rem;
-  border-radius: 999px;
-  margin-bottom: 1.25rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.pitch-timer-container {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.9));
-  border: 1.5px solid rgba(8, 145, 178, 0.3);
-  border-radius: 20px;
-  padding: 1.5rem 2rem;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-  margin: 2rem 0 3rem 0;
-  flex-wrap: wrap;
-}
-
-body.light-theme .pitch-timer-container {
-  background: #ffffff;
-  border-color: #e2e8f0;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-}
-
-.pitch-timer-val {
-  font-family: var(--font-tech, monospace);
-  font-size: 2.75rem;
-  font-weight: 800;
-  color: #06b6d4;
-  letter-spacing: 0.05em;
-  text-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
-}
-
-body.light-theme .pitch-timer-val {
-  color: #0284c7;
-  text-shadow: none;
-}
-
-.pitch-timer-controls {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  flex-wrap: wrap;
-}
-
-.pitch-timer-btn {
-  padding: 0.55rem 1rem;
-  font-size: 0.88rem;
-  font-weight: 700;
-  border-radius: 9px;
-  border: 1px solid var(--border-color);
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text-primary);
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  transition: all 0.2s ease;
-}
-
-.pitch-timer-btn:hover {
-  background: rgba(6, 182, 212, 0.15);
-  border-color: #06b6d4;
-  color: #38bdf8;
-}
-
-.pitch-timer-btn.btn-play {
-  background: linear-gradient(135deg, #0891b2, #0284c7);
-  color: #ffffff;
-  border: none;
-}
-
-.pitch-timer-btn.btn-play:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(8, 145, 178, 0.4);
-}
-
-.pitch-card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 3.5rem;
-}
-
-.pitch-feature-card {
-  background: var(--bg-surface, #1e293b);
-  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
-  border-radius: 18px;
-  padding: 1.75rem;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.25s ease;
-}
-
-.pitch-feature-card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(6, 182, 212, 0.4);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
-}
-
-.pitch-feature-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  background: rgba(6, 182, 212, 0.12);
-  color: #06b6d4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.35rem;
-  margin-bottom: 1.25rem;
-}
-
-.pitch-timeline-step {
-  background: var(--bg-surface, #1e293b);
-  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
-  border-radius: 18px;
-  padding: 1.75rem;
-  margin-bottom: 1.5rem;
-  position: relative;
-  transition: all 0.25s ease;
-}
-
-.pitch-timeline-step:hover {
-  border-color: rgba(16, 185, 129, 0.4);
-}
-
-.pitch-step-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1rem;
-  flex-wrap: wrap;
-}
-
-.pitch-step-pill {
-  font-family: var(--font-tech, monospace);
-  font-size: 0.8rem;
-  font-weight: 800;
-  padding: 0.25rem 0.75rem;
-  border-radius: 999px;
-  background: rgba(16, 185, 129, 0.15);
-  color: #10b981;
-  border: 1px solid rgba(16, 185, 129, 0.3);
-}
-
-.pitch-script-box {
-  background: rgba(0, 0, 0, 0.25);
-  border-left: 3px solid #06b6d4;
-  padding: 1rem 1.25rem;
-  border-radius: 0 10px 10px 0;
-  margin-top: 1rem;
-  font-size: 0.92rem;
-  line-height: 1.5;
-  color: var(--text-secondary);
-}
-
-body.light-theme .pitch-script-box {
-  background: #f8fafc;
-}
-
-.pitch-checklist {
-  list-style: none;
-  padding: 0;
-  margin: 1.5rem 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1rem;
-}
-
-.pitch-checklist-item {
-  background: var(--bg-surface, #1e293b);
-  border: 1px solid var(--border-color);
-  padding: 1rem 1.25rem;
-  border-radius: 12px;
-  display: flex;
-  align-items: flex-start;
-  gap: 0.85rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.pitch-checklist-item:hover {
-  border-color: var(--primary);
-}
-
-.pitch-checklist-item input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  accent-color: #06b6d4;
-  cursor: pointer;
-  margin-top: 2px;
+@media (max-width: 768px) {
+  .pitch-timer-container {
+    top: 64px;
+    padding: 0.6rem 0.85rem;
+    border-radius: 14px;
+    margin: 1rem 0 2rem 0;
+    gap: 0.5rem;
+  }
+  .pitch-timer-val {
+    font-size: 1.5rem;
+  }
+  .pitch-timer-label {
+    display: none;
+  }
+  .pitch-timer-btn {
+    padding: 0.38rem 0.6rem;
+    font-size: 0.75rem;
+  }
+  .pitch-timeline-step {
+    padding: 1.4rem;
+    margin-bottom: 1.75rem;
+    border-radius: 16px;
+    scroll-margin-top: 110px;
+  }
 }
 

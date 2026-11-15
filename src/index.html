@@ -1552,11 +1552,11 @@
               </p>
             </div>
 
-            <!-- CRONÔMETRO INTERATIVO DO PITCH -->
+            <!-- CRONÔMETRO INTERATIVO DO PITCH (STICKY & FLUTUANTE) -->
             <div class="pitch-timer-container">
               <div>
-                <div style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; color: var(--text-muted); margin-bottom: 4px;">
-                  <i class="fa-solid fa-stopwatch"></i> Tempo do Pitch (Meta: 9 min 30 s)
+                <div class="pitch-timer-label" style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; color: var(--text-muted); margin-bottom: 3px;">
+                  <i class="fa-solid fa-stopwatch"></i> Tempo do Pitch (Meta: 9m30s)
                 </div>
                 <div class="pitch-timer-val" id="pitch-timer-display">09:30</div>
               </div>
@@ -1576,19 +1576,19 @@
               </div>
             </div>
 
-            <!-- OS 9 BLOCOS DE ROLAGEM (ESTRUTURA OFICIAL DO GRUPO 6) -->
+            <!-- OS 9 BLOCOS DE ROLAGEM (ESTRUTURA OFICIAL DO GRUPO 6 - ESTILO SLIDES) -->
             <div class="pitch-blocks-flow">
 
               <!-- PARTE 1: O PROBLEMA -->
               <div class="pitch-timeline-step" id="pitch-bloco-1">
                 <div class="pitch-step-header">
-                  <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
                     <span class="pitch-step-pill">1 · 0:00–0:50</span>
-                    <h3 style="font-size: 1.3rem; font-weight: 700; margin: 0;">Hoje, achar um médico é esperar na fila</h3>
+                    <span class="pitch-speaker-badge"><i class="fa-solid fa-user"></i> Camila</span>
                   </div>
-                  <span style="font-size: 0.85rem; font-weight: 700; color: #38bdf8;"><i class="fa-solid fa-user"></i> Camila</span>
                 </div>
-                <p style="font-size: 1.05rem; color: var(--text-primary); margin: 0.75rem 0; font-weight: 500;">
+                <h2 class="pitch-slide-title">Hoje, achar um médico é esperar na fila</h2>
+                <p class="pitch-slide-punchline">
                   Fila longa, tempo de espera elevado e o novo Decreto do SAC exigindo canal 24h e resolução imediata.
                 </p>
                 <div class="pitch-visual-card" style="background: rgba(239, 68, 68, 0.08); border: 1px dashed rgba(239, 68, 68, 0.35); border-radius: 12px; padding: 1.25rem; display: flex; align-items: center; gap: 1rem; margin-top: 1rem;">
@@ -1603,13 +1603,13 @@
               <!-- PARTE 2: A SOLUÇÃO -->
               <div class="pitch-timeline-step" id="pitch-bloco-2">
                 <div class="pitch-step-header">
-                  <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
                     <span class="pitch-step-pill" style="background: rgba(8, 145, 178, 0.15); color: #0891b2; border-color: rgba(8, 145, 178, 0.35);">2 · 0:50–1:45</span>
-                    <h3 style="font-size: 1.3rem; font-weight: 700; margin: 0;">Iara: chat e voz, 24 horas, um só fluxo</h3>
+                    <span class="pitch-speaker-badge"><i class="fa-solid fa-user"></i> Jessie</span>
                   </div>
-                  <span style="font-size: 0.85rem; font-weight: 700; color: #38bdf8;"><i class="fa-solid fa-user"></i> Jessie</span>
                 </div>
-                <p style="font-size: 1.05rem; color: var(--text-primary); margin: 0.75rem 0; font-weight: 500;">
+                <h2 class="pitch-slide-title">Iara: chat e voz, 24 horas, um só fluxo</h2>
+                <p class="pitch-slide-punchline">
                   Atendimento unificado no Amazon Connect com emissão de protocolo imediato (ANS RN 623) e integração com Customer Profiles.
                 </p>
                 <div class="pitch-visual-card" style="background: rgba(8, 145, 178, 0.08); border: 1px dashed rgba(8, 145, 178, 0.35); border-radius: 12px; padding: 1.25rem; display: flex; align-items: center; gap: 1rem; margin-top: 1rem;">
@@ -1624,13 +1624,13 @@
               <!-- PARTE 3: COMO A IARA ENTENDE + DEMO 1 -->
               <div class="pitch-timeline-step" id="pitch-bloco-3">
                 <div class="pitch-step-header">
-                  <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
                     <span class="pitch-step-pill" style="background: rgba(139, 92, 246, 0.15); color: #a855f7; border-color: rgba(139, 92, 246, 0.35);">3 · 1:45–2:30</span>
-                    <h3 style="font-size: 1.3rem; font-weight: 700; margin: 0;">Ela entende do jeito que você fala</h3>
+                    <span class="pitch-speaker-badge"><i class="fa-solid fa-user"></i> Ana Paula</span>
                   </div>
-                  <span style="font-size: 0.85rem; font-weight: 700; color: #38bdf8;"><i class="fa-solid fa-user"></i> Ana Paula</span>
                 </div>
-                <p style="font-size: 1.05rem; color: var(--text-primary); margin: 0.75rem 0; font-weight: 500;">
+                <h2 class="pitch-slide-title">Ela entende do jeito que você fala</h2>
+                <p class="pitch-slide-punchline">
                   Amazon Lex V2 mapeando linguagem natural para 17 especialidades e Amazon Q in Connect com IA generativa.
                 </p>
                 <!-- DEMO 1 CARD -->
@@ -1648,13 +1648,13 @@
               <!-- PARTE 4: DE ONDE VEM A RESPOSTA -->
               <div class="pitch-timeline-step" id="pitch-bloco-4">
                 <div class="pitch-step-header">
-                  <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
                     <span class="pitch-step-pill">4 · 3:15–3:55</span>
-                    <h3 style="font-size: 1.3rem; font-weight: 700; margin: 0;">A resposta vem da base do Guia Médico</h3>
+                    <span class="pitch-speaker-badge"><i class="fa-solid fa-user"></i> Felipe</span>
                   </div>
-                  <span style="font-size: 0.85rem; font-weight: 700; color: #38bdf8;"><i class="fa-solid fa-user"></i> Felipe</span>
                 </div>
-                <p style="font-size: 1.05rem; color: var(--text-primary); margin: 0.75rem 0; font-weight: 500;">
+                <h2 class="pitch-slide-title">A resposta vem da base do Guia Médico</h2>
+                <p class="pitch-slide-punchline">
                   25 médicos, 17 especialidades e 15 cidades no Amazon S3 conectados ao Amazon Q. Respostas precisas sem alucinação.
                 </p>
                 <div class="pitch-visual-card" style="background: rgba(245, 158, 11, 0.08); border: 1px dashed rgba(245, 158, 11, 0.35); border-radius: 12px; padding: 1.25rem; display: flex; align-items: center; gap: 1rem; margin-top: 1rem;">
@@ -1669,13 +1669,13 @@
               <!-- PARTE 5: A VOZ + DEMO 2 -->
               <div class="pitch-timeline-step" id="pitch-bloco-5">
                 <div class="pitch-step-header">
-                  <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
                     <span class="pitch-step-pill">5 · 3:55–4:25</span>
-                    <h3 style="font-size: 1.3rem; font-weight: 700; margin: 0;">No telefone, sem menu</h3>
+                    <span class="pitch-speaker-badge"><i class="fa-solid fa-user"></i> Rebeca</span>
                   </div>
-                  <span style="font-size: 0.85rem; font-weight: 700; color: #38bdf8;"><i class="fa-solid fa-user"></i> Rebeca</span>
                 </div>
-                <p style="font-size: 1.05rem; color: var(--text-primary); margin: 0.75rem 0; font-weight: 500;">
+                <h2 class="pitch-slide-title">No telefone, sem menu</h2>
+                <p class="pitch-slide-punchline">
                   Mesma central e mesmo fluxo inteligente com voz natural em português e escuta ajustada para 6 segundos para idosos.
                 </p>
                 <!-- DEMO 2 CARD -->
@@ -1693,13 +1693,13 @@
               <!-- PARTE 6: TRANSBORDO + DEMO 3 -->
               <div class="pitch-timeline-step" id="pitch-bloco-6">
                 <div class="pitch-step-header">
-                  <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
                     <span class="pitch-step-pill" style="background: rgba(239, 68, 68, 0.15); color: #ef4444; border-color: rgba(239, 68, 68, 0.35);">6 · 5:15–5:40 & 6:30–7:15</span>
-                    <h3 style="font-size: 1.3rem; font-weight: 700; margin: 0;">Quando precisa de uma pessoa: contexto preservado</h3>
+                    <span class="pitch-speaker-badge"><i class="fa-solid fa-user"></i> Daniel</span>
                   </div>
-                  <span style="font-size: 0.85rem; font-weight: 700; color: #38bdf8;"><i class="fa-solid fa-user"></i> Daniel</span>
                 </div>
-                <p style="font-size: 1.05rem; color: var(--text-primary); margin: 0.75rem 0; font-weight: 500;">
+                <h2 class="pitch-slide-title">Quando precisa de uma pessoa: contexto preservado</h2>
+                <p class="pitch-slide-punchline">
                   Transbordo para N1 com contexto completo: protocolo, histórico e cadastro sem o cliente precisar repetir nada.
                 </p>
                 <!-- DEMO 3 CARD -->
@@ -1732,13 +1732,13 @@
               <!-- PARTE 7: SEGURANÇA E LGPD -->
               <div class="pitch-timeline-step" id="pitch-bloco-7">
                 <div class="pitch-step-header">
-                  <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
                     <span class="pitch-step-pill" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border-color: rgba(56, 189, 248, 0.35);">7 · 7:15–7:55</span>
-                    <h3 style="font-size: 1.3rem; font-weight: 700; margin: 0;">Só o necessário, só com permissão</h3>
+                    <span class="pitch-speaker-badge"><i class="fa-solid fa-user-shield"></i> Lucivaldo</span>
                   </div>
-                  <span style="font-size: 0.85rem; font-weight: 700; color: #38bdf8;"><i class="fa-solid fa-user-shield"></i> Lucivaldo</span>
                 </div>
-                <p style="font-size: 1.05rem; color: var(--text-primary); margin: 0.75rem 0; font-weight: 500;">
+                <h2 class="pitch-slide-title">Só o necessário, só com permissão</h2>
+                <p class="pitch-slide-punchline">
                   Princípio da minimização de dados da LGPD (Art. 6º): sem coleta de CPF ou dados sensíveis de saúde em texto aberto.
                 </p>
                 <div class="pitch-visual-card" style="background: rgba(56, 189, 248, 0.08); border: 1px dashed rgba(56, 189, 248, 0.35); border-radius: 12px; padding: 1.25rem; display: flex; align-items: center; gap: 1rem; margin-top: 1rem;">
@@ -1753,13 +1753,13 @@
               <!-- PARTE 8: TESTES E DASHBOARD -->
               <div class="pitch-timeline-step" id="pitch-bloco-8">
                 <div class="pitch-step-header">
-                  <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
                     <span class="pitch-step-pill">8 · 7:55–8:35</span>
-                    <h3 style="font-size: 1.3rem; font-weight: 700; margin: 0;">O gestor vê tudo em tempo real</h3>
+                    <span class="pitch-speaker-badge"><i class="fa-solid fa-user"></i> Elizabeth</span>
                   </div>
-                  <span style="font-size: 0.85rem; font-weight: 700; color: #38bdf8;"><i class="fa-solid fa-user"></i> Elizabeth</span>
                 </div>
-                <p style="font-size: 1.05rem; color: var(--text-primary); margin: 0.75rem 0; font-weight: 500;">
+                <h2 class="pitch-slide-title">O gestor vê tudo em tempo real</h2>
+                <p class="pitch-slide-punchline">
                   Telemetria no Amazon Connect e CloudWatch com volume de atendimentos e TMA em chat e voz.
                 </p>
                 <div class="pitch-visual-card" style="background: rgba(168, 85, 247, 0.08); border: 1px dashed rgba(168, 85, 247, 0.35); border-radius: 12px; padding: 1.25rem; display: flex; align-items: center; gap: 1rem; margin-top: 1rem;">
@@ -1774,12 +1774,12 @@
               <!-- PARTE 9: IMPACTO E FECHAMENTO -->
               <div class="pitch-timeline-step" id="pitch-bloco-9">
                 <div class="pitch-step-header">
-                  <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
                     <span class="pitch-step-pill" style="background: rgba(16, 185, 129, 0.15); color: #10b981; border-color: rgba(16, 185, 129, 0.35);">9 · 8:35–9:30</span>
-                    <h3 style="font-size: 1.3rem; font-weight: 700; margin: 0;">Antes × Depois: A Transformação</h3>
+                    <span class="pitch-speaker-badge"><i class="fa-solid fa-user"></i> Camila</span>
                   </div>
-                  <span style="font-size: 0.85rem; font-weight: 700; color: #38bdf8;"><i class="fa-solid fa-user"></i> Camila</span>
                 </div>
+                <h2 class="pitch-slide-title">Antes × Depois: A Transformação</h2>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 1rem 0;">
                   <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 10px; padding: 1rem;">
                     <strong style="color: #ef4444;"><i class="fa-solid fa-xmark"></i> Antes:</strong>
