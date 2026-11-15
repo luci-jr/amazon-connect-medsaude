@@ -730,14 +730,20 @@ const TOPIC_PAGE_MAP_JS = {
 
   // Tópicos do Guia Médico
   'guia-busca': 'guia-medico',
-  'guia-lista': 'guia-medico'
+  'guia-lista': 'guia-medico',
+
+  // Tópicos de Apresentação
+  'apresentacao-pitch': 'apresentacao',
+  'apresentacao-arquitetura': 'apresentacao',
+  'apresentacao-roteiro': 'apresentacao',
+  'apresentacao-checklist': 'apresentacao'
 };
 
 function navegarPara(target) {
   if (!target) target = 'inicio';
   const cleanTarget = target.replace('#', '');
 
-  const rotasPrincipais = ['inicio', 'guia-medico', 'planos', 'sobre-nos'];
+  const rotasPrincipais = ['inicio', 'guia-medico', 'planos', 'sobre-nos', 'apresentacao'];
   let pageId = cleanTarget;
   let subElementId = null;
 
@@ -1053,14 +1059,38 @@ function voltarAoTopo() {
 function blindarAmazonConnectMobile() {
   function ajustarFrameConnect() {
     if (window.innerWidth <= 640) {
-      const frames = document.querySelectorAll('iframe[id*="amazon-connect"], #amazon-connect-widget-frame, div[id*="amazon-connect"][style*="position: fixed"], div[class*="acFrameContainer"]');
       const maxW = Math.max(280, window.innerWidth - 16) + 'px';
-      frames.forEach(el => {
+      const maxH = Math.max(380, window.innerHeight - 84) + 'px';
+
+      const containers = document.querySelectorAll(
+        'div[class*="acWidgetContainer"], div[class*="acFrameContainer"], div[class*="acContainer"], #amazon-connect-chat-wrapper, #amazon-connect-widget-frame, div[id*="amazon-connect"][style*="position: fixed"]'
+      );
+      containers.forEach(el => {
         if (el) {
+          el.style.setProperty('width', 'calc(100vw - 16px)', 'important');
           el.style.setProperty('max-width', maxW, 'important');
+          el.style.setProperty('height', maxH, 'important');
+          el.style.setProperty('max-height', maxH, 'important');
           el.style.setProperty('left', '8px', 'important');
           el.style.setProperty('right', '8px', 'important');
+          el.style.setProperty('bottom', '70px', 'important');
+          el.style.setProperty('top', 'auto', 'important');
+          el.style.setProperty('border-radius', '16px', 'important');
           el.style.setProperty('box-sizing', 'border-box', 'important');
+        }
+      });
+
+      const iframes = document.querySelectorAll(
+        'iframe[id*="amazon-connect"], iframe[class*="acFrame"], iframe[src*="connect"]'
+      );
+      iframes.forEach(iframe => {
+        if (iframe) {
+          iframe.style.setProperty('width', '100%', 'important');
+          iframe.style.setProperty('max-width', '100%', 'important');
+          iframe.style.setProperty('height', '100%', 'important');
+          iframe.style.setProperty('max-height', '100%', 'important');
+          iframe.style.setProperty('border-radius', '16px', 'important');
+          iframe.style.setProperty('box-sizing', 'border-box', 'important');
         }
       });
     }
@@ -1074,6 +1104,50 @@ function blindarAmazonConnectMobile() {
     observer.observe(document.body, { childList: true, subtree: true });
   }
   ajustarFrameConnect();
+}
+
+// 12.2 Cronômetro Interativo do Pitch (Aba Apresentação)
+let pitchTimerInterval = null;
+let pitchSegundosRestantes = 600; // 10 minutos padrão
+
+function formatarTempoPitch(segundos) {
+  const min = Math.floor(segundos / 60);
+  const seg = segundos % 60;
+  return `${String(min).padStart(2, '0')}:${String(seg).padStart(2, '0')}`;
+}
+
+function iniciarPitchTimer() {
+  if (pitchTimerInterval) return;
+  const display = document.getElementById('pitch-timer-display');
+  pitchTimerInterval = setInterval(() => {
+    if (pitchSegundosRestantes > 0) {
+      pitchSegundosRestantes--;
+      if (display) display.textContent = formatarTempoPitch(pitchSegundosRestantes);
+    } else {
+      pausarPitchTimer();
+      if (display) {
+        display.textContent = '00:00';
+        display.style.color = '#ef4444';
+      }
+    }
+  }, 1000);
+}
+
+function pausarPitchTimer() {
+  if (pitchTimerInterval) {
+    clearInterval(pitchTimerInterval);
+    pitchTimerInterval = null;
+  }
+}
+
+function resetarPitchTimer(minutos = 10) {
+  pausarPitchTimer();
+  pitchSegundosRestantes = minutos * 60;
+  const display = document.getElementById('pitch-timer-display');
+  if (display) {
+    display.textContent = formatarTempoPitch(pitchSegundosRestantes);
+    display.style.color = '';
+  }
 }
 
 // 12. Exportações Globais para o Window
@@ -1090,4 +1164,7 @@ window.alternarTema = alternarTema;
 window.ajustarTamanhoFonte = ajustarTamanhoFonte;
 window.resetarTamanhoFonte = resetarTamanhoFonte;
 window.voltarAoTopo = voltarAoTopo;
+window.iniciarPitchTimer = iniciarPitchTimer;
+window.pausarPitchTimer = pausarPitchTimer;
+window.resetarPitchTimer = resetarPitchTimer;
 

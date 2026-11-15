@@ -4747,26 +4747,474 @@ iframe[id*="amazon-connect"],
   #amazon-connect-widget-frame,
   div[id*="amazon-connect"][style*="position: fixed"],
   div[id*="amazon-connect-live-widget"],
-  div[class*="acFrameContainer"] {
-    width: 100% !important;
-    max-width: calc(100vw - 16px) !important;
-    right: 8px !important;
+  div[class*="acFrameContainer"],
+  div[class*="acWidgetContainer"],
+  div[class*="acContainer"],
+  div[style*="position: fixed"]:has(iframe[src*="connect"]) {
+    position: fixed !important;
     left: 8px !important;
-    bottom: 74px !important;
+    right: 8px !important;
+    bottom: 70px !important;
+    top: auto !important;
+    width: calc(100vw - 16px) !important;
+    max-width: calc(100vw - 16px) !important;
+    height: calc(100dvh - 84px) !important;
+    max-height: calc(100dvh - 84px) !important;
     margin: 0 auto !important;
     box-sizing: border-box !important;
+    overflow: hidden !important;
+    border-radius: 16px !important;
+    z-index: 1000000 !important;
   }
+
   iframe[id*="amazon-connect"],
   #amazon-connect-chat-widget-iframe,
   #amazon-connect-chat-iframe,
-  iframe[class*="acFrame"] {
+  iframe[class*="acFrame"],
+  iframe[src*="connect"],
+  div[class*="acFrameContainer"] iframe,
+  div[class*="acWidgetContainer"] iframe {
     width: 100% !important;
-    max-width: calc(100vw - 16px) !important;
-    max-height: calc(100vh - 84px) !important;
-    right: 8px !important;
-    left: 8px !important;
-    margin: 0 auto !important;
+    max-width: 100% !important;
+    height: 100% !important;
+    max-height: 100% !important;
+    right: 0 !important;
+    left: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    border-radius: 16px !important;
     box-sizing: border-box !important;
+    display: block !important;
   }
+}
+
+/* =========================================================================
+   SEÇÃO APRESENTAÇÃO DO PROJETO (ROTEIRO OFICIAL DO PITCH & BANCA)
+   ========================================================================= */
+.section-apresentacao {
+  padding: 3rem 0 6rem 0;
+  position: relative;
+}
+
+.pitch-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(8, 145, 178, 0.12);
+  border: 1px solid rgba(8, 145, 178, 0.35);
+  color: #38bdf8;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.35rem 1rem;
+  border-radius: 999px;
+  margin-bottom: 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.pitch-timer-container {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.9));
+  border: 1.5px solid rgba(8, 145, 178, 0.3);
+  border-radius: 20px;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin: 2rem 0 3rem 0;
+  flex-wrap: wrap;
+}
+
+body.light-theme .pitch-timer-container {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.pitch-timer-val {
+  font-family: var(--font-tech, monospace);
+  font-size: 2.75rem;
+  font-weight: 800;
+  color: #06b6d4;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+}
+
+body.light-theme .pitch-timer-val {
+  color: #0284c7;
+  text-shadow: none;
+}
+
+.pitch-timer-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.pitch-timer-btn {
+  padding: 0.55rem 1rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  border-radius: 9px;
+  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.2s ease;
+}
+
+.pitch-timer-btn:hover {
+  background: rgba(6, 182, 212, 0.15);
+  border-color: #06b6d4;
+  color: #38bdf8;
+}
+
+.pitch-timer-btn.btn-play {
+  background: linear-gradient(135deg, #0891b2, #0284c7);
+  color: #ffffff;
+  border: none;
+}
+
+.pitch-timer-btn.btn-play:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(8, 145, 178, 0.4);
+}
+
+.pitch-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3.5rem;
+}
+
+.pitch-feature-card {
+  background: var(--bg-surface, #1e293b);
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+  border-radius: 18px;
+  padding: 1.75rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s ease;
+}
+
+.pitch-feature-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(6, 182, 212, 0.4);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+.pitch-feature-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(6, 182, 212, 0.12);
+  color: #06b6d4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  margin-bottom: 1.25rem;
+}
+
+.pitch-timeline-step {
+  background: var(--bg-surface, #1e293b);
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+  border-radius: 18px;
+  padding: 1.75rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  transition: all 0.25s ease;
+}
+
+.pitch-timeline-step:hover {
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.pitch-step-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.pitch-step-pill {
+  font-family: var(--font-tech, monospace);
+  font-size: 0.8rem;
+  font-weight: 800;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.pitch-script-box {
+  background: rgba(0, 0, 0, 0.25);
+  border-left: 3px solid #06b6d4;
+  padding: 1rem 1.25rem;
+  border-radius: 0 10px 10px 0;
+  margin-top: 1rem;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+body.light-theme .pitch-script-box {
+  background: #f8fafc;
+}
+
+.pitch-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.pitch-checklist-item {
+  background: var(--bg-surface, #1e293b);
+  border: 1px solid var(--border-color);
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pitch-checklist-item:hover {
+  border-color: var(--primary);
+}
+
+.pitch-checklist-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #06b6d4;
+  cursor: pointer;
+  margin-top: 2px;
+}
+
+/* =========================================================================
+   SEÇÃO APRESENTAÇÃO DO PROJETO (ROTEIRO OFICIAL DO PITCH & BANCA)
+   ========================================================================= */
+.section-apresentacao {
+  padding: 3rem 0 6rem 0;
+  position: relative;
+}
+
+.pitch-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(8, 145, 178, 0.12);
+  border: 1px solid rgba(8, 145, 178, 0.35);
+  color: #38bdf8;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.35rem 1rem;
+  border-radius: 999px;
+  margin-bottom: 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.pitch-timer-container {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.9));
+  border: 1.5px solid rgba(8, 145, 178, 0.3);
+  border-radius: 20px;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin: 2rem 0 3rem 0;
+  flex-wrap: wrap;
+}
+
+body.light-theme .pitch-timer-container {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.pitch-timer-val {
+  font-family: var(--font-tech, monospace);
+  font-size: 2.75rem;
+  font-weight: 800;
+  color: #06b6d4;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+}
+
+body.light-theme .pitch-timer-val {
+  color: #0284c7;
+  text-shadow: none;
+}
+
+.pitch-timer-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.pitch-timer-btn {
+  padding: 0.55rem 1rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  border-radius: 9px;
+  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.2s ease;
+}
+
+.pitch-timer-btn:hover {
+  background: rgba(6, 182, 212, 0.15);
+  border-color: #06b6d4;
+  color: #38bdf8;
+}
+
+.pitch-timer-btn.btn-play {
+  background: linear-gradient(135deg, #0891b2, #0284c7);
+  color: #ffffff;
+  border: none;
+}
+
+.pitch-timer-btn.btn-play:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(8, 145, 178, 0.4);
+}
+
+.pitch-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3.5rem;
+}
+
+.pitch-feature-card {
+  background: var(--bg-surface, #1e293b);
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+  border-radius: 18px;
+  padding: 1.75rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s ease;
+}
+
+.pitch-feature-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(6, 182, 212, 0.4);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+.pitch-feature-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(6, 182, 212, 0.12);
+  color: #06b6d4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  margin-bottom: 1.25rem;
+}
+
+.pitch-timeline-step {
+  background: var(--bg-surface, #1e293b);
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+  border-radius: 18px;
+  padding: 1.75rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  transition: all 0.25s ease;
+}
+
+.pitch-timeline-step:hover {
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.pitch-step-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.pitch-step-pill {
+  font-family: var(--font-tech, monospace);
+  font-size: 0.8rem;
+  font-weight: 800;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.pitch-script-box {
+  background: rgba(0, 0, 0, 0.25);
+  border-left: 3px solid #06b6d4;
+  padding: 1rem 1.25rem;
+  border-radius: 0 10px 10px 0;
+  margin-top: 1rem;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+body.light-theme .pitch-script-box {
+  background: #f8fafc;
+}
+
+.pitch-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.pitch-checklist-item {
+  background: var(--bg-surface, #1e293b);
+  border: 1px solid var(--border-color);
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pitch-checklist-item:hover {
+  border-color: var(--primary);
+}
+
+.pitch-checklist-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #06b6d4;
+  cursor: pointer;
+  margin-top: 2px;
 }
 

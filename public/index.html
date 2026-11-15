@@ -149,7 +149,7 @@
   </style>
 
   <!-- Estilos Customizados & Design System (Angular + Ionic Tokens) -->
-  <link rel="stylesheet" href="./css/style.css?v=1794764632498">
+  <link rel="stylesheet" href="./css/style.css?v=1794766027089">
 </head>
 
 <body class="ion-app-root">
@@ -239,6 +239,13 @@
             </li>
           </ul>
         </li>
+
+        <!-- 5. Apresentação (Roteiro Oficial do Pitch) -->
+        <li class="nav-item">
+          <a href="#apresentacao" class="nav-link-pill" onclick="navegarPara('apresentacao'); return false;">
+            <i class="fa-solid fa-chalkboard-user"></i> Apresentação
+          </a>
+        </li>
       </ul>
 
       <!-- AÇÕES À DIREITA (TEMA, VOZ, SOLICITAR/CHAT, ENTRAR) -->
@@ -312,6 +319,11 @@
           <li>
             <a href="#sobre-nos" class="drawer-nav-link" onclick="navegarDrawer('sobre-nos')">
               <i class="fa-solid fa-users"></i> Sobre Nós (Grupo 6)
+            </a>
+          </li>
+          <li>
+            <a href="#apresentacao" class="drawer-nav-link" onclick="navegarDrawer('apresentacao')">
+              <i class="fa-solid fa-chalkboard-user"></i> Roteiro de Apresentação
             </a>
           </li>
         </ul>
@@ -1523,6 +1535,283 @@
       </div>
       <!-- FIM DA VIEW 5: SOBRE NÓS -->
 
+      <!-- VIEW 6: APRESENTAÇÃO DO PROJETO & ROTEIRO DA BANCA (LOCAL) -->
+      <div class="page-view" id="view-apresentacao" style="display: none;">
+        <section class="section-apresentacao" id="apresentacao">
+          <div class="container">
+            <!-- HEADER DA APRESENTAÇÃO -->
+            <div style="text-align: center; max-width: 860px; margin: 0 auto;">
+              <div class="pitch-hero-badge">
+                <i class="fa-solid fa-graduation-cap"></i> Turma Piloto AWS Connect • Escola da Nuvem | Grupo 6
+              </div>
+              <h1 style="font-size: clamp(1.85rem, 4vw, 2.75rem); font-family: var(--font-retro); font-weight: 800; line-height: 1.2; margin-bottom: 1rem;">
+                Roteiro Oficial de Apresentação <br><span style="color: var(--primary);">Pitch Deck & Demo Runbook</span>
+              </h1>
+              <p style="font-size: 1.05rem; color: var(--text-secondary); line-height: 1.6;">
+                Guia estruturado de apresentação executiva e técnica do projeto <strong>Med+Saúde</strong> para a banca avaliadora. Acompanhe os tempos, etapas da demonstração prática e pontos-chave de arquitetura na AWS.
+              </p>
+            </div>
+
+            <!-- CRONÔMETRO INTERATIVO DO PITCH -->
+            <div class="pitch-timer-container">
+              <div>
+                <div style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; color: var(--text-muted); margin-bottom: 4px;">
+                  <i class="fa-solid fa-stopwatch"></i> Tempo do Pitch (Recomendado: 10 min)
+                </div>
+                <div class="pitch-timer-val" id="pitch-timer-display">10:00</div>
+              </div>
+              <div class="pitch-timer-controls">
+                <button type="button" class="pitch-timer-btn btn-play" onclick="iniciarPitchTimer()">
+                  <i class="fa-solid fa-play"></i> Iniciar
+                </button>
+                <button type="button" class="pitch-timer-btn" onclick="pausarPitchTimer()">
+                  <i class="fa-solid fa-pause"></i> Pausar
+                </button>
+                <button type="button" class="pitch-timer-btn" onclick="resetarPitchTimer(10)">
+                  <i class="fa-solid fa-rotate-left"></i> 10 Min
+                </button>
+                <button type="button" class="pitch-timer-btn" onclick="resetarPitchTimer(5)">
+                  <i class="fa-solid fa-bolt"></i> 5 Min (Rápido)
+                </button>
+              </div>
+            </div>
+
+            <!-- 1. OS 4 PILARES DO PITCH -->
+            <h2 style="font-size: 1.5rem; font-family: var(--font-retro); font-weight: 800; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.6rem;">
+              <i class="fa-solid fa-cubes" style="color: var(--primary);"></i> 1. Visão Executiva & Proposta de Valor
+            </h2>
+            <div class="pitch-card-grid">
+              <div class="pitch-feature-card">
+                <div class="pitch-feature-icon" style="background: rgba(239, 68, 68, 0.12); color: #ef4444;">
+                  <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">O Problema</h3>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5;">
+                  Filas de espera de até 40 minutos em operadoras de saúde, dificuldade de localizar credenciados e descumprimento dos prazos de atendimento regulamentados pela <strong>ANS RN 623</strong> e <strong>Decreto do SAC 13.135/2026</strong>.
+                </p>
+              </div>
+
+              <div class="pitch-feature-card">
+                <div class="pitch-feature-icon" style="background: rgba(8, 145, 178, 0.12); color: #0891b2;">
+                  <i class="fa-solid fa-cloud-bolt"></i>
+                </div>
+                <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">A Solução AWS</h3>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5;">
+                  Atendimento Omnichannel com <strong>Amazon Connect</strong>, chatbot inteligente <strong>Amazon Lex V2 (Iara)</strong>, assistência ao operador via <strong>Amazon Q</strong> e agendamento instantâneo via portal web estático.
+                </p>
+              </div>
+
+              <div class="pitch-feature-card">
+                <div class="pitch-feature-icon" style="background: rgba(16, 185, 129, 0.12); color: #10b981;">
+                  <i class="fa-solid fa-universal-access"></i>
+                </div>
+                <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">Inclusão & Acessibilidade</h3>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5;">
+                  Controles dinâmicos de fonte (A- / A / A+), alternância Dark/Light mode com alto contraste, design responsivo para mobile (WCAG 2.1 AA) e suporte a atendimento por voz WebRTC direto no navegador.
+                </p>
+              </div>
+
+              <div class="pitch-feature-card">
+                <div class="pitch-feature-icon" style="background: rgba(139, 92, 246, 0.12); color: #8b5cf6;">
+                  <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">Impacto & FinOps</h3>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5;">
+                  Arquitetura 100% Serverless com custo sob demanda (pay-as-you-go). Zero gasto com servidores ociosos, redução de até 65% no TCO operacional de contact center e alta disponibilidade multi-AZ nativa AWS.
+                </p>
+              </div>
+            </div>
+
+            <!-- 2. ROTEIRO DE DEMONSTRAÇÃO AO VIVO (LIVE DEMO) -->
+            <h2 style="font-size: 1.5rem; font-family: var(--font-retro); font-weight: 800; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.6rem;">
+              <i class="fa-solid fa-play" style="color: var(--primary);"></i> 2. Roteiro da Demonstração Prática (Live Demo)
+            </h2>
+
+            <!-- ETAPA 1 -->
+            <div class="pitch-timeline-step">
+              <div class="pitch-step-header">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <span class="pitch-step-pill">00:00 - 01:30</span>
+                  <h3 style="font-size: 1.2rem; font-weight: 700; margin: 0;">Etapa 1: Abertura & Propósito do Projeto</h3>
+                </div>
+                <span style="font-size: 0.85rem; color: var(--text-muted);"><i class="fa-solid fa-desktop"></i> Tela: Página Inicial (Home)</span>
+              </div>
+              <p style="font-size: 0.95rem; color: var(--text-secondary); margin: 0;">
+                Apresente os membros do Grupo 6, agradeça à Escola da Nuvem e introduza a Med+Saúde como a operadora de saúde desenvolvida para o Case 1 da formação.
+              </p>
+              <div class="pitch-script-box">
+                <strong><i class="fa-solid fa-microphone"></i> O que falar:</strong>
+                "Olá a todos da banca e professores. Nós somos o Grupo 6 e hoje temos o prazer de apresentar a Med+Saúde, uma solução completa de Contact Center Omnichannel e Guia Médico desenvolvida na AWS para revolucionar a jornada de atendimento na saúde..."
+              </div>
+            </div>
+
+            <!-- ETAPA 2 -->
+            <div class="pitch-timeline-step">
+              <div class="pitch-step-header">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <span class="pitch-step-pill">01:30 - 03:30</span>
+                  <h3 style="font-size: 1.2rem; font-weight: 700; margin: 0;">Etapa 2: Guia Médico, Filtros & Acessibilidade</h3>
+                </div>
+                <span style="font-size: 0.85rem; color: var(--text-muted);"><i class="fa-solid fa-stethoscope"></i> Tela: Guia Médico</span>
+              </div>
+              <p style="font-size: 0.95rem; color: var(--text-secondary); margin: 0;">
+                Navegue até a aba Guia Médico. Demonstre o filtro rápido de especialidade (ex: Cardiologia, Pediatria), clique no botão A+ para mostrar acessibilidade e clique em 'Agendar Consulta'.
+              </p>
+              <div class="pitch-script-box">
+                <strong><i class="fa-solid fa-microphone"></i> O que falar:</strong>
+                "Pensando na inclusão digital de idosos e pessoas com baixa visão, implementamos acessibilidade em tempo real para tamanho de fonte e modo noturno. O beneficiário encontra seu especialista credenciado e pode acionar o agendamento em um clique..."
+              </div>
+            </div>
+
+            <!-- ETAPA 3 -->
+            <div class="pitch-timeline-step">
+              <div class="pitch-step-header">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <span class="pitch-step-pill">03:30 - 06:00</span>
+                  <h3 style="font-size: 1.2rem; font-weight: 700; margin: 0;">Etapa 3: Chatbot Iara & Amazon Lex V2</h3>
+                </div>
+                <span style="font-size: 0.85rem; color: var(--text-muted);"><i class="fa-solid fa-robot"></i> Tela: Widget Amazon Connect</span>
+              </div>
+              <p style="font-size: 0.95rem; color: var(--text-secondary); margin: 0;">
+                Abra o widget oficial no canto inferior direito. Mostre a mensagem de abertura da Iara, a geração instantânea do protocolo no padrão ANS RN 623 e simule uma solicitação de consulta.
+              </p>
+              <div class="pitch-script-box">
+                <strong><i class="fa-solid fa-microphone"></i> O que falar:</strong>
+                "Aqui demonstramos a integração com o Amazon Lex V2 através do bot-G6. Em total conformidade regulatória, emitimos o protocolo inicial obrigatório de imediato. A Iara identifica a intenção de agendamento e faz a triagem contextualizada..."
+              </div>
+            </div>
+
+            <!-- ETAPA 4 -->
+            <div class="pitch-timeline-step">
+              <div class="pitch-step-header">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <span class="pitch-step-pill">06:00 - 08:00</span>
+                  <h3 style="font-size: 1.2rem; font-weight: 700; margin: 0;">Etapa 4: Chamada de Voz WebCalling (WebRTC) & Transbordo</h3>
+                </div>
+                <span style="font-size: 0.85rem; color: var(--text-muted);"><i class="fa-solid fa-phone-volume"></i> Tela: Central 0800 / WebCalling</span>
+              </div>
+              <p style="font-size: 0.95rem; color: var(--text-secondary); margin: 0;">
+                No rodapé do widget ou no botão de ligação da página, demonstre o botão 'Iniciar uma chamada' por voz via tecnologia WebRTC do Amazon Connect, sem depender de linhas telefônicas físicas.
+              </p>
+              <div class="pitch-script-box">
+                <strong><i class="fa-solid fa-microphone"></i> O que falar:</strong>
+                "Se o beneficiário preferir falar por voz ou se o caso for de alta complexidade, o Amazon Connect permite iniciar uma chamada de voz WebRTC de altíssima fidelidade diretamente pelo navegador, sem custo de ligação DDD ou telefonia legada..."
+              </div>
+            </div>
+
+            <!-- ETAPA 5 -->
+            <div class="pitch-timeline-step">
+              <div class="pitch-step-header">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <span class="pitch-step-pill">08:00 - 10:00</span>
+                  <h3 style="font-size: 1.2rem; font-weight: 700; margin: 0;">Etapa 5: Fechamento, Métricas CloudWatch & Agradecimentos</h3>
+                </div>
+                <span style="font-size: 0.85rem; color: var(--text-muted);"><i class="fa-solid fa-flag-checkered"></i> Tela: Sobre Nós (Grupo 6)</span>
+              </div>
+              <p style="font-size: 0.95rem; color: var(--text-secondary); margin: 0;">
+                Navegue até a página Sobre Nós. Crie o encerramento citando a telemetria do CloudWatch, os SLAs de atendimento e agradecendo à equipe da Escola da Nuvem.
+              </p>
+              <div class="pitch-script-box">
+                <strong><i class="fa-solid fa-microphone"></i> O que falar:</strong>
+                "Para concluir, monitoramos todo o contact center com métricas em tempo real no Amazon CloudWatch e Contact Lens. Agradecemos imensamente aos instrutores e à Escola da Nuvem pela oportunidade de construir uma solução pronta para produção..."
+              </div>
+            </div>
+
+            <!-- 3. ARQUITETURA TÉCNICA NA AWS -->
+            <h2 style="font-size: 1.5rem; font-family: var(--font-retro); font-weight: 800; margin: 3rem 0 1.5rem 0; display: flex; align-items: center; gap: 0.6rem;">
+              <i class="fa-brands fa-aws" style="color: #ff9900;"></i> 3. Arquitetura Técnica & Serviços AWS Integrados
+            </h2>
+            <div class="pitch-card-grid">
+              <div class="pitch-feature-card">
+                <h4 style="color: #38bdf8; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem;">
+                  <i class="fa-solid fa-headset"></i> Amazon Connect (Core)
+                </h4>
+                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;">
+                  Instância <code>g6saude.my.connect.aws</code>, Contact Flows de voz e chat, números de discagem direta (DID/0800), filas inteligentes e perfis de roteamento por especialidade.
+                </p>
+              </div>
+
+              <div class="pitch-feature-card">
+                <h4 style="color: #10b981; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem;">
+                  <i class="fa-solid fa-brain"></i> Amazon Lex V2
+                </h4>
+                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;">
+                  Bot conversacional em pt-BR (<code>bot-G6</code>, alias <code>prod</code>), com slots customizados para busca médica, triagem de sintomas e confirmação de agendamentos.
+                </p>
+              </div>
+
+              <div class="pitch-feature-card">
+                <h4 style="color: #f59e0b; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem;">
+                  <i class="fa-solid fa-wand-magic-sparkles"></i> Amazon Q in Connect
+                </h4>
+                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;">
+                  Assistente de IA generativa para agentes humanos, consultando base de conhecimento de carências, rol de procedimentos da ANS e diretrizes clínicas em tempo real.
+                </p>
+              </div>
+
+              <div class="pitch-feature-card">
+                <h4 style="color: #a855f7; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem;">
+                  <i class="fa-solid fa-server"></i> AWS Lambda & DynamoDB
+                </h4>
+                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;">
+                  Funções serverless para validação de CPF/carteirinha, consulta de horários disponíveis no banco NoSQL DynamoDB e geração de logs auditáveis de protocolo.
+                </p>
+              </div>
+            </div>
+
+            <!-- 4. CHECKLIST DO DIA DA APRESENTAÇÃO (RUNBOOK) -->
+            <h2 style="font-size: 1.5rem; font-family: var(--font-retro); font-weight: 800; margin: 3rem 0 1.5rem 0; display: flex; align-items: center; gap: 0.6rem;">
+              <i class="fa-solid fa-list-check" style="color: var(--primary);"></i> 4. Checklist de Pré-Voo da Banca (15 min antes)
+            </h2>
+            <ul class="pitch-checklist">
+              <li class="pitch-checklist-item">
+                <input type="checkbox" id="check-1" checked>
+                <label for="check-1" style="font-size: 0.92rem; color: var(--text-secondary); cursor: pointer;">
+                  <strong>Conexão & Microfone:</strong> Fone de ouvido testado no Google Meet / Teams com áudio limpo.
+                </label>
+              </li>
+              <li class="pitch-checklist-item">
+                <input type="checkbox" id="check-2">
+                <label for="check-2" style="font-size: 0.92rem; color: var(--text-secondary); cursor: pointer;">
+                  <strong>Contact Control Panel (CCP):</strong> Aba do atendente Amazon Connect aberta em status 'Available'.
+                </label>
+              </li>
+              <li class="pitch-checklist-item">
+                <input type="checkbox" id="check-3" checked>
+                <label for="check-3" style="font-size: 0.92rem; color: var(--text-secondary); cursor: pointer;">
+                  <strong>Portal Med+Saúde Pronto:</strong> Navegador em modo tela cheia (F11) na Home.
+                </label>
+              </li>
+              <li class="pitch-checklist-item">
+                <input type="checkbox" id="check-4">
+                <label for="check-4" style="font-size: 0.92rem; color: var(--text-secondary); cursor: pointer;">
+                  <strong>Widget Iara Inicializado:</strong> Verificar se o balão de atendimento está ativo no canto inferior direito.
+                </label>
+              </li>
+              <li class="pitch-checklist-item">
+                <input type="checkbox" id="check-5" checked>
+                <label for="check-5" style="font-size: 0.92rem; color: var(--text-secondary); cursor: pointer;">
+                  <strong>Divisão das Falas:</strong> Cada integrante do Grupo 6 ciente do seu momento no cronômetro.
+                </label>
+              </li>
+              <li class="pitch-checklist-item">
+                <input type="checkbox" id="check-6">
+                <label for="check-6" style="font-size: 0.92rem; color: var(--text-secondary); cursor: pointer;">
+                  <strong>Telemetria / CloudWatch:</strong> Dashboard de chamadas ou métricas aberto em aba de apoio.
+                </label>
+              </li>
+            </ul>
+
+            <div style="text-align: center; margin-top: 3rem;">
+              <button class="btn btn-primary" onclick="navegarPara('inicio')" style="padding: 0.85rem 2rem; font-size: 1rem;">
+                <i class="fa-solid fa-house"></i> Voltar à Página Inicial
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
+      <!-- FIM DA VIEW 6: APRESENTAÇÃO -->
+
 
 
 
@@ -1649,10 +1938,14 @@
             headerMessage: 'Iara – Assistente Virtual'
           }
         });
+        var isMobileConnect = window.innerWidth <= 640;
+        var dynamicConnectWidth = isMobileConnect ? Math.min(window.innerWidth - 16, 380) + 'px' : '380px';
+        var dynamicConnectHeight = isMobileConnect ? Math.min(window.innerHeight - 84, 560) + 'px' : '620px';
+
         amazon_connect('customStyles', {
           global: {
-            frameWidth: '380px',
-            frameHeight: '620px',
+            frameWidth: dynamicConnectWidth,
+            frameHeight: dynamicConnectHeight,
             textColor: '#0f172a',
             fontSize: '14px',
             typeface: "'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
@@ -1745,10 +2038,10 @@
   </button>
 
   <!-- Scripts da Aplicação (Arquitetura Angular Standalone + Ionic Runtime) -->
-  <script src="./js/data.js?v=1794764632498"></script>
-  <script src="./js/app.js?v=1794764632498"></script>
-  <script src="./js/chat-widget.js?v=1794764632498"></script>
-  <script type="module" src="./main.js?v=1794764632498"></script>
+  <script src="./js/data.js?v=1794766027089"></script>
+  <script src="./js/app.js?v=1794766027089"></script>
+  <script src="./js/chat-widget.js?v=1794766027089"></script>
+  <script type="module" src="./main.js?v=1794766027089"></script>
 </body>
 
 </html>
