@@ -4663,6 +4663,17 @@ body.light-theme .docs-block-footer span {
    Avatar da Iara, Bordas Arredondadas, Sombra e Eliminação de Scrollbars
    ========================================================================= */
 
+/* Elimina fundo azul, bordas ou cápsula de dock do container nativo da AWS Connect */
+div[class*="acWidgetContainer"],
+div[class*="acContainer"],
+#amazon-connect-live-widget,
+#amazon-connect-live-widget > div,
+div[class*="acWidgetContainer"] > div {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
 /* Botão Disparador Oficial AWS Connect com Foto/Ícone da Iara (Apenas o primeiro botão disparador) */
 #amazon-connect-chat-button,
 div[id*="amazon-connect"] > button:first-of-type,
