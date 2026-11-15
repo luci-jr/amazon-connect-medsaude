@@ -4748,15 +4748,35 @@ iframe[id*="amazon-connect"],
   max-height: calc(100vh - 90px) !important;
 }
 
+#amazon-connect-live-widget {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  pointer-events: none !important;
+}
+
+#amazon-connect-live-widget * {
+  pointer-events: auto;
+}
+
 @media (max-width: 640px) {
   #amazon-connect-chat-wrapper,
   #amazon-connect-widget-frame,
-  div[id*="amazon-connect"][style*="position: fixed"],
-  div[id*="amazon-connect-live-widget"],
   div[class*="acFrameContainer"],
-  div[class*="acWidgetContainer"],
-  div[class*="acContainer"],
-  div[style*="position: fixed"]:has(iframe[src*="connect"]) {
+  div[class*="acWidgetContainer"] {
+    pointer-events: none !important;
+  }
+
+  #amazon-connect-chat-wrapper *,
+  #amazon-connect-widget-frame *,
+  div[class*="acFrameContainer"] *,
+  div[class*="acWidgetContainer"] * {
+    pointer-events: auto;
+  }
+
+  /* Aplica dimensões apenas quando o iframe do chat estiver visivelmente aberto */
+  div[class*="acFrameContainer"]:has(iframe[style*="height"]),
+  div[class*="acWidgetContainer"]:has(iframe[style*="height"]) {
     position: fixed !important;
     left: 8px !important;
     right: 8px !important;
@@ -4771,6 +4791,7 @@ iframe[id*="amazon-connect"],
     overflow: hidden !important;
     border-radius: 16px !important;
     z-index: 1000000 !important;
+    pointer-events: auto !important;
   }
 
   iframe[id*="amazon-connect"],
@@ -4995,7 +5016,8 @@ body.light-theme .nav-timer-val {
 .pitch-timer-container {
   position: sticky;
   top: 90px;
-  z-index: 99990;
+  z-index: 99999 !important;
+  pointer-events: auto !important;
   background: rgba(15, 23, 42, 0.94);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -5038,6 +5060,7 @@ body.light-theme .pitch-timer-val {
   align-items: center;
   gap: 0.5rem;
   flex-wrap: wrap;
+  pointer-events: auto !important;
 }
 
 .pitch-timer-btn {
@@ -5048,7 +5071,9 @@ body.light-theme .pitch-timer-val {
   border: 1px solid var(--border-color);
   background: rgba(255, 255, 255, 0.06);
   color: var(--text-primary);
-  cursor: pointer;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  touch-action: manipulation !important;
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;

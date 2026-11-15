@@ -1068,14 +1068,26 @@ function voltarAoTopo() {
 function blindarAmazonConnectMobile() {
   function ajustarFrameConnect() {
     if (window.innerWidth <= 640) {
-      const maxW = Math.max(280, window.innerWidth - 16) + 'px';
-      const maxH = Math.max(380, window.innerHeight - 84) + 'px';
+      const iframes = document.querySelectorAll(
+        'iframe[id*="amazon-connect"], iframe[class*="acFrame"], iframe[src*="connect"]'
+      );
+
+      let chatAbertoMobile = false;
+      iframes.forEach(iframe => {
+        if (iframe && iframe.offsetHeight > 100) {
+          chatAbertoMobile = true;
+        }
+      });
 
       const containers = document.querySelectorAll(
-        'div[class*="acWidgetContainer"], div[class*="acFrameContainer"], div[class*="acContainer"], #amazon-connect-chat-wrapper, #amazon-connect-widget-frame, div[id*="amazon-connect"][style*="position: fixed"]'
+        'div[class*="acWidgetContainer"], div[class*="acFrameContainer"], div[class*="acContainer"], #amazon-connect-chat-wrapper, #amazon-connect-widget-frame'
       );
+
       containers.forEach(el => {
-        if (el) {
+        if (!el) return;
+        if (chatAbertoMobile) {
+          const maxW = Math.max(280, window.innerWidth - 16) + 'px';
+          const maxH = Math.max(380, window.innerHeight - 84) + 'px';
           el.style.setProperty('width', 'calc(100vw - 16px)', 'important');
           el.style.setProperty('max-width', maxW, 'important');
           el.style.setProperty('height', maxH, 'important');
@@ -1084,22 +1096,13 @@ function blindarAmazonConnectMobile() {
           el.style.setProperty('right', '8px', 'important');
           el.style.setProperty('bottom', '70px', 'important');
           el.style.setProperty('top', 'auto', 'important');
-          el.style.setProperty('border-radius', '16px', 'important');
-          el.style.setProperty('box-sizing', 'border-box', 'important');
-        }
-      });
-
-      const iframes = document.querySelectorAll(
-        'iframe[id*="amazon-connect"], iframe[class*="acFrame"], iframe[src*="connect"]'
-      );
-      iframes.forEach(iframe => {
-        if (iframe) {
-          iframe.style.setProperty('width', '100%', 'important');
-          iframe.style.setProperty('max-width', '100%', 'important');
-          iframe.style.setProperty('height', '100%', 'important');
-          iframe.style.setProperty('max-height', '100%', 'important');
-          iframe.style.setProperty('border-radius', '16px', 'important');
-          iframe.style.setProperty('box-sizing', 'border-box', 'important');
+          el.style.setProperty('pointer-events', 'auto', 'important');
+        } else {
+          el.style.removeProperty('width');
+          el.style.removeProperty('max-width');
+          el.style.removeProperty('height');
+          el.style.removeProperty('max-height');
+          el.style.setProperty('pointer-events', 'none', 'important');
         }
       });
     }
@@ -1256,6 +1259,24 @@ function reiniciarPitchTimer() {
 
 function resetarPitchTimer(minutos = 10) {
   reiniciarPitchTimer();
+}
+
+// Vinculação explícita de eventos de clique e toque para garantir execução no mobile
+function vincularBotoesPitchTimer() {
+  const bannerBtn = document.getElementById('btn-banner-pitch-toggle');
+  if (bannerBtn && !bannerBtn.dataset.bound) {
+    bannerBtn.dataset.bound = 'true';
+    bannerBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      togglePitchTimer();
+    });
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', vincularBotoesPitchTimer);
+} else {
+  vincularBotoesPitchTimer();
 }
 
 // 12. Exportações Globais para o Window
