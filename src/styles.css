@@ -4818,7 +4818,7 @@ iframe[id*="amazon-connect"],
   letter-spacing: 0.05em;
 }
 
-/* CRONÔMETRO FLUTUANTE DE CANTO (FIXED - EXATAMENTE COMO A CAMILA SUGERIU) */
+/* CRONÔMETRO FLUTUANTE DE CANTO & ARRASTÁVEL (DRAGGABLE - FEEDBACK DO DESENVOLVEDOR & CAMILA) */
 .pitch-floating-pill {
   position: fixed !important;
   top: 86px;
@@ -4834,9 +4834,20 @@ iframe[id*="amazon-connect"],
   border: 1.5px solid rgba(6, 182, 212, 0.5);
   border-radius: 999px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.55), 0 0 18px rgba(6, 182, 212, 0.3);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.15s ease;
   user-select: none;
+  -webkit-user-select: none;
   pointer-events: auto;
+  cursor: grab;
+  touch-action: none;
+}
+
+.pitch-floating-pill.is-dragging {
+  cursor: grabbing !important;
+  transform: scale(1.06) !important;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.75), 0 0 32px rgba(6, 182, 212, 0.6) !important;
+  border-color: #38bdf8 !important;
+  transition: none !important;
 }
 
 body.light-theme .pitch-floating-pill {

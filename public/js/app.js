@@ -24,6 +24,7 @@ function iniciarApp() {
   inicializarScrollSpyDocumentacao();
   inicializarBotaoVoltarAoTopo();
   blindarAmazonConnectMobile();
+  inicializarCronometroArrastavel();
 
   // Fechar dropdowns ao clicar fora ou apertar Escape
   document.addEventListener('click', () => {
@@ -1190,6 +1191,87 @@ function resetarPitchTimer(minutos = 10) {
   pausarPitchTimer();
   pitchSegundosRestantes = Math.round(minutos * 60);
   atualizarDisplayPitch();
+}
+
+// 12.3 Sistema de Arrastar (Draggable) do Cronômetro Flutuante com Suporte a Mouse e Touch
+function inicializarCronometroArrastavel() {
+  const pill = document.getElementById('pitch-floating-pill');
+  if (!pill) return;
+
+  let isDragging = false;
+  let startX = 0, startY = 0, initialLeft = 0, initialTop = 0;
+
+  function onStart(e) {
+    // Não iniciar drag se clicou em um botão interno (play/pause/reset)
+    if (e.target.closest('.pitch-pill-btn')) return;
+
+    isDragging = true;
+
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+    const rect = pill.getBoundingClientRect();
+    startX = clientX;
+    startY = clientY;
+    initialLeft = rect.left;
+    initialTop = rect.top;
+
+    // Converte right/bottom para coordenadas absolutas de tela para permitir arrasto livre
+    pill.style.right = 'auto';
+    pill.style.bottom = 'auto';
+    pill.style.left = `${initialLeft}px`;
+    pill.style.top = `${initialTop}px`;
+
+    pill.classList.add('is-dragging');
+
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onEnd);
+    document.addEventListener('touchmove', onMove, { passive: false });
+    document.addEventListener('touchend', onEnd);
+  }
+
+  function onMove(e) {
+    if (!isDragging) return;
+
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+    const deltaX = clientX - startX;
+    const deltaY = clientY - startY;
+
+    if (Math.abs(deltaX) > 3 || Math.abs(deltaY) > 3) {
+      if (e.cancelable) e.preventDefault();
+    }
+
+    let newLeft = initialLeft + deltaX;
+    let newTop = initialTop + deltaY;
+
+    // Manter dentro das dimensões visíveis da tela (bounds)
+    const pillWidth = pill.offsetWidth;
+    const pillHeight = pill.offsetHeight;
+    const maxLeft = window.innerWidth - pillWidth - 8;
+    const maxTop = window.innerHeight - pillHeight - 8;
+
+    newLeft = Math.max(8, Math.min(newLeft, maxLeft));
+    newTop = Math.max(8, Math.min(newTop, maxTop));
+
+    pill.style.left = `${newLeft}px`;
+    pill.style.top = `${newTop}px`;
+  }
+
+  function onEnd() {
+    if (!isDragging) return;
+    isDragging = false;
+    pill.classList.remove('is-dragging');
+
+    document.removeEventListener('mousemove', onMove);
+    document.removeEventListener('mouseup', onEnd);
+    document.removeEventListener('touchmove', onMove);
+    document.removeEventListener('touchend', onEnd);
+  }
+
+  pill.addEventListener('mousedown', onStart);
+  pill.addEventListener('touchstart', onStart, { passive: true });
 }
 
 // 12. Exportações Globais para o Window
