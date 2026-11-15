@@ -1277,7 +1277,7 @@ function resetarPitchTimer(minutos = 10) {
 function inicializarChatMobileArrastavelEFechar() {
   function buscarBotaoConnect() {
     return document.querySelector(
-      '#amazon-connect-chat-button, div[id*="amazon-connect"] > button, div[class*="acWidgetContainer"] > button, button[id*="amazon-connect"]'
+      '#amazon-connect-open-widget-button, #amazon-connect-chat-button, div[id*="amazon-connect"] > button, div[class*="acWidgetContainer"] > button, button[id*="amazon-connect"]'
     );
   }
 

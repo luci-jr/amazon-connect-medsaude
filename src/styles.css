@@ -4664,6 +4664,7 @@ body.light-theme .docs-block-footer span {
    ========================================================================= */
 
 /* Elimina fundo azul, bordas ou cápsula de dock do container nativo da AWS Connect */
+#amazon-connect-chat-widget,
 div[class*="acWidgetContainer"],
 div[class*="acContainer"],
 #amazon-connect-live-widget,
@@ -4674,7 +4675,18 @@ div[class*="acWidgetContainer"] > div {
   box-shadow: none !important;
 }
 
+/* Oculta os SVGs internos padrão do widget da AWS para não vazarem por trás do avatar */
+#amazon-connect-open-widget-button svg,
+#amazon-connect-close-widget-button svg,
+div[id*="amazon-connect"] button svg,
+div[class*="acWidgetContainer"] button svg {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
 /* Botão Disparador Oficial AWS Connect com Foto/Ícone da Iara (Apenas o primeiro botão disparador) */
+#amazon-connect-open-widget-button,
 #amazon-connect-chat-button,
 div[id*="amazon-connect"] > button:first-of-type,
 div[id*="amazon-connect"] button[id*="button"]:first-of-type,
