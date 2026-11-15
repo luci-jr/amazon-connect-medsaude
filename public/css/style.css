@@ -4663,18 +4663,18 @@ body.light-theme .docs-block-footer span {
    Avatar da Iara, Bordas Arredondadas, Sombra e Eliminação de Scrollbars
    ========================================================================= */
 
-/* Botão Disparador Oficial AWS Connect com Foto/Ícone da Iara */
+/* Botão Disparador Oficial AWS Connect com Foto/Ícone da Iara (Apenas o primeiro botão disparador) */
 #amazon-connect-chat-button,
-div[id*="amazon-connect"] button[id*="button"],
-div[id*="amazon-connect"] button,
-button[id*="amazon-connect"] {
+div[id*="amazon-connect"] > button:first-of-type,
+div[id*="amazon-connect"] button[id*="button"]:first-of-type,
+div[class*="acWidgetContainer"] > button:first-of-type {
   background-image: url('../images/avatar-iara.png') !important;
   background-size: cover !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
   border: 3px solid #0891b2 !important;
   box-shadow: 0 8px 24px rgba(8, 145, 178, 0.45) !important;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition: transform 0.2s ease, box-shadow 0.25s ease !important;
   width: 60px !important;
   height: 60px !important;
   border-radius: 50% !important;
@@ -4687,24 +4687,31 @@ button[id*="amazon-connect"] {
   will-change: transform !important;
 }
 
+/* Blindagem contra duplicação: oculta quaisquer outros botões gerados pelo SDK */
+div[id*="amazon-connect"] button:not(:first-of-type),
+div[class*="acWidgetContainer"] button:not(:first-of-type) {
+  display: none !important;
+}
+
 /* Botão discreto com 'X' no canto do avatar da Iara no mobile para fechar durante apresentação */
 .btn-chat-dismiss-corner {
+  all: unset !important;
   position: absolute !important;
   top: -4px !important;
   right: -4px !important;
   width: 22px !important;
   height: 22px !important;
   border-radius: 50% !important;
-  background: rgba(15, 23, 42, 0.95) !important;
-  border: 1.5px solid rgba(255, 255, 255, 0.45) !important;
+  background: #0f172a !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.8) !important;
   color: #ffffff !important;
-  font-size: 0.68rem !important;
+  font-size: 0.7rem !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   cursor: pointer !important;
   z-index: 10000005 !important;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.75) !important;
   touch-action: manipulation !important;
   padding: 0 !important;
   line-height: 1 !important;
@@ -4716,7 +4723,7 @@ button[id*="amazon-connect"] {
   background: #ef4444 !important;
   border-color: #ef4444 !important;
   color: #ffffff !important;
-  transform: scale(1.1) !important;
+  transform: scale(1.15) !important;
 }
 
 /* Chip/Pill discreto de restauração caso o usuário queira reexibir o chat */
@@ -5022,6 +5029,19 @@ body.light-theme .nav-timer-val {
   background: rgba(6, 182, 212, 0.25);
   border-color: #06b6d4;
   color: #38bdf8;
+}
+
+.nav-timer-btn.btn-nav-restart {
+  color: #38bdf8;
+  border-color: rgba(56, 189, 248, 0.35);
+}
+
+.nav-timer-btn.btn-nav-restart:hover,
+.nav-timer-btn.btn-nav-restart:active {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: #38bdf8;
+  color: #7dd3fc;
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.35);
 }
 
 .nav-timer-btn.btn-nav-stop {

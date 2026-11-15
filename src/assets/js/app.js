@@ -24,6 +24,7 @@ function iniciarApp() {
   inicializarScrollSpyDocumentacao();
   inicializarBotaoVoltarAoTopo();
   blindarAmazonConnectMobile();
+  inicializarChatMobileArrastavelEFechar();
 
   // Fechar dropdowns ao clicar fora ou apertar Escape
   document.addEventListener('click', () => {
@@ -765,6 +766,10 @@ function navegarPara(target) {
     }
   }
 
+  try {
+    localStorage.setItem('medsaude_last_tab', pageId);
+  } catch (e) {}
+
   // 1. Alternar visualização da página ativa de forma instantânea e absoluta
   const views = document.querySelectorAll('.page-view');
   views.forEach(v => {
@@ -886,7 +891,12 @@ function inicializarRoteadorSPA() {
     navegarPara(hash);
   });
 
-  const hashInicial = window.location.hash.replace('#', '') || 'inicio';
+  let savedTab = null;
+  try {
+    savedTab = localStorage.getItem('medsaude_last_tab');
+  } catch (e) {}
+
+  const hashInicial = window.location.hash.replace('#', '') || savedTab || 'inicio';
   navegarPara(hashInicial);
 }
 
@@ -1059,14 +1069,26 @@ function voltarAoTopo() {
 function blindarAmazonConnectMobile() {
   function ajustarFrameConnect() {
     if (window.innerWidth <= 640) {
-      const maxW = Math.max(280, window.innerWidth - 16) + 'px';
-      const maxH = Math.max(380, window.innerHeight - 84) + 'px';
+      const iframes = document.querySelectorAll(
+        'iframe[id*="amazon-connect"], iframe[class*="acFrame"], iframe[src*="connect"]'
+      );
+
+      let chatAbertoMobile = false;
+      iframes.forEach(iframe => {
+        if (iframe && iframe.offsetHeight > 100) {
+          chatAbertoMobile = true;
+        }
+      });
 
       const containers = document.querySelectorAll(
-        'div[class*="acWidgetContainer"], div[class*="acFrameContainer"], div[class*="acContainer"], #amazon-connect-chat-wrapper, #amazon-connect-widget-frame, div[id*="amazon-connect"][style*="position: fixed"]'
+        'div[class*="acWidgetContainer"], div[class*="acFrameContainer"], div[class*="acContainer"], #amazon-connect-chat-wrapper, #amazon-connect-widget-frame'
       );
+
       containers.forEach(el => {
-        if (el) {
+        if (!el) return;
+        if (chatAbertoMobile) {
+          const maxW = Math.max(280, window.innerWidth - 16) + 'px';
+          const maxH = Math.max(380, window.innerHeight - 84) + 'px';
           el.style.setProperty('width', 'calc(100vw - 16px)', 'important');
           el.style.setProperty('max-width', maxW, 'important');
           el.style.setProperty('height', maxH, 'important');
@@ -1075,22 +1097,13 @@ function blindarAmazonConnectMobile() {
           el.style.setProperty('right', '8px', 'important');
           el.style.setProperty('bottom', '70px', 'important');
           el.style.setProperty('top', 'auto', 'important');
-          el.style.setProperty('border-radius', '16px', 'important');
-          el.style.setProperty('box-sizing', 'border-box', 'important');
-        }
-      });
-
-      const iframes = document.querySelectorAll(
-        'iframe[id*="amazon-connect"], iframe[class*="acFrame"], iframe[src*="connect"]'
-      );
-      iframes.forEach(iframe => {
-        if (iframe) {
-          iframe.style.setProperty('width', '100%', 'important');
-          iframe.style.setProperty('max-width', '100%', 'important');
-          iframe.style.setProperty('height', '100%', 'important');
-          iframe.style.setProperty('max-height', '100%', 'important');
-          iframe.style.setProperty('border-radius', '16px', 'important');
-          iframe.style.setProperty('box-sizing', 'border-box', 'important');
+          el.style.setProperty('pointer-events', 'auto', 'important');
+        } else {
+          el.style.removeProperty('width');
+          el.style.removeProperty('max-width');
+          el.style.removeProperty('height');
+          el.style.removeProperty('max-height');
+          el.style.setProperty('pointer-events', 'none', 'important');
         }
       });
     }
@@ -1106,9 +1119,9 @@ function blindarAmazonConnectMobile() {
   ajustarFrameConnect();
 }
 
-// 12.2 Cronômetro Interativo do Pitch (Aba Apresentação)
+// 12.2 Cronômetro Interativo do Pitch (Aba Apresentação - Sincronizado com Pill Flutuante)
 let pitchTimerInterval = null;
-let pitchSegundosRestantes = 600; // 10 minutos padrão
+let pitchSegundosRestantes = 600; // 10 minutos cravados (meta oficial do pitch Grupo 6)
 
 function formatarTempoPitch(segundos) {
   const min = Math.floor(segundos / 60);
@@ -1116,21 +1129,93 @@ function formatarTempoPitch(segundos) {
   return `${String(min).padStart(2, '0')}:${String(seg).padStart(2, '0')}`;
 }
 
+function atualizarDisplayPitch() {
+  const formatted = formatarTempoPitch(pitchSegundosRestantes);
+  const display = document.getElementById('pitch-timer-display');
+  const bannerIcon = document.getElementById('banner-icon-toggle');
+  const bannerText = document.getElementById('banner-text-toggle');
+  const navTimer = document.getElementById('nav-pitch-timer');
+  const navDisplay = document.getElementById('nav-timer-val');
+  const navIcon = document.getElementById('nav-icon-toggle');
+
+  if (display) {
+    display.textContent = formatted;
+    if (pitchSegundosRestantes <= 60 && pitchSegundosRestantes > 0) {
+      display.style.color = '#f59e0b';
+    } else if (pitchSegundosRestantes === 0) {
+      display.style.color = '#ef4444';
+    } else {
+      display.style.color = '';
+    }
+  }
+
+  if (bannerIcon) {
+    bannerIcon.className = pitchTimerInterval ? 'fa-solid fa-pause' : 'fa-solid fa-play';
+  }
+  if (bannerText) {
+    bannerText.textContent = pitchTimerInterval ? 'Pausar' : 'Iniciar';
+  }
+
+  const bannerBtn = document.getElementById('btn-banner-pitch-toggle');
+  if (bannerBtn) {
+    if (pitchTimerInterval) {
+      bannerBtn.classList.remove('btn-play');
+      bannerBtn.classList.add('btn-pause');
+    } else {
+      bannerBtn.classList.remove('btn-pause');
+      bannerBtn.classList.add('btn-play');
+    }
+  }
+
+  if (navDisplay) navDisplay.textContent = formatted;
+
+  if (navTimer) {
+    if (pitchTimerInterval) {
+      navTimer.classList.add('running');
+      navTimer.classList.remove('paused');
+    } else {
+      navTimer.classList.remove('running');
+      navTimer.classList.add('paused');
+    }
+
+    if (pitchSegundosRestantes <= 60 && pitchSegundosRestantes > 0) {
+      navTimer.classList.add('warning');
+      navTimer.classList.remove('danger');
+    } else if (pitchSegundosRestantes === 0) {
+      navTimer.classList.add('danger');
+      navTimer.classList.remove('warning');
+    } else {
+      navTimer.classList.remove('warning', 'danger');
+    }
+  }
+
+  if (navIcon) {
+    navIcon.className = pitchTimerInterval ? 'fa-solid fa-pause' : 'fa-solid fa-play';
+  }
+}
+
 function iniciarPitchTimer() {
   if (pitchTimerInterval) return;
-  const display = document.getElementById('pitch-timer-display');
   pitchTimerInterval = setInterval(() => {
     if (pitchSegundosRestantes > 0) {
       pitchSegundosRestantes--;
-      if (display) display.textContent = formatarTempoPitch(pitchSegundosRestantes);
+      atualizarDisplayPitch();
     } else {
       pausarPitchTimer();
-      if (display) {
-        display.textContent = '00:00';
-        display.style.color = '#ef4444';
-      }
+      atualizarDisplayPitch();
     }
   }, 1000);
+
+  // Ativa estado do cronômetro (no mobile, oculta botões de tema e fonte para dar espaço)
+  document.body.classList.add('pitch-timer-active');
+
+  // Integra automaticamente o cronômetro à barra de menu superior
+  const navTimer = document.getElementById('nav-pitch-timer');
+  if (navTimer) {
+    navTimer.style.display = 'inline-flex';
+  }
+
+  atualizarDisplayPitch();
 }
 
 function pausarPitchTimer() {
@@ -1138,16 +1223,189 @@ function pausarPitchTimer() {
     clearInterval(pitchTimerInterval);
     pitchTimerInterval = null;
   }
+  atualizarDisplayPitch();
 }
 
-function resetarPitchTimer(minutos = 9.5) {
-  pausarPitchTimer();
-  pitchSegundosRestantes = Math.round(minutos * 60);
-  const display = document.getElementById('pitch-timer-display');
-  if (display) {
-    display.textContent = formatarTempoPitch(pitchSegundosRestantes);
-    display.style.color = '';
+function pararPitchTimer() {
+  if (pitchTimerInterval) {
+    clearInterval(pitchTimerInterval);
+    pitchTimerInterval = null;
   }
+  pitchSegundosRestantes = 600; // Reseta cravado para 10 minutos (meta oficial)
+
+  // Desativa estado do cronômetro (restaura botões no mobile)
+  document.body.classList.remove('pitch-timer-active');
+
+  atualizarDisplayPitch();
+
+  // Oculta da barra de navegação ao parar
+  const navTimer = document.getElementById('nav-pitch-timer');
+  if (navTimer) {
+    navTimer.style.display = 'none';
+    navTimer.classList.remove('running', 'paused', 'warning', 'danger');
+  }
+}
+
+function togglePitchTimer() {
+  if (pitchTimerInterval) {
+    pausarPitchTimer();
+  } else {
+    iniciarPitchTimer();
+  }
+}
+
+function reiniciarPitchTimer() {
+  const estavaRodando = !!pitchTimerInterval;
+  if (pitchTimerInterval) {
+    clearInterval(pitchTimerInterval);
+    pitchTimerInterval = null;
+  }
+  pitchSegundosRestantes = 600; // 10 minutos cravados
+
+  if (estavaRodando) {
+    iniciarPitchTimer();
+  } else {
+    atualizarDisplayPitch();
+  }
+}
+
+function resetarPitchTimer(minutos = 10) {
+  reiniciarPitchTimer();
+}
+
+// 12.3 Sistema Mobile: Chat Flutuante Arrastável com o Dedo & Botão com 'X' para Fechar
+function inicializarChatMobileArrastavelEFechar() {
+  function buscarBotaoConnect() {
+    return document.querySelector(
+      '#amazon-connect-chat-button, div[id*="amazon-connect"] > button, div[class*="acWidgetContainer"] > button, button[id*="amazon-connect"]'
+    );
+  }
+
+  let tentativas = 0;
+  const intervalo = setInterval(() => {
+    tentativas++;
+    const chatBtn = buscarBotaoConnect();
+    if (chatBtn) {
+      clearInterval(intervalo);
+      aplicarArrastoEBotaoFechar(chatBtn);
+    } else if (tentativas > 40) {
+      clearInterval(intervalo);
+    }
+  }, 500);
+
+  function aplicarArrastoEBotaoFechar(btn) {
+    if (btn.dataset.dragReady) return;
+    btn.dataset.dragReady = 'true';
+
+    // 1. Injetar o botão 'x' discreto (como div role="button" para não conflitar com regras CSS de button)
+    let closeBtn = document.getElementById('btn-fechar-chat-apresentacao');
+    if (!closeBtn) {
+      closeBtn = document.createElement('div');
+      closeBtn.id = 'btn-fechar-chat-apresentacao';
+      closeBtn.className = 'btn-chat-dismiss-corner';
+      closeBtn.setAttribute('role', 'button');
+      closeBtn.setAttribute('tabindex', '0');
+      closeBtn.title = 'Fechar/Ocultar assistente durante a apresentação';
+      closeBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+      closeBtn.setAttribute('aria-label', 'Ocultar assistente');
+
+      function fecharHandler(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        ocultarChatApresentacao(btn);
+      }
+
+      closeBtn.addEventListener('click', fecharHandler);
+      closeBtn.addEventListener('touchend', fecharHandler);
+
+      btn.appendChild(closeBtn);
+    }
+
+    // 2. Sistema de arrasto com o dedo no mobile (Touch Drag)
+    let isDragging = false;
+    let startX = 0, startY = 0;
+    let currentX = 0, currentY = 0;
+    let deltaMove = 0;
+
+    btn.addEventListener('touchstart', (e) => {
+      if (e.target.closest('#btn-fechar-chat-apresentacao')) return;
+      const touch = e.touches[0];
+      startX = touch.clientX - currentX;
+      startY = touch.clientY - currentY;
+      deltaMove = 0;
+      isDragging = false;
+    }, { passive: true });
+
+    btn.addEventListener('touchmove', (e) => {
+      if (e.target.closest('#btn-fechar-chat-apresentacao')) return;
+      const touch = e.touches[0];
+      const newX = touch.clientX - startX;
+      const newY = touch.clientY - startY;
+      deltaMove += Math.abs(touch.clientX - (startX + currentX)) + Math.abs(touch.clientY - (startY + currentY));
+
+      if (deltaMove > 8) {
+        isDragging = true;
+        currentX = newX;
+        currentY = newY;
+        btn.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+        btn.style.transition = 'none';
+      }
+    }, { passive: true });
+
+    btn.addEventListener('touchend', (e) => {
+      if (isDragging) {
+        e.preventDefault();
+        e.stopPropagation();
+        btn.style.transition = 'transform 0.2s ease';
+        setTimeout(() => { isDragging = false; }, 120);
+      }
+    });
+  }
+}
+
+function ocultarChatApresentacao(btn) {
+  const target = btn || document.querySelector(
+    '#amazon-connect-chat-button, div[id*="amazon-connect"] > button, div[class*="acWidgetContainer"] > button, button[id*="amazon-connect"]'
+  );
+  if (target) {
+    target.classList.add('chat-oculto-apresentacao');
+    target.style.setProperty('display', 'none', 'important');
+  }
+
+  let restoreBtn = document.getElementById('btn-restaurar-chat-apresentacao');
+  if (!restoreBtn) {
+    restoreBtn = document.createElement('button');
+    restoreBtn.id = 'btn-restaurar-chat-apresentacao';
+    restoreBtn.className = 'btn-chat-restore-pill';
+    restoreBtn.innerHTML = '<i class="fa-solid fa-headset"></i> <span>Iara</span>';
+    restoreBtn.title = 'Reexibir Assistente Virtual';
+    restoreBtn.addEventListener('click', () => {
+      restaurarChatApresentacao(target);
+    });
+    document.body.appendChild(restoreBtn);
+  } else {
+    restoreBtn.style.display = 'inline-flex';
+  }
+}
+
+function restaurarChatApresentacao(btn) {
+  const target = btn || document.querySelector(
+    '#amazon-connect-chat-button, div[id*="amazon-connect"] > button, div[class*="acWidgetContainer"] > button, button[id*="amazon-connect"]'
+  );
+  if (target) {
+    target.classList.remove('chat-oculto-apresentacao');
+    target.style.removeProperty('display');
+  }
+  const restoreBtn = document.getElementById('btn-restaurar-chat-apresentacao');
+  if (restoreBtn) {
+    restoreBtn.style.display = 'none';
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', inicializarChatMobileArrastavelEFechar);
+} else {
+  inicializarChatMobileArrastavelEFechar();
 }
 
 // 12. Exportações Globais para o Window
@@ -1166,5 +1424,10 @@ window.resetarTamanhoFonte = resetarTamanhoFonte;
 window.voltarAoTopo = voltarAoTopo;
 window.iniciarPitchTimer = iniciarPitchTimer;
 window.pausarPitchTimer = pausarPitchTimer;
+window.togglePitchTimer = togglePitchTimer;
+window.reiniciarPitchTimer = reiniciarPitchTimer;
 window.resetarPitchTimer = resetarPitchTimer;
+window.pararPitchTimer = pararPitchTimer;
+window.ocultarChatApresentacao = ocultarChatApresentacao;
+window.restaurarChatApresentacao = restaurarChatApresentacao;
 

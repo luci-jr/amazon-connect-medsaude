@@ -3,7 +3,7 @@
   "short_name": "Med+Saúde",
   "description": "Portal do Beneficiário e Guia Médico Inteligente integrado ao Amazon Connect - Escola da Nuvem (Grupo 6)",
   "start_url": "./index.html",
-  "display": "standalone",
+  "display": "minimal-ui",
   "background_color": "#060a14",
   "theme_color": "#0284c7",
   "orientation": "portrait-primary",

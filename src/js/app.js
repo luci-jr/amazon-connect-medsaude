@@ -1277,7 +1277,7 @@ function resetarPitchTimer(minutos = 10) {
 function inicializarChatMobileArrastavelEFechar() {
   function buscarBotaoConnect() {
     return document.querySelector(
-      '#amazon-connect-chat-button, button[id*="amazon-connect"], div[id*="amazon-connect"] button, div[class*="acWidgetContainer"] button'
+      '#amazon-connect-chat-button, div[id*="amazon-connect"] > button, div[class*="acWidgetContainer"] > button, button[id*="amazon-connect"]'
     );
   }
 
@@ -1297,12 +1297,14 @@ function inicializarChatMobileArrastavelEFechar() {
     if (btn.dataset.dragReady) return;
     btn.dataset.dragReady = 'true';
 
-    // 1. Injetar o botão 'x' discreto no canto superior do botão do chat
+    // 1. Injetar o botão 'x' discreto (como div role="button" para não conflitar com regras CSS de button)
     let closeBtn = document.getElementById('btn-fechar-chat-apresentacao');
     if (!closeBtn) {
-      closeBtn = document.createElement('button');
+      closeBtn = document.createElement('div');
       closeBtn.id = 'btn-fechar-chat-apresentacao';
       closeBtn.className = 'btn-chat-dismiss-corner';
+      closeBtn.setAttribute('role', 'button');
+      closeBtn.setAttribute('tabindex', '0');
       closeBtn.title = 'Fechar/Ocultar assistente durante a apresentação';
       closeBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
       closeBtn.setAttribute('aria-label', 'Ocultar assistente');
@@ -1363,7 +1365,7 @@ function inicializarChatMobileArrastavelEFechar() {
 
 function ocultarChatApresentacao(btn) {
   const target = btn || document.querySelector(
-    '#amazon-connect-chat-button, button[id*="amazon-connect"], div[id*="amazon-connect"] button, div[class*="acWidgetContainer"] button'
+    '#amazon-connect-chat-button, div[id*="amazon-connect"] > button, div[class*="acWidgetContainer"] > button, button[id*="amazon-connect"]'
   );
   if (target) {
     target.classList.add('chat-oculto-apresentacao');
@@ -1388,7 +1390,7 @@ function ocultarChatApresentacao(btn) {
 
 function restaurarChatApresentacao(btn) {
   const target = btn || document.querySelector(
-    '#amazon-connect-chat-button, button[id*="amazon-connect"], div[id*="amazon-connect"] button, div[class*="acWidgetContainer"] button'
+    '#amazon-connect-chat-button, div[id*="amazon-connect"] > button, div[class*="acWidgetContainer"] > button, button[id*="amazon-connect"]'
   );
   if (target) {
     target.classList.remove('chat-oculto-apresentacao');
