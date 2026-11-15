@@ -4749,32 +4749,62 @@ div[class*="acWidgetContainer"] button:not(:first-of-type) {
   transform: scale(1.15) !important;
 }
 
-/* Chip/Pill discreto de restauração caso o usuário queira reexibir o chat */
+/* Chip/Pill oficial discreto [ 🎧 Iara ] */
+.btn-chat-mobile-pill,
 .btn-chat-restore-pill {
   position: fixed !important;
   bottom: 84px !important;
   right: 14px !important;
   z-index: 999990 !important;
-  background: rgba(15, 23, 42, 0.9) !important;
-  border: 1.5px solid rgba(8, 145, 178, 0.6) !important;
+  background: rgba(15, 23, 42, 0.94) !important;
+  border: 1.5px solid rgba(8, 145, 178, 0.75) !important;
   color: #38bdf8 !important;
-  font-size: 0.75rem !important;
+  font-size: 0.82rem !important;
   font-weight: 700 !important;
   border-radius: 999px !important;
-  padding: 0.32rem 0.75rem !important;
+  padding: 0.38rem 0.85rem !important;
   display: inline-flex !important;
   align-items: center !important;
-  gap: 0.4rem !important;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5) !important;
+  gap: 0.45rem !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6), 0 0 10px rgba(8, 145, 178, 0.35) !important;
   backdrop-filter: blur(12px) !important;
   cursor: pointer !important;
-  touch-action: manipulation !important;
-  animation: fadeInNavbarTimer 0.3s ease forwards !important;
+  touch-action: none !important;
+  user-select: none !important;
+  outline: none !important;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease !important;
 }
 
-.btn-chat-restore-pill:hover {
+.btn-chat-mobile-pill:hover,
+.btn-chat-mobile-pill:active,
+.btn-chat-restore-pill:hover,
+.btn-chat-restore-pill:active {
   background: rgba(8, 145, 178, 0.25) !important;
   border-color: #38bdf8 !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 20px rgba(8, 145, 178, 0.5) !important;
+}
+
+/* No mobile: oculta completamente o botão circular grande para deixar SOMENTE a pílula [ 🎧 Iara ] */
+@media (max-width: 768px) {
+  #amazon-connect-open-widget-button,
+  #amazon-connect-close-widget-button,
+  #amazon-connect-chat-button,
+  div[id*="amazon-connect"] > button,
+  div[class*="acWidgetContainer"] > button,
+  .btn-chat-dismiss-corner {
+    display: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  body.chat-is-open .btn-chat-mobile-pill,
+  body.chat-is-open .btn-chat-restore-pill {
+    display: none !important;
+  }
 }
 
 /* Quando oculto durante a apresentação */
