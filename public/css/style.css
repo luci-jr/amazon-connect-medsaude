@@ -3634,6 +3634,8 @@ body.light-theme .plan-price-val {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
   }
 
   .brand-logo {
@@ -3642,6 +3644,7 @@ body.light-theme .plan-price-val {
     min-width: 0 !important;
     display: flex !important;
     align-items: center !important;
+    overflow: hidden !important;
   }
 
   .logo-icon-box {
@@ -3649,11 +3652,14 @@ body.light-theme .plan-price-val {
     height: 34px !important;
     min-width: 34px !important;
     border-radius: 9px !important;
+    flex-shrink: 0 !important;
   }
 
   .brand-name {
-    font-size: 1.12rem !important;
+    font-size: clamp(0.92rem, 3.2vw, 1.12rem) !important;
     white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
   }
 
   .nav-actions {
@@ -3661,6 +3667,13 @@ body.light-theme .plan-price-val {
     flex-shrink: 0 !important;
     display: flex !important;
     align-items: center !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+  }
+  .nav-actions::-webkit-scrollbar {
+    display: none !important;
   }
 
   .nav-icon-btn {
@@ -4732,17 +4745,28 @@ iframe[id*="amazon-connect"],
 @media (max-width: 640px) {
   #amazon-connect-chat-wrapper,
   #amazon-connect-widget-frame,
-  div[id*="amazon-connect"][style*="position: fixed"] {
-    right: 12px !important;
+  div[id*="amazon-connect"][style*="position: fixed"],
+  div[id*="amazon-connect-live-widget"],
+  div[class*="acFrameContainer"] {
+    width: 100% !important;
+    max-width: calc(100vw - 16px) !important;
+    right: 8px !important;
+    left: 8px !important;
     bottom: 74px !important;
-    max-width: calc(100vw - 24px) !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
   }
   iframe[id*="amazon-connect"],
   #amazon-connect-chat-widget-iframe,
-  #amazon-connect-chat-iframe {
-    max-width: calc(100vw - 24px) !important;
+  #amazon-connect-chat-iframe,
+  iframe[class*="acFrame"] {
     width: 100% !important;
+    max-width: calc(100vw - 16px) !important;
     max-height: calc(100vh - 84px) !important;
+    right: 8px !important;
+    left: 8px !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
   }
 }
 

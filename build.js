@@ -69,6 +69,13 @@ function build() {
     });
   }
 
+  const srcDirectJs = path.join(SRC_DIR, 'js');
+  if (fs.existsSync(srcDirectJs)) {
+    fs.readdirSync(srcDirectJs).forEach(file => {
+      fs.copyFileSync(path.join(srcDirectJs, file), path.join(publicJs, file));
+    });
+  }
+
   // 5. Copiar Main e Módulos da Arquitetura Angular para public/
   if (fs.existsSync(path.join(SRC_DIR, 'main.js'))) {
     fs.copyFileSync(path.join(SRC_DIR, 'main.js'), path.join(PUBLIC_DIR, 'main.js'));

@@ -23,6 +23,7 @@ function iniciarApp() {
   inicializarRoteadorSPA();
   inicializarScrollSpyDocumentacao();
   inicializarBotaoVoltarAoTopo();
+  blindarAmazonConnectMobile();
 
   // Fechar dropdowns ao clicar fora ou apertar Escape
   document.addEventListener('click', () => {
@@ -1046,6 +1047,33 @@ function inicializarBotaoVoltarAoTopo() {
 
 function voltarAoTopo() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// 12.1 Blindagem de Viewport Mobile para Amazon Connect Communications Widget
+function blindarAmazonConnectMobile() {
+  function ajustarFrameConnect() {
+    if (window.innerWidth <= 640) {
+      const frames = document.querySelectorAll('iframe[id*="amazon-connect"], #amazon-connect-widget-frame, div[id*="amazon-connect"][style*="position: fixed"], div[class*="acFrameContainer"]');
+      const maxW = Math.max(280, window.innerWidth - 16) + 'px';
+      frames.forEach(el => {
+        if (el) {
+          el.style.setProperty('max-width', maxW, 'important');
+          el.style.setProperty('left', '8px', 'important');
+          el.style.setProperty('right', '8px', 'important');
+          el.style.setProperty('box-sizing', 'border-box', 'important');
+        }
+      });
+    }
+  }
+
+  window.addEventListener('resize', ajustarFrameConnect, { passive: true });
+  window.addEventListener('orientationchange', ajustarFrameConnect, { passive: true });
+
+  if (typeof MutationObserver !== 'undefined') {
+    const observer = new MutationObserver(() => ajustarFrameConnect());
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+  ajustarFrameConnect();
 }
 
 // 12. Exportações Globais para o Window
