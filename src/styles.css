@@ -4818,6 +4818,147 @@ iframe[id*="amazon-connect"],
   letter-spacing: 0.05em;
 }
 
+/* CRONÔMETRO INTEGRADO À BARRA DE MENU (ATIVADO AO INICIAR O PITCH) */
+.nav-pitch-timer {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: rgba(15, 23, 42, 0.88);
+  border: 1px solid rgba(6, 182, 212, 0.45);
+  border-radius: 999px;
+  padding: 0.25rem 0.65rem;
+  box-shadow: 0 0 12px rgba(6, 182, 212, 0.25);
+  animation: fadeInNavbarTimer 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  user-select: none;
+}
+
+body.light-theme .nav-pitch-timer {
+  background: rgba(240, 249, 255, 0.95);
+  border-color: rgba(2, 132, 199, 0.4);
+  box-shadow: 0 0 10px rgba(2, 132, 199, 0.2);
+}
+
+@keyframes fadeInNavbarTimer {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.nav-timer-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 6px #10b981;
+}
+
+.nav-pitch-timer.running .nav-timer-dot {
+  animation: pillDotPulse 1.6s infinite ease-in-out;
+}
+
+.nav-pitch-timer.paused .nav-timer-dot {
+  background: #f59e0b;
+  box-shadow: 0 0 6px #f59e0b;
+}
+
+.nav-pitch-timer.warning .nav-timer-dot {
+  background: #f59e0b;
+  box-shadow: 0 0 6px #f59e0b;
+}
+
+.nav-pitch-timer.danger .nav-timer-dot {
+  background: #ef4444;
+  box-shadow: 0 0 6px #ef4444;
+  animation: pillDotPulse 0.8s infinite ease-in-out;
+}
+
+.nav-timer-tag {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #06b6d4;
+}
+
+body.light-theme .nav-timer-tag {
+  color: #0284c7;
+}
+
+.nav-timer-val {
+  font-family: var(--font-tech, monospace);
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #38bdf8;
+  letter-spacing: 0.04em;
+  min-width: 44px;
+  text-align: center;
+}
+
+body.light-theme .nav-timer-val {
+  color: #0284c7;
+}
+
+.nav-pitch-timer.danger .nav-timer-val {
+  color: #ef4444 !important;
+}
+
+.nav-timer-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.68rem;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.nav-timer-btn:hover {
+  background: rgba(6, 182, 212, 0.25);
+  border-color: #06b6d4;
+  color: #38bdf8;
+}
+
+.nav-timer-btn.btn-nav-stop {
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.35);
+}
+
+.nav-timer-btn.btn-nav-stop:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+  color: #f87171;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.35);
+}
+
+@media (max-width: 640px) {
+  .nav-timer-tag {
+    display: none;
+  }
+  .nav-pitch-timer {
+    padding: 0.2rem 0.45rem;
+    gap: 0.3rem;
+  }
+  .nav-timer-val {
+    font-size: 0.82rem;
+    min-width: 38px;
+  }
+  .nav-timer-btn {
+    width: 22px;
+    height: 22px;
+    font-size: 0.62rem;
+  }
+}
+
 /* CRONÔMETRO FLUTUANTE DE CANTO & ARRASTÁVEL (DRAGGABLE NO BODY - 100% FIXED) */
 .pitch-floating-pill {
   position: fixed !important;
@@ -4969,6 +5110,18 @@ body.light-theme .pitch-pill-display {
   box-shadow: 0 4px 14px rgba(8, 145, 178, 0.6);
 }
 
+.pitch-pill-btn.btn-stop-timer {
+  color: #ef4444 !important;
+  border-color: rgba(239, 68, 68, 0.35) !important;
+}
+
+.pitch-pill-btn.btn-stop-timer:hover {
+  background: rgba(239, 68, 68, 0.2) !important;
+  border-color: #ef4444 !important;
+  color: #f87171 !important;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.35) !important;
+}
+
 @media (max-width: 768px) {
   .pitch-floating-pill {
     top: 60px;
@@ -5070,6 +5223,19 @@ body.light-theme .pitch-timer-val {
 .pitch-timer-btn.btn-play:hover {
   transform: translateY(-1px);
   box-shadow: 0 4px 14px rgba(8, 145, 178, 0.4);
+}
+
+.pitch-timer-btn.btn-stop {
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.35);
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.pitch-timer-btn.btn-stop:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+  color: #f87171;
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.3);
 }
 
 /* BLOCOS ESTILO SLIDE (Títulos ampliados e preenchimento de tela - Feedback Camila) */

@@ -1138,9 +1138,13 @@ function atualizarDisplayPitch() {
   const pillDisplay = document.getElementById('pitch-pill-time');
   const pill = document.getElementById('pitch-floating-pill');
   const icon = document.getElementById('pitch-icon-toggle');
+  const navTimer = document.getElementById('nav-pitch-timer');
+  const navDisplay = document.getElementById('nav-timer-val');
+  const navIcon = document.getElementById('nav-icon-toggle');
 
   if (display) display.textContent = formatted;
   if (pillDisplay) pillDisplay.textContent = formatted;
+  if (navDisplay) navDisplay.textContent = formatted;
 
   if (pill) {
     if (pitchTimerInterval) {
@@ -1163,12 +1167,31 @@ function atualizarDisplayPitch() {
     }
   }
 
-  if (icon) {
+  if (navTimer) {
     if (pitchTimerInterval) {
-      icon.className = 'fa-solid fa-pause';
+      navTimer.classList.add('running');
+      navTimer.classList.remove('paused');
     } else {
-      icon.className = 'fa-solid fa-play';
+      navTimer.classList.remove('running');
+      navTimer.classList.add('paused');
     }
+
+    if (pitchSegundosRestantes <= 60 && pitchSegundosRestantes > 0) {
+      navTimer.classList.add('warning');
+      navTimer.classList.remove('danger');
+    } else if (pitchSegundosRestantes === 0) {
+      navTimer.classList.add('danger');
+      navTimer.classList.remove('warning');
+    } else {
+      navTimer.classList.remove('warning', 'danger');
+    }
+  }
+
+  if (icon) {
+    icon.className = pitchTimerInterval ? 'fa-solid fa-pause' : 'fa-solid fa-play';
+  }
+  if (navIcon) {
+    navIcon.className = pitchTimerInterval ? 'fa-solid fa-pause' : 'fa-solid fa-play';
   }
 }
 
@@ -1183,6 +1206,13 @@ function iniciarPitchTimer() {
       atualizarDisplayPitch();
     }
   }, 1000);
+
+  // Integra automaticamente o cronômetro à barra de menu superior
+  const navTimer = document.getElementById('nav-pitch-timer');
+  if (navTimer) {
+    navTimer.style.display = 'inline-flex';
+  }
+
   atualizarDisplayPitch();
 }
 
@@ -1192,6 +1222,22 @@ function pausarPitchTimer() {
     pitchTimerInterval = null;
   }
   atualizarDisplayPitch();
+}
+
+function pararPitchTimer() {
+  if (pitchTimerInterval) {
+    clearInterval(pitchTimerInterval);
+    pitchTimerInterval = null;
+  }
+  pitchSegundosRestantes = 600; // Reseta cravado para 10 minutos (meta oficial)
+  atualizarDisplayPitch();
+
+  // Oculta da barra de navegação ao parar
+  const navTimer = document.getElementById('nav-pitch-timer');
+  if (navTimer) {
+    navTimer.style.display = 'none';
+    navTimer.classList.remove('running', 'paused', 'warning', 'danger');
+  }
 }
 
 function togglePitchTimer() {
@@ -1288,4 +1334,5 @@ window.iniciarPitchTimer = iniciarPitchTimer;
 window.pausarPitchTimer = pausarPitchTimer;
 window.togglePitchTimer = togglePitchTimer;
 window.resetarPitchTimer = resetarPitchTimer;
+window.pararPitchTimer = pararPitchTimer;
 

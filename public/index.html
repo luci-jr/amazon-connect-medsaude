@@ -149,7 +149,7 @@
   </style>
 
   <!-- Estilos Customizados & Design System (Angular + Ionic Tokens) -->
-  <link rel="stylesheet" href="./css/style.css?v=1794771094080">
+  <link rel="stylesheet" href="./css/style.css?v=1794771728688">
 </head>
 
 <body class="ion-app-root">
@@ -250,6 +250,19 @@
 
       <!-- AÇÕES À DIREITA (TEMA, VOZ, SOLICITAR/CHAT, ENTRAR) -->
       <div class="nav-actions">
+        <!-- CRONÔMETRO INTEGRADO À BARRA DE MENU (ATIVADO QUANDO INICIADO) -->
+        <div class="nav-pitch-timer" id="nav-pitch-timer" style="display: none;" title="Cronômetro do Pitch Integrado">
+          <span class="nav-timer-dot" id="nav-timer-dot"></span>
+          <span class="nav-timer-tag">PITCH</span>
+          <span class="nav-timer-val" id="nav-timer-val">10:00</span>
+          <button type="button" class="nav-timer-btn btn-nav-toggle" id="nav-btn-toggle" onclick="togglePitchTimer()" title="Iniciar / Pausar Cronômetro">
+            <i class="fa-solid fa-play" id="nav-icon-toggle"></i>
+          </button>
+          <button type="button" class="nav-timer-btn btn-nav-stop" onclick="pararPitchTimer()" title="Parar Apresentação (Stop)">
+            <i class="fa-solid fa-stop"></i>
+          </button>
+        </div>
+
         <!-- Alternador Dark / Light Mode -->
         <button class="nav-icon-btn" id="theme-toggle" onclick="alternarTema()" title="Alternar Modo Claro / Escuro">
           <i class="fa-solid fa-sun" id="theme-icon"></i>
@@ -1557,8 +1570,8 @@
                 <button type="button" class="pitch-timer-btn" onclick="resetarPitchTimer(10)">
                   <i class="fa-solid fa-rotate-left"></i> 10 Min
                 </button>
-                <button type="button" class="pitch-timer-btn" onclick="resetarPitchTimer(5)">
-                  <i class="fa-solid fa-bolt"></i> 5 Min
+                <button type="button" class="pitch-timer-btn btn-stop" onclick="pararPitchTimer()" title="Parar Apresentação (Stop)">
+                  <i class="fa-solid fa-stop"></i> Parar
                 </button>
               </div>
             </div>
@@ -2086,8 +2099,8 @@
       <button type="button" class="pitch-pill-btn btn-play-pause" id="pitch-btn-toggle" onclick="togglePitchTimer()" title="Iniciar / Pausar Cronômetro">
         <i class="fa-solid fa-play" id="pitch-icon-toggle"></i>
       </button>
-      <button type="button" class="pitch-pill-btn" onclick="resetarPitchTimer(10)" title="Reiniciar para 10 Min">
-        <i class="fa-solid fa-rotate-left"></i>
+      <button type="button" class="pitch-pill-btn btn-stop-timer" onclick="pararPitchTimer()" title="Parar Apresentação (Stop)">
+        <i class="fa-solid fa-stop"></i>
       </button>
     </div>
   </aside>
@@ -2100,10 +2113,10 @@
   </button>
 
   <!-- Scripts da Aplicação (Arquitetura Angular Standalone + Ionic Runtime) -->
-  <script src="./js/data.js?v=1794771094080"></script>
-  <script src="./js/app.js?v=1794771094080"></script>
-  <script src="./js/chat-widget.js?v=1794771094080"></script>
-  <script type="module" src="./main.js?v=1794771094080"></script>
+  <script src="./js/data.js?v=1794771728688"></script>
+  <script src="./js/app.js?v=1794771728688"></script>
+  <script src="./js/chat-widget.js?v=1794771728688"></script>
+  <script type="module" src="./main.js?v=1794771728688"></script>
 </body>
 
 </html>
