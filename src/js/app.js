@@ -1140,9 +1140,9 @@ function pausarPitchTimer() {
   }
 }
 
-function resetarPitchTimer(minutos = 10) {
+function resetarPitchTimer(minutos = 9.5) {
   pausarPitchTimer();
-  pitchSegundosRestantes = minutos * 60;
+  pitchSegundosRestantes = Math.round(minutos * 60);
   const display = document.getElementById('pitch-timer-display');
   if (display) {
     display.textContent = formatarTempoPitch(pitchSegundosRestantes);
