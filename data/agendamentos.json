@@ -1,0 +1,15 @@
+[
+  {
+    "id": "agend-101",
+    "medicoId": "med-001",
+    "medicoNome": "Dr. Carlos Eduardo Mendonça",
+    "especialidade": "Cardiologia",
+    "pacienteNome": "João Ferreira da Costa",
+    "cpf": "123.456.789-00",
+    "telefone": "(91) 98111-2233",
+    "dataHorario": "Amanhã às 09:30",
+    "status": "Confirmado",
+    "canalOrigem": "Amazon Connect Chat (Lex)",
+    "criadoEm": "2026-10-29T14:00:00.000Z"
+  }
+]

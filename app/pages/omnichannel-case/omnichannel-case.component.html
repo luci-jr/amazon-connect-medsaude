@@ -1,0 +1,190 @@
+<!-- VIEW 3: PÁGINA ARQUITETURA AWS (ANGULAR PAGE COMPONENT) -->
+<div class="page-view" id="view-omnichannel-case">
+  <!-- SEÇÃO ARQUITETURA AWS CONNECT (GRUPO 6 - ESCOLA DA NUVEM) -->
+  <section class="section-omnichannel" id="omnichannel-case">
+    <div class="container">
+      <div class="section-header">
+        <span class="tag-badge tag-badge-teal">Case 1 — Escola da Nuvem</span>
+        <h2>Jornada Omnichannel no Amazon Connect</h2>
+        <p>Arquitetura desenvolvida para eliminar o elevado Tempo Médio de Atendimento (TMA) e automatizar o agendamento de consultas via Guia Médico.</p>
+      </div>
+
+      <div class="arch-cards-grid">
+        <div class="arch-card">
+          <div class="arch-card-icon">
+            <i class="fa-solid fa-comments"></i>
+          </div>
+          <h3>Canal Chat Online (Texto)</h3>
+          <p>O beneficiário busca médicos em linguagem natural. O bot NLU interpreta as intenções <code>ConsultarEspecialidade</code> e <code>BuscarPorLocalidade</code> retornando os especialistas cadastrados no S3.</p>
+          <span class="arch-card-tag">Amazon Connect + Lex</span>
+        </div>
+
+        <div class="arch-card">
+          <div class="arch-card-icon" style="background: rgba(2, 132, 199, 0.25); color: #38bdf8;">
+            <i class="fa-solid fa-microphone-lines"></i>
+          </div>
+          <h3>Canal Voz (Telefonia)</h3>
+          <p>Desenvolvido com IA agêntica e reconhecimento de voz (ASR). Idosos e beneficiários podem falar espontaneamente sem digitar números de menus complicados.</p>
+          <span class="arch-card-tag">ASR + NLU + Amazon Lex</span>
+        </div>
+
+        <div class="arch-card">
+          <div class="arch-card-icon" style="background: rgba(245, 158, 11, 0.25); color: #fbbf24;">
+            <i class="fa-solid fa-database"></i>
+          </div>
+          <h3>Amazon Q in Connect & S3</h3>
+          <p>Base de conhecimento viva do Guia Médico e regras de negócio do plano (carências, autorizações, boletos) consultada em tempo real para respostas assertivas.</p>
+          <span class="arch-card-tag">Amazon Q + AWS S3</span>
+        </div>
+
+        <div class="arch-card">
+          <div class="arch-card-icon" style="background: rgba(239, 68, 68, 0.25); color: #f87171;">
+            <i class="fa-solid fa-headset"></i>
+          </div>
+          <h3>Transbordo Humanizado N1</h3>
+          <p>Se o bot não conseguir solucionar ou houver pedido explícito, o chamado é transbordado para o atendente N1 preservando todo o histórico e intenções na tela do operador.</p>
+          <span class="arch-card-tag">Preservação de Contexto</span>
+        </div>
+      </div>
+
+      <!-- MÉTRICAS DO CASE DE SUCESSO -->
+      <div class="metrics-box">
+        <div class="metric-item">
+          <div class="metric-val">-68%</div>
+          <div class="metric-label">Redução do TMA na Central</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-val">84%</div>
+          <div class="metric-label">Agendamentos Resolvidos pela IA</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-val">Zero</div>
+          <div class="metric-label">Perda de Contexto no Transbordo N1</div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-val">98%</div>
+          <div class="metric-label">Satisfação dos Beneficiários (CSAT)</div>
+        </div>
+      </div>
+
+      <!-- SIMULADOR FICTÍCIO: LOG DE ATENDIMENTO E TELEMETRIA NLU NO CLOUDWATCH -->
+      <div style="margin-top: 3.5rem;">
+        <div class="section-header" style="text-align: left; margin-bottom: 1.25rem;">
+          <span class="tag-badge tag-badge-blue">Telemetria CloudWatch & Contact Lens</span>
+          <h3>Trilha de Auditoria e Sessão NLU em Tempo Real</h3>
+          <p>Rastreabilidade ponta a ponta: do utterance do beneficiário de Belém/PA à execução do Lambda e persistência no S3.</p>
+        </div>
+
+        <div class="session-log-terminal">
+          <div class="log-entry">
+            <span class="log-time">[14:32:01.104]</span>
+            <span class="log-tag connect">CONNECT</span>
+            <span>Inbound Call Started • ContactId: <code>c8f49a21-7e3b-41da-a012-e789bcde0145</code> • ANI: <code>+55 (91) 98144-****</code> (Belém/PA)</span>
+          </div>
+          <div class="log-entry">
+            <span class="log-time">[14:32:02.450]</span>
+            <span class="log-tag connect">FLOW</span>
+            <span>Invoking Contact Flow: <code>MedSaude_Principal_Voz_v3</code> • Audio Stream Neural: <code>Camila (pt-BR)</code></span>
+          </div>
+          <div class="log-entry">
+            <span class="log-time">[14:32:04.120]</span>
+            <span class="log-tag lex">LEX V2</span>
+            <span>Utterance: <em>"Preciso de uma consulta com cardiologista aqui no Marco em Belém"</em></span>
+          </div>
+          <div class="log-entry">
+            <span class="log-time">[14:32:04.380]</span>
+            <span class="log-tag lex">LEX V2</span>
+            <span>Intent: <code>ConsultarEspecialidade</code> (Confidence: 0.984) • Slots: <code>{Especialidade: "Cardiologia", Cidade: "Belém", Bairro: "Marco"}</code></span>
+          </div>
+          <div class="log-entry">
+            <span class="log-time">[14:32:04.425]</span>
+            <span class="log-tag lambda">LAMBDA</span>
+            <span>Invoking <code>MedSaude-GuiaMedico-Lookup</code> • Runtime: Node.js 20.x • Memory: 256MB</span>
+          </div>
+          <div class="log-entry">
+            <span class="log-time">[14:32:04.478]</span>
+            <span class="log-tag s3">S3 GET</span>
+            <span>Bucket: <code>s3://medsaude-guia-dados-prd/especialistas.json</code> • Matched: <strong>Dr. Marcos Vinícius Paiva (CRM/PA 8912)</strong></span>
+          </div>
+          <div class="log-entry">
+            <span class="log-time">[14:32:04.530]</span>
+            <span class="log-tag lambda">LAMBDA</span>
+            <span>Execution Time: <strong>52ms</strong> • Slots Preenchidos • Próximos Horários: <code>["Amanhã às 09:30", "Quinta às 14:00"]</code></span>
+          </div>
+          <div class="log-entry">
+            <span class="log-time">[14:32:06.890]</span>
+            <span class="log-tag connect">CONNECT</span>
+            <span>Prompt: <em>"Encontrei o Dr. Marcos Vinícius no Ed. Saúde Prime, Marco. Ele tem horário amanhã às 09:30. Deseja confirmar?"</em></span>
+          </div>
+          <div class="log-entry">
+            <span class="log-time">[14:32:08.200]</span>
+            <span class="log-tag lex">LEX V2</span>
+            <span>Utterance: <em>"Sim, pode confirmar por favor"</em> • Intent: <code>ConfirmarAgendamento</code> (Confidence: 0.992)</span>
+          </div>
+          <div class="log-entry">
+            <span class="log-time">[14:32:08.780]</span>
+            <span class="log-tag connect">SNS SMS</span>
+            <span>SMS Protocolo <code>#MED-940218</code> despachado com sucesso • TMA Total da Interação: <strong>1m 14s</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- FINOPS FICTÍCIO: DIMENSIONAMENTO DE CUSTOS AWS CONNECT VS TRADICIONAL -->
+      <div class="finops-box">
+        <div class="section-header" style="text-align: left; margin-bottom: 0.5rem;">
+          <span class="tag-badge tag-badge-green">FinOps & Arquitetura de Custos</span>
+          <h3>Dimensionamento de Custos: On-Premise vs. Serverless AWS</h3>
+          <p>Projeção de volume mensal considerando <strong>50.000 chamadas e interações</strong> de agendamento na Med+Saúde:</p>
+        </div>
+
+        <div class="finops-table-wrapper">
+          <table class="finops-table">
+            <thead>
+              <tr>
+                <th>Componente / Serviço</th>
+                <th>Modelo Tradicional (PBX Físico)</th>
+                <th>Solução AWS Connect (Grupo 6)</th>
+                <th>Diferença / Economia</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Telefonia & Troncos E1</strong></td>
+                <td>R$ 18.500,00 (Contrato Fixo Mensal)</td>
+                <td>R$ 1.620,00 (US$ 0,004/min Connect)</td>
+                <td><span class="aws-badge-pill" style="color: #10b981;">-91,2%</span></td>
+              </tr>
+              <tr>
+                <td><strong>Licenciamento por Agente / PA</strong></td>
+                <td>R$ 14.000,00 (40 licenças proprietárias)</td>
+                <td>R$ 0,00 (Zero custo de licença fixa)</td>
+                <td><span class="aws-badge-pill" style="color: #10b981;">-100%</span></td>
+              </tr>
+              <tr>
+                <td><strong>Automação Cognitiva (Lex V2)</strong></td>
+                <td>R$ 6.200,00 (URA engessada legada)</td>
+                <td>R$ 1.850,00 (US$ 0,004/interação voz)</td>
+                <td><span class="aws-badge-pill" style="color: #10b981;">-70,1%</span></td>
+              </tr>
+              <tr>
+                <td><strong>Infraestrutura & Storage (S3/Lambda)</strong></td>
+                <td>R$ 4.800,00 (Servidores e manutenção)</td>
+                <td>R$ 380,00 (Serverless sob demanda)</td>
+                <td><span class="aws-badge-pill" style="color: #10b981;">-92,0%</span></td>
+              </tr>
+              <tr style="font-weight: 700; background: rgba(6, 182, 212, 0.08);">
+                <td><strong>Custo Total Mensal Estimado</strong></td>
+                <td style="color: #ef4444;">R$ 43.500,00 / mês</td>
+                <td style="color: #10b981;">R$ 3.850,00 / mês</td>
+                <td><span class="tag-badge tag-badge-green">Economia de 91,1%</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem;">
+          * Estimativa baseada na calculadora oficial AWS Pricing Calculator para a região <code>us-east-1</code> (N. Virginia), com cotação US$ 1,00 = R$ 5,40.
+        </p>
+      </div>
+    </div>
+  </section>
+</div>

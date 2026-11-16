@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!-- Fundo circular com gradiente Med+Saúde -->
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#22D3EE"/>
+      <stop offset="100%" stop-color="#0369A1"/>
+    </radialGradient>
+    <clipPath id="circleClip">
+      <circle cx="50" cy="50" r="47"/>
+    </clipPath>
+  </defs>
+
+  <!-- Círculo base -->
+  <circle cx="50" cy="50" r="50" fill="#0C4A6E"/>
+  <circle cx="50" cy="50" r="47" fill="url(#bgGrad)"/>
+
+  <!-- Corpo / uniforme -->
+  <ellipse cx="50" cy="88" rx="26" ry="18" fill="#0C4A6E"/>
+  <ellipse cx="50" cy="84" rx="22" ry="14" fill="#0891B2"/>
+  <!-- Detalhe gola/uniforme -->
+  <path d="M38 76 Q50 82 62 76 L60 88 Q50 93 40 88 Z" fill="#0C4A6E"/>
+  <!-- Cruz médica no uniforme -->
+  <rect x="47" y="78" width="6" height="2.5" rx="1" fill="white" opacity="0.9"/>
+  <rect x="49.5" y="75.5" width="2.5" height="7" rx="1" fill="white" opacity="0.9"/>
+
+  <!-- Pescoço -->
+  <rect x="44" y="62" width="12" height="10" rx="4" fill="#FDDBB4"/>
+
+  <!-- Cabeça -->
+  <ellipse cx="50" cy="52" rx="16" ry="17" fill="#FDDBB4"/>
+
+  <!-- Cabelo -->
+  <path d="M34 50 Q33 36 50 33 Q67 36 66 50 Q63 36 50 34 Q37 36 34 50 Z" fill="#1D4ED8"/>
+  <!-- Cabelo lateral esquerdo -->
+  <path d="M34 50 Q31 58 33 66 Q36 58 38 56 Q35 54 34 50 Z" fill="#1D4ED8"/>
+  <!-- Cabelo lateral direito -->
+  <path d="M66 50 Q69 58 67 66 Q64 58 62 56 Q65 54 66 50 Z" fill="#1D4ED8"/>
+  <!-- Topo do cabelo arredondado -->
+  <ellipse cx="50" cy="37" rx="16" ry="8" fill="#1D4ED8"/>
+
+  <!-- Rosto: olhos -->
+  <ellipse cx="44" cy="52" rx="2.2" ry="2.5" fill="#1D4ED8"/>
+  <ellipse cx="56" cy="52" rx="2.2" ry="2.5" fill="#1D4ED8"/>
+  <ellipse cx="44.6" cy="51.4" rx="0.8" ry="0.9" fill="white"/>
+  <ellipse cx="56.6" cy="51.4" rx="0.8" ry="0.9" fill="white"/>
+
+  <!-- Sobrancelhas -->
+  <path d="M41 49 Q44 47.5 47 49" stroke="#1D4ED8" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  <path d="M53 49 Q56 47.5 59 49" stroke="#1D4ED8" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+
+  <!-- Boca sorrindo -->
+  <path d="M46 58 Q50 61 54 58" stroke="#C97B63" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+
+  <!-- Bochechas rosadas -->
+  <ellipse cx="41" cy="56" rx="3" ry="2" fill="#F9A8A8" opacity="0.5"/>
+  <ellipse cx="59" cy="56" rx="3" ry="2" fill="#F9A8A8" opacity="0.5"/>
+
+  <!-- Headset - arco superior -->
+  <path d="M34 50 Q34 33 50 33 Q66 33 66 50" stroke="#F59E0B" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+
+  <!-- Headset - orelheira esquerda -->
+  <rect x="30" y="47" width="7" height="10" rx="3.5" fill="#F59E0B"/>
+  <rect x="31.5" y="49" width="4" height="6" rx="2" fill="#D97706"/>
+
+  <!-- Headset - orelheira direita -->
+  <rect x="63" y="47" width="7" height="10" rx="3.5" fill="#F59E0B"/>
+  <rect x="64.5" y="49" width="4" height="6" rx="2" fill="#D97706"/>
+
+  <!-- Microfone - haste -->
+  <path d="M36 55 Q32 60 34 65" stroke="#0C4A6E" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- Microfone - bolinha -->
+  <circle cx="34" cy="66" r="2.5" fill="#0C4A6E"/>
+  <circle cx="34" cy="66" r="1.5" fill="#22D3EE"/>
+
+  <!-- Borda externa branca -->
+  <circle cx="50" cy="50" r="47" fill="none" stroke="white" stroke-width="2" opacity="0.3"/>
+</svg>
