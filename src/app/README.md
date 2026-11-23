@@ -20,10 +20,9 @@ src/
 │   ├── pages/                     # Módulos de rota / Views do portal
 │   │   ├── inicio/                # Hero, estatísticas, rede hospitalar do Pará
 │   │   ├── guia-medico/           # Filtros, cards de especialistas e busca S3
-│   │   ├── omnichannel-case/      # Arquitetura AWS, Live NLU Log, FinOps
 │   │   ├── planos/                # Cards de planos, simulador e cobertura
 │   │   ├── sobre-nos/             # Squad Grupo 6, métricas e bios
-│   │   └── documentacao/          # Manual técnico, payloads Lambda e FAQ
+│   │   └── apresentacao/          # Pitch da banca examinadora (9 blocos e cronômetro)
 │   ├── app.routes.js              # Roteador SPA com navegação por hash
 │   └── app.component.js           # Orquestrador raiz da aplicação
 ├── assets/                        # Recursos Estáticos

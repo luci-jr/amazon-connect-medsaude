@@ -4555,8 +4555,8 @@ body.light-theme div[style*="border-left: 4px solid #f59e0b"] {
   box-shadow: 0 4px 14px rgba(60, 45, 30, 0.06) !important;
 }
 
-/* 3. Cards de Segurança HIPAA */
-.hipaa-mini-card {
+/* 3. Cards de Segurança e Governança LGPD */
+.lgpd-mini-card {
   background: rgba(15, 23, 42, 0.6);
   padding: 0.85rem;
   border-radius: 8px;
@@ -4564,30 +4564,30 @@ body.light-theme div[style*="border-left: 4px solid #f59e0b"] {
   transition: all 0.2s ease;
 }
 
-body.light-theme .hipaa-mini-card {
+body.light-theme .lgpd-mini-card {
   background: #ffffff !important;
   border-color: rgba(16, 185, 129, 0.35) !important;
   box-shadow: 0 2px 8px rgba(60, 45, 30, 0.06) !important;
 }
 
-body.light-theme .hipaa-mini-card strong {
+body.light-theme .lgpd-mini-card strong {
   font-weight: 700 !important;
 }
 
-body.light-theme .hipaa-mini-card span {
+body.light-theme .lgpd-mini-card span {
   color: #44403c !important;
 }
 
-body.light-theme #doc-hipaa-governanca {
+body.light-theme #doc-lgpd-governanca {
   background: rgba(16, 185, 129, 0.06) !important;
   border-color: rgba(16, 185, 129, 0.35) !important;
 }
 
-body.light-theme #doc-hipaa-governanca h4 {
+body.light-theme #doc-lgpd-governanca h4 {
   color: #047857 !important;
 }
 
-body.light-theme #inicio-hipaa-compliance {
+body.light-theme #inicio-lgpd-compliance {
   background: #ffffff !important;
   border-color: rgba(16, 185, 129, 0.35) !important;
   box-shadow: 0 4px 16px rgba(60, 45, 30, 0.06) !important;

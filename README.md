@@ -20,13 +20,13 @@
 > O produto central desenvolvido pela **Squad Grupo 6** é a solução de **Contact Center Omnichannel e Agente Inteligente na AWS (Amazon Connect + Lex V2 + Q in Connect + S3)**.  
 > Este portal web foi concebido e desenvolvido integralmente por **Lucivaldo Junior** com base estrita nos requisitos do documento oficial do **Case 1 (`ca_1` - `Case_1_Guia_Medico_Chat_Online.pdf`)** da **Escola da Nuvem**. Ele atua como **showcase executivo**, simulador da jornada do paciente e central unificada de documentações técnicas de todas as 4 frentes de trabalho.
 
-A aplicação foi desenhada para materializar o **Case 1 da Med+Saúde**, simulando em tempo real uma jornada completa de atendimento ao beneficiário com controles técnicos de segurança compatíveis com **HIPAA & LGPD**:
+A aplicação foi desenhada para materializar o **Case 1 da Med+Saúde**, simulando em tempo real uma jornada completa de atendimento ao beneficiário com controles técnicos de segurança em conformidade com a **LGPD**:
 
 - 🩺 **Guia Médico Interativo:** Consulta rápida de especialistas clínicos credenciados por especialidade, cidade (destaque para Curitiba/PR) e rede nacional com filtros em tempo real.
 - 🤖 **Assistente Conversacional Iara:** Chatbot com inteligência conversacional (NLU) integrada aos fluxos do **Amazon Lex V2** (bot `bot-G6`, alias `prod`) e protocolo imediato conforme **ANS RN 623**.
 - 📞 **Canal de Voz Inteligente:** Telefonia em nuvem com reconhecimento de fala contínuo (ASR) e linguagem natural para idosos sem menus rígidos, reduzindo o TMA de 14 para 3 minutos (meta estimada).
 - 📚 **Base de Conhecimento Amazon Q in Connect:** Motor de pesquisa RAG documental direto no arquivo Markdown consolidado do S3, evitando redundâncias.
-- 🛡️ **Governança & Padrão HIPAA:** Criptografia em repouso com **AWS KMS (AES-256)**, dados em trânsito com **TLS 1.2+**, mascaramento de PHI nos fluxos do Contact Flow e logs do CloudWatch, além de políticas de IAM Least Privilege.
+- 🛡️ **Governança & Padrão LGPD:** Criptografia em repouso com **AWS KMS (AES-256)**, dados em trânsito com **TLS 1.2+**, mascaramento de dados sensíveis nos fluxos do Contact Flow e logs do CloudWatch, além de políticas de IAM Least Privilege.
 - 🔄 **Transbordo Humanizado para Agente N1:** Encaminhamento de chamadas e conversas para fila única `AgenteN1` com preservação de 100% do contexto histórico (Novo Decreto do SAC nº 13.135/2026 e LGPD).
 
 ---
