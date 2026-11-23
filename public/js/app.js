@@ -1349,6 +1349,26 @@ if (document.readyState === 'loading') {
   inicializarPilulaMobile();
 }
 
+// 11.2 Controle Interativo de Capítulos do Vídeo de Apresentação
+function pularVideoApresentacao(segundos, blocoId) {
+  const iframe = document.getElementById('pitch-video-iframe');
+  if (iframe) {
+    iframe.src = `https://www.youtube.com/embed/dI8Z_fwjyCo?autoplay=1&start=${segundos}&rel=0`;
+  }
+  if (blocoId) {
+    const el = document.getElementById(blocoId);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+  }
+  const videoCard = document.querySelector('.pitch-video-card');
+  if (videoCard) {
+    videoCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+window.pularVideoApresentacao = pularVideoApresentacao;
+
 // 12. Exportações Globais para o Window
 window.filtrarPorChip = filtrarPorChip;
 window.filtrarGuiaMedico = filtrarGuiaMedico;
