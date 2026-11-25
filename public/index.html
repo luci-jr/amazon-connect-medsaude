@@ -149,7 +149,7 @@
   </style>
 
   <!-- Estilos Customizados & Design System (Angular + Ionic Tokens) -->
-  <link rel="stylesheet" href="./css/style.css?v=1795475765848">
+  <link rel="stylesheet" href="./css/style.css?v=1795607964332">
 </head>
 
 <body class="ion-app-root">
@@ -1285,8 +1285,7 @@
                   portal web foi concebido e desenvolvido do zero por <strong>Lucivaldo Junior</strong> para
                   materializar os requisitos estipulados no documento oficial do <strong>Case 1
                     (<code>ca_1</code>)</strong> da Escola da Nuvem, funcionando como vitrine executiva de engenharia,
-                  simulador da jornada do paciente e central unificada de documentação de todas as 4 frentes de
-                  trabalho.
+                  simulador da jornada do paciente e central unificada de documentação de todas as áreas de engenharia do projeto.
                 </p>
               </div>
             </div>
@@ -1303,184 +1302,219 @@
               </a>
             </div>
 
-            <!-- GRID DOS INTEGRANTES DO GRUPO 6 COM AS 4 FRENTES OFICIAIS DO TRELLO -->
-            <div class="team-grid" id="sobre-nos-integrantes">
-              <!-- Integrante 1: Daniel Villegas (Frente A) -->
-              <div class="team-card team-card-blue" data-frente="A">
-                <div class="team-avatar-box">
-                  <img src="./images/daniel.png" alt="Daniel Villegas" class="team-avatar-img">
+            <!-- ESTRUTURA DOS INTEGRANTES DO GRUPO 6 ORGANIZADA POR DUPLAS (ÁREAS OFICIAIS) -->
+            <div id="sobre-nos-integrantes" class="team-sections-wrapper">
+
+              <!-- DUPLA 1: FLUXOS DE ATENDIMENTO & VOZ -->
+              <div class="team-area-block">
+                <div class="team-area-header">
+                  <span class="team-area-badge badge-blue">
+                    <i class="fa-solid fa-headset"></i> Fluxos de Atendimento &amp; Voz
+                  </span>
                 </div>
-                <h3 class="team-name">Daniel Villegas</h3>
-                <span class="team-role" style="color: #38bdf8;"><i class="fa-solid fa-circle"
-                    style="font-size: 0.6rem; color: #0284c7;"></i> Frente A • Fluxos Connect & Voz</span>
-                <p class="team-bio">
-                  Configuração dos pontos de entrada no Amazon Connect para canais de Voz e Chat, arquitetura do Contact
-                  Flow de voz conversacional para idosos (sem menus rígidos) e transbordo para Agente N1.
-                </p>
-                <div class="team-links">
-                  <a href="https://www.linkedin.com/in/vdaniel07/" target="_blank" rel="noopener noreferrer"
-                    class="team-icon-btn team-icon-linkedin" title="LinkedIn de Daniel Villegas" aria-label="LinkedIn">
-                    <i class="fa-brands fa-linkedin-in"></i>
-                  </a>
+                <div class="team-pair-grid">
+                  <!-- Integrante 1: Daniel Villegas -->
+                  <div class="team-card team-card-blue">
+                    <div class="team-avatar-box">
+                      <img src="./images/daniel.png" alt="Daniel Villegas" class="team-avatar-img">
+                    </div>
+                    <h3 class="team-name">Daniel Villegas</h3>
+                    <span class="team-role" style="color: #38bdf8;"><i class="fa-solid fa-circle"
+                        style="font-size: 0.6rem; color: #0284c7;"></i> Arquiteto de Fluxos &amp; Voz</span>
+                    <p class="team-bio">
+                      Responsável pelos fluxos de atendimento no Amazon Connect. Desenhou o esboço do fluxo ponta a ponta, iniciou o fluxo de voz em linguagem natural para o público idoso e publicou o fluxo de chat e voz em pt-BR, com protocolo de atendimento, fila AgenteN1, urgência com prioridade e atributos de motivo e resultado para o atendente e as métricas.
+                    </p>
+                    <div class="team-links">
+                      <a href="https://www.linkedin.com/in/vdaniel07/" target="_blank" rel="noopener noreferrer"
+                        class="team-icon-btn team-icon-linkedin" title="LinkedIn de Daniel Villegas" aria-label="LinkedIn">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                      </a>
+                    </div>
+                  </div>
+
+                  <!-- Integrante 2: Rebeca Espinoza Alves -->
+                  <div class="team-card team-card-blue">
+                    <div class="team-avatar-box">
+                      <span class="team-avatar-initials"
+                        style="background: linear-gradient(135deg, #0284c7, #2563eb); color: #ffffff;">RE</span>
+                    </div>
+                    <h3 class="team-name">Rebeca Espinoza Alves</h3>
+                    <span class="team-role" style="color: #38bdf8;"><i class="fa-solid fa-circle"
+                        style="font-size: 0.6rem; color: #0284c7;"></i> Fluxos de Atendimento</span>
+                    <p class="team-bio">
+                      Integrante da equipe de fluxos do Amazon Connect na formação inicial do grupo. Precisou se afastar durante o desenvolvimento, e o trabalho seguiu com o Daniel e Jessie no apoio.
+                    </p>
+                    <div class="team-links">
+                      <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer"
+                        class="team-icon-btn team-icon-linkedin" title="Conectar no LinkedIn" aria-label="LinkedIn">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <!-- Integrante 2: Rebeca Espinoza Alves (Frente A) -->
-              <div class="team-card team-card-blue" data-frente="A">
-                <div class="team-avatar-box">
-                  <span class="team-avatar-initials"
-                    style="background: linear-gradient(135deg, #0284c7, #2563eb); color: #ffffff;">RE</span>
+              <!-- DUPLA 2: BOT, IA GENERATIVA & GOVERNANÇA -->
+              <div class="team-area-block">
+                <div class="team-area-header">
+                  <span class="team-area-badge badge-purple">
+                    <i class="fa-solid fa-brain"></i> Bot, IA Generativa &amp; Governança
+                  </span>
                 </div>
-                <h3 class="team-name">Rebeca Espinoza Alves</h3>
-                <span class="team-role" style="color: #38bdf8;"><i class="fa-solid fa-circle"
-                    style="font-size: 0.6rem; color: #0284c7;"></i> Frente A • Fluxos Connect & Transbordo</span>
-                <p class="team-bio">
-                  Desenho e montagem dos Contact Flows no Amazon Connect para o canal Chat online, preservação dos
-                  atributos de contexto na tela do atendente e roteamento inteligente da fila única AgenteN1.
-                </p>
-                <div class="team-links">
-                  <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer"
-                    class="team-icon-btn team-icon-linkedin" title="Conectar no LinkedIn" aria-label="LinkedIn">
-                    <i class="fa-brands fa-linkedin-in"></i>
-                  </a>
+                <div class="team-pair-grid">
+                  <!-- Integrante 3: Jessie V -->
+                  <div class="team-card team-card-purple">
+                    <div class="team-avatar-box">
+                      <img src="./images/jessica.png" alt="Jessie V" class="team-avatar-img">
+                    </div>
+                    <h3 class="team-name">Jessie V</h3>
+                    <span class="team-role" style="color: #c084fc;"><i class="fa-solid fa-circle"
+                        style="font-size: 0.6rem; color: #9333ea;"></i> Dev, Governança &amp; IA Generativa</span>
+                    <p class="team-bio">
+                      Criou o bot Lex de triagem e configurou os agentes de IA da Iara no Q in Connect. Desenvolveu as Lambdas e o DynamoDB de protocolo e agendamento, depurando os erros pelo CloudWatch, e criou o widget do site. Organizou a squad no Trello, com as tarefas e os prazos de cada etapa. Conduziu as demonstrações com a Paula.
+                    </p>
+                    <div class="team-links">
+                      <a href="https://www.linkedin.com/in/jessieviana/" target="_blank" rel="noopener noreferrer"
+                        class="team-icon-btn team-icon-linkedin" title="LinkedIn de Jessie V" aria-label="LinkedIn">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                      </a>
+                    </div>
+                  </div>
+
+                  <!-- Integrante 4: Ana Paula Tavares Lopes -->
+                  <div class="team-card team-card-purple">
+                    <div class="team-avatar-box">
+                      <img src="./images/ana-paula.jpg" alt="Ana Paula Tavares Lopes" class="team-avatar-img">
+                    </div>
+                    <h3 class="team-name">Ana Paula Tavares Lopes</h3>
+                    <span class="team-role" style="color: #c084fc;"><i class="fa-solid fa-circle"
+                        style="font-size: 0.6rem; color: #9333ea;"></i> Dev Conversacional &amp; Linguagem Natural</span>
+                    <p class="team-bio">
+                      Desenvolveu no bot Lex as intenções BuscarPorLocalidade e AgendarConsulta: frases de exemplo em linguagem natural, slots de especialidade, cidade, data e horário e a confirmação do agendamento. Conduziu com a Jessie as demonstrações de chat e voz.
+                    </p>
+                    <div class="team-links">
+                      <a href="https://www.linkedin.com/in/aptlopes/" target="_blank" rel="noopener noreferrer"
+                        class="team-icon-btn team-icon-linkedin" title="LinkedIn de Ana Paula Tavares Lopes" aria-label="LinkedIn">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <!-- Integrante 3: Jessie V (Frente B) -->
-              <div class="team-card team-card-purple" data-frente="B">
-                <div class="team-avatar-box">
-                  <img src="./images/jessica.png" alt="Jessie V" class="team-avatar-img">
+              <!-- DUPLA 3: DADOS, CONHECIMENTO & PORTAL WEB -->
+              <div class="team-area-block">
+                <div class="team-area-header">
+                  <span class="team-area-badge badge-orange">
+                    <i class="fa-solid fa-database"></i> Dados, Conhecimento &amp; Portal Web
+                  </span>
                 </div>
-                <h3 class="team-name">Jessie V</h3>
-                <span class="team-role" style="color: #c084fc;"><i class="fa-solid fa-circle"
-                    style="font-size: 0.6rem; color: #9333ea;"></i> Frente B • Bot Lex & Governança</span>
-                <p class="team-bio">
-                  Governança e facilitação ágil da squad, criação e versionamento do bot Lex V2 (bot-G6, alias prod),
-                  especificação das 8 intenções oficiais, testes de ASR e vocabulário customizado.
-                </p>
-                <div class="team-links">
-                  <a href="https://www.linkedin.com/in/jessieviana/" target="_blank" rel="noopener noreferrer"
-                    class="team-icon-btn team-icon-linkedin" title="LinkedIn de Jessie V" aria-label="LinkedIn">
-                    <i class="fa-brands fa-linkedin-in"></i>
-                  </a>
+                <div class="team-pair-grid">
+                  <!-- Integrante 5: Lucivaldo Junior -->
+                  <div class="team-card team-card-orange">
+                    <div class="team-avatar-box">
+                      <img src="./images/lucivaldo-junior.jpg" alt="Lucivaldo Junior" class="team-avatar-img"
+                        style="object-position: center 15%;">
+                    </div>
+                    <h3 class="team-name">Lucivaldo Junior</h3>
+                    <span class="team-role" style="color: #fb923c;"><i class="fa-solid fa-circle"
+                        style="font-size: 0.6rem; color: #ea580c;"></i> Cloud, Dados &amp; Portal Web</span>
+                    <p class="team-bio">
+                      Desenvolveu integralmente o projeto do site Med+Saúde com base em 100% dos requisitos estipulados no
+                      documento oficial do <strong>Case 1 (<code>ca_1</code>)</strong> da Escola da Nuvem, conectando a
+                      simulação do Chat online e centralizando as documentações do grupo. Liderou a Frente C no
+                      provisionamento do Amazon S3 (<code>dados-guia-medico</code>), estruturação da Base de Conhecimento
+                      única para o Amazon Q in Connect, engenharia dos 25 especialistas com cenários de Curitiba-PR e
+                      governança de dados compatível com LGPD.
+                    </p>
+                    <div class="team-links">
+                      <a href="https://github.com/luci-jr" target="_blank" rel="noopener noreferrer"
+                        class="team-icon-btn team-icon-github" title="GitHub de Lucivaldo Junior" aria-label="GitHub">
+                        <i class="fa-brands fa-github"></i>
+                      </a>
+                      <a href="https://www.linkedin.com/in/lucivaldojr/" target="_blank" rel="noopener noreferrer"
+                        class="team-icon-btn team-icon-linkedin" title="LinkedIn de Lucivaldo Junior" aria-label="LinkedIn">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                      </a>
+                      <a href="https://portifolio.lucivaldo.cloud/" target="_blank" rel="noopener noreferrer"
+                        class="team-icon-btn team-icon-portfolio" title="Portfólio Profissional de Lucivaldo Junior"
+                        aria-label="Portfólio">
+                        <i class="fa-solid fa-globe"></i>
+                      </a>
+                    </div>
+                  </div>
+
+                  <!-- Integrante 6: Felipe Henrique Souza -->
+                  <div class="team-card team-card-orange">
+                    <div class="team-avatar-box">
+                      <span class="team-avatar-initials"
+                        style="background: linear-gradient(135deg, #f97316, #c2410c); color: #ffffff;">FH</span>
+                    </div>
+                    <h3 class="team-name">Felipe Henrique Souza</h3>
+                    <span class="team-role" style="color: #fb923c;"><i class="fa-solid fa-circle"
+                        style="font-size: 0.6rem; color: #ea580c;"></i> Modelagem de Dados &amp; Base de Conhecimento</span>
+                    <p class="team-bio">
+                      Responsável pela base de dados do Guia Médico: elaborou e entregou o documento com os 25 médicos credenciados fictícios, em 17 especialidades, com endereço, dias e horários de atendimento. É essa base que a Iara consulta em tempo real pelo Q in Connect.
+                    </p>
+                    <div class="team-links">
+                      <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer"
+                        class="team-icon-btn team-icon-linkedin" title="Conectar no LinkedIn" aria-label="LinkedIn">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <!-- Integrante 4: Ana Paula Tavares Lopes (Frente B) -->
-              <div class="team-card team-card-purple" data-frente="B">
-                <div class="team-avatar-box">
-                  <img src="./images/ana-paula.jpg" alt="Ana Paula Tavares Lopes" class="team-avatar-img">
+              <!-- DUPLA 4: ANÁLISE DE DADOS, MÉTRICAS & QUALIDADE -->
+              <div class="team-area-block">
+                <div class="team-area-header">
+                  <span class="team-area-badge badge-green">
+                    <i class="fa-solid fa-chart-line"></i> Análise de Dados, Métricas &amp; Qualidade
+                  </span>
                 </div>
-                <h3 class="team-name">Ana Paula Tavares Lopes</h3>
-                <span class="team-role" style="color: #c084fc;"><i class="fa-solid fa-circle"
-                    style="font-size: 0.6rem; color: #9333ea;"></i> Frente B • Bot Lex & Linguagem Natural</span>
-                <p class="team-bio">
-                  Mapeamento de utterances em linguagem natural, calibração dos slots de Especialidade e Localidade,
-                  configuração dos prompts de confirmação da assistente virtual Iara e testes de regressão de voz.
-                </p>
-                <div class="team-links">
-                  <a href="https://www.linkedin.com/in/aptlopes/" target="_blank" rel="noopener noreferrer"
-                    class="team-icon-btn team-icon-linkedin" title="LinkedIn de Ana Paula Tavares Lopes" aria-label="LinkedIn">
-                    <i class="fa-brands fa-linkedin-in"></i>
-                  </a>
+                <div class="team-pair-grid">
+                  <!-- Integrante 7: Elizabeth Silva do Nascimento -->
+                  <div class="team-card team-card-green">
+                    <div class="team-avatar-box">
+                      <span class="team-avatar-initials"
+                        style="background: linear-gradient(135deg, #10b981, #047857); color: #ffffff;">EN</span>
+                    </div>
+                    <h3 class="team-name">Elizabeth Silva do Nascimento</h3>
+                    <span class="team-role" style="color: #34d399;"><i class="fa-solid fa-circle"
+                        style="font-size: 0.6rem; color: #16a34a;"></i> Métricas &amp; Dashboards</span>
+                    <p class="team-bio">
+                      Integrante da equipe de métricas e dashboards na formação inicial do grupo.
+                    </p>
+                    <div class="team-links">
+                      <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer"
+                        class="team-icon-btn team-icon-linkedin" title="Conectar no LinkedIn" aria-label="LinkedIn">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                      </a>
+                    </div>
+                  </div>
+
+                  <!-- Integrante 8: Camila Landy Fernandes de Oliveira -->
+                  <div class="team-card team-card-green">
+                    <div class="team-avatar-box">
+                      <img src="./images/camila.png" alt="Camila Landy Fernandes de Oliveira" class="team-avatar-img">
+                    </div>
+                    <h3 class="team-name">Camila Landy Fernandes de Oliveira</h3>
+                    <span class="team-role" style="color: #34d399;"><i class="fa-solid fa-circle"
+                        style="font-size: 0.6rem; color: #16a34a;"></i> Análise de Dados, Métricas &amp; QA</span>
+                    <p class="team-bio">
+                      Configurou inicialmente o Customer Profiles com os perfis de demonstração (Dona Maria, Seu Carlos e Dona Josefa), que permitem à Iara identificar o beneficiário pelo telefone. Responsável pelos testes integrados dos cenários de chat, voz e transbordo para o atendente. Responsável pelo Dashboard de TMA e volume.
+                    </p>
+                    <div class="team-links">
+                      <a href="https://www.linkedin.com/in/camila-landy-fernandes-de-oliveira/" target="_blank" rel="noopener noreferrer"
+                        class="team-icon-btn team-icon-linkedin" title="Conectar no LinkedIn" aria-label="LinkedIn">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <!-- Integrante 5: Lucivaldo Junior (Frente C) -->
-              <div class="team-card team-card-orange" data-frente="C">
-                <div class="team-avatar-box">
-                  <img src="./images/lucivaldo-junior.jpg" alt="Lucivaldo Junior" class="team-avatar-img"
-                    style="object-position: center 15%;">
-                </div>
-                <h3 class="team-name">Lucivaldo Junior</h3>
-                <span class="team-role" style="color: #fb923c;"><i class="fa-solid fa-circle"
-                    style="font-size: 0.6rem; color: #ea580c;"></i> Frente C • Dados, Conhecimento & Portal Web</span>
-                <p class="team-bio">
-                  Desenvolveu integralmente o projeto do site Med+Saúde com base em 100% dos requisitos estipulados no
-                  documento oficial do <strong>Case 1 (<code>ca_1</code>)</strong> da Escola da Nuvem, conectando a
-                  simulação do Chat online e centralizando as documentações do grupo. Liderou a Frente C no
-                  provisionamento do Amazon S3 (<code>dados-guia-medico</code>), estruturação da Base de Conhecimento
-                  única para o Amazon Q in Connect, engenharia dos 25 especialistas com cenários de Curitiba-PR e
-                  governança de dados compatível com LGPD.
-                </p>
-                <div class="team-links">
-                  <a href="https://github.com/luci-jr" target="_blank" rel="noopener noreferrer"
-                    class="team-icon-btn team-icon-github" title="GitHub de Lucivaldo Junior" aria-label="GitHub">
-                    <i class="fa-brands fa-github"></i>
-                  </a>
-                  <a href="https://www.linkedin.com/in/lucivaldojr/" target="_blank" rel="noopener noreferrer"
-                    class="team-icon-btn team-icon-linkedin" title="LinkedIn de Lucivaldo Junior" aria-label="LinkedIn">
-                    <i class="fa-brands fa-linkedin-in"></i>
-                  </a>
-                  <a href="https://portifolio.lucivaldo.cloud/" target="_blank" rel="noopener noreferrer"
-                    class="team-icon-btn team-icon-portfolio" title="Portfólio Profissional de Lucivaldo Junior"
-                    aria-label="Portfólio">
-                    <i class="fa-solid fa-globe"></i>
-                  </a>
-                </div>
-              </div>
-
-              <!-- Integrante 6: Felipe Henrique Souza (Frente C) -->
-              <div class="team-card team-card-orange" data-frente="C">
-                <div class="team-avatar-box">
-                  <span class="team-avatar-initials"
-                    style="background: linear-gradient(135deg, #f97316, #c2410c); color: #ffffff;">FH</span>
-                </div>
-                <h3 class="team-name">Felipe Henrique Souza</h3>
-                <span class="team-role" style="color: #fb923c;"><i class="fa-solid fa-circle"
-                    style="font-size: 0.6rem; color: #ea580c;"></i> Frente C • Dados & Base de Conhecimento S3</span>
-                <p class="team-bio">
-                  Modelagem e curadoria dos dados simulados dos especialistas credenciados (Curitiba-PR), conexão com a
-                  Knowledge Base do Amazon Q in Connect e garantia de indexação RAG sem redundâncias.
-                </p>
-                <div class="team-links">
-                  <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer"
-                    class="team-icon-btn team-icon-linkedin" title="Conectar no LinkedIn" aria-label="LinkedIn">
-                    <i class="fa-brands fa-linkedin-in"></i>
-                  </a>
-                </div>
-              </div>
-
-              <!-- Integrante 7: Elizabeth Silva do Nascimento (Frente D) -->
-              <div class="team-card team-card-green" data-frente="D">
-                <div class="team-avatar-box">
-                  <span class="team-avatar-initials"
-                    style="background: linear-gradient(135deg, #10b981, #047857); color: #ffffff;">EN</span>
-                </div>
-                <h3 class="team-name">Elizabeth Silva do Nascimento</h3>
-                <span class="team-role" style="color: #34d399;"><i class="fa-solid fa-circle"
-                    style="font-size: 0.6rem; color: #16a34a;"></i> Frente D • Métricas & Dashboards</span>
-                <p class="team-bio">
-                  Configuração e monitoramento do dashboard básico no Amazon Connect para acompanhamento de TMA e volume
-                  de atendimentos, rastreamento de contenção e roteiro de testes dos 3 cenários do case.
-                </p>
-                <div class="team-links">
-                  <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer"
-                    class="team-icon-btn team-icon-linkedin" title="Conectar no LinkedIn" aria-label="LinkedIn">
-                    <i class="fa-brands fa-linkedin-in"></i>
-                  </a>
-                </div>
-              </div>
-
-              <!-- Integrante 8: Camila Landy Fernandes de Oliveira (Frente D) -->
-              <div class="team-card team-card-green" data-frente="D">
-                <div class="team-avatar-box">
-                  <img src="./images/camila.png" alt="Camila Landy Fernandes de Oliveira" class="team-avatar-img">
-                </div>
-                <h3 class="team-name">Camila Landy Fernandes de Oliveira</h3>
-                <span class="team-role" style="color: #34d399;"><i class="fa-solid fa-circle"
-                    style="font-size: 0.6rem; color: #16a34a;"></i> Frente D • Testes Integrados & Apresentação</span>
-                <p class="team-bio">
-                  Homologação ponta a ponta dos cenários de teste (Chat, Voz do idoso e Transbordo N1), auditoria de
-                  conformidade com os critérios de aceite e estruturação do deck e pitch final do projeto.
-                </p>
-                <div class="team-links">
-                  <a href="https://www.linkedin.com/in/camila-landy-fernandes-de-oliveira/" target="_blank" rel="noopener noreferrer"
-                    class="team-icon-btn team-icon-linkedin" title="Conectar no LinkedIn" aria-label="LinkedIn">
-                    <i class="fa-brands fa-linkedin-in"></i>
-                  </a>
-                </div>
-              </div>
             </div>
 
             <!-- INDICADORES DE ENGENHARIA DA SQUAD GRUPO 6 -->
@@ -1502,8 +1536,8 @@
                   <div class="stats-card-label">Entregáveis Oficiais do Case</div>
                 </div>
                 <div class="stats-card">
-                  <div class="stats-card-val">4 Frentes</div>
-                  <div class="stats-card-label">Divisão Ágil em Duplas (A, B, C, D)</div>
+                  <div class="stats-card-val">4 Áreas</div>
+                  <div class="stats-card-label">Atuação Técnica Integrada da Squad</div>
                 </div>
               </div>
             </div>
@@ -2255,10 +2289,10 @@
   </button>
 
   <!-- Scripts da Aplicação (Arquitetura Angular Standalone + Ionic Runtime) -->
-  <script src="./js/data.js?v=1795475765848"></script>
-  <script src="./js/app.js?v=1795475765848"></script>
-  <script src="./js/chat-widget.js?v=1795475765848"></script>
-  <script type="module" src="./main.js?v=1795475765848"></script>
+  <script src="./js/data.js?v=1795607964332"></script>
+  <script src="./js/app.js?v=1795607964332"></script>
+  <script src="./js/chat-widget.js?v=1795607964332"></script>
+  <script type="module" src="./main.js?v=1795607964332"></script>
 </body>
 
 </html>
