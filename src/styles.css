@@ -2628,20 +2628,52 @@ body.light-theme .section-sobre-nos {
   }
 }
 
-/* SEÇÃO ORGANIZADA POR DUPLAS (LARGURA CONTROLADA E ELEGANTE) */
+/* Container fluido responsivo para a Seção Sobre Nós */
+.section-sobre-nos .container {
+  width: 96% !important;
+  max-width: 96% !important;
+  padding: 0 1rem;
+}
+
+@media (min-width: 1400px) {
+  .section-sobre-nos .container {
+    width: 98% !important;
+    max-width: 98% !important;
+    padding: 0 1.5rem;
+  }
+}
+
+/* SEÇÃO ORGANIZADA POR DUPLAS:
+   - Em telas intermediárias/restauradas (< 1500px): 1 bloco de dupla por vez, com cards generosos, fonte ampliada e leitura confortável.
+   - Somente em telas bem largas/maximizadas (>= 1500px): exibe 2 blocos de duplas lado a lado (2x2), onde cada um tem espaço de sobra.
+*/
 .team-sections-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.75rem;
   margin-top: 2.25rem;
+  max-width: 1260px;
+  margin-left: auto;
+  margin-right: auto;
+  transition: all 0.3s ease;
+}
+
+@media (min-width: 1500px) {
+  .team-sections-wrapper {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 100%;
+    gap: 2rem;
+  }
 }
 
 .team-area-block {
   background: rgba(15, 23, 42, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: var(--radius-lg, 16px);
-  padding: 1.75rem 2rem 2rem 2rem;
+  padding: 2.25rem 2.5rem;
   backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
 }
 
 body.light-theme .team-area-block {
@@ -2656,34 +2688,73 @@ body.light-theme .team-area-block {
   align-items: center;
 }
 
+/* DENTRO DE CADA BLOCO DE DUPLA:
+   - minmax(380px, 1fr) garante cards bem largos, horizontais e confortáveis.
+   - Espaçamento de 2.25rem entre os cards da dupla.
+*/
 .team-pair-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 2rem;
-  max-width: 1040px;
-  margin: 0 auto;
-}
-
-@media (min-width: 860px) {
-  .team-pair-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 2.25rem;
+  width: 100%;
+  flex-grow: 1;
 }
 
 .team-pair-grid .team-card {
-  padding: 2.25rem 2rem;
+  padding: 2.5rem 2.25rem;
   text-align: left;
   align-items: flex-start;
+  height: 100%;
 }
 
 .team-pair-grid .team-avatar-box {
+  width: 112px;
+  height: 112px;
   margin: 0 0 1.25rem 0;
 }
 
+.team-pair-grid .team-name {
+  font-size: 1.35rem;
+  margin-bottom: 0.4rem;
+}
+
+.team-pair-grid .team-role {
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 1.25rem;
+}
+
 .team-pair-grid .team-bio {
-  font-size: 0.94rem;
-  line-height: 1.7;
+  font-size: 1rem;
+  line-height: 1.75;
   text-align: justify;
+}
+
+/* Ajuste proporcional mais compacto quando em modo 2x2 (>= 1500px) */
+@media (min-width: 1500px) {
+  .team-area-block {
+    padding: 1.75rem;
+  }
+  .team-pair-grid {
+    gap: 1.5rem;
+  }
+  .team-pair-grid .team-card {
+    padding: 2rem 1.5rem;
+  }
+  .team-pair-grid .team-avatar-box {
+    width: 100px;
+    height: 100px;
+  }
+  .team-pair-grid .team-name {
+    font-size: 1.25rem;
+  }
+  .team-pair-grid .team-role {
+    font-size: 0.84rem;
+  }
+  .team-pair-grid .team-bio {
+    font-size: 0.92rem;
+    line-height: 1.65;
+  }
 }
 
 .team-pair-grid .team-links {
