@@ -1,0 +1,72 @@
+<!-- WIDGET DO CHATBOT FLUTUANTE IARA (ANGULAR SHARED COMPONENT) -->
+<!-- Botão Disparador Premium (Iara - Amazon Connect) -->
+<button class="chat-launcher-btn" id="chat-launcher" onclick="toggleChatWidget()" aria-label="Abrir Assistente Virtual Iara">
+  <div class="chat-launcher-inner">
+    <img src="./images/avatar-iara.jpg" alt="Iara - Assistente Virtual" class="chat-launcher-avatar">
+    <i class="fa-solid fa-xmark chat-launcher-close-icon"></i>
+    <span class="chat-launcher-pulse"></span>
+  </div>
+  <span class="chat-launcher-status-dot" title="Iara Online 24 Horas"></span>
+  <span class="chat-launcher-tooltip">Assistente Iara • IA Connect</span>
+</button>
+
+<!-- Janela do Chat -->
+<div class="chat-widget-panel hidden" id="chat-panel">
+  <div class="chat-header">
+    <div class="chat-header-info">
+      <div class="chat-bot-avatar">
+        <img src="./images/avatar-iara.jpg" alt="Iara" class="chat-bot-avatar-img">
+      </div>
+      <div class="chat-bot-titles">
+        <h4>Iara <span class="aws-badge-pill" style="font-size: 0.65rem; padding: 0.1rem 0.4rem;">Amazon Connect</span></h4>
+        <p>Guia Médico Virtual & Agendamento</p>
+      </div>
+    </div>
+    <div class="chat-header-actions">
+      <button class="chat-btn-icon" onclick="toggleAwsConfigDrawer()" title="Configurar Snippet Real da AWS">
+        <i class="fa-solid fa-gear"></i>
+      </button>
+      <button class="chat-btn-icon" onclick="toggleChatWidget()" title="Minimizar">
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Gaveta de Configuração do Snippet Real do Amazon Connect -->
+  <div class="aws-config-drawer hidden" id="aws-config-drawer">
+    <h4><i class="fa-brands fa-aws text-primary"></i> Integração Oficial AWS Connect</h4>
+    <p>Caso seu grupo tenha gerado o snippet de script do <strong>Amazon Connect Communications Widget</strong> no console AWS, cole-o aqui para carregar o widget oficial da sua instância:</p>
+    <textarea id="aws-snippet-input" placeholder="<script type='text/javascript'> ... amazon-connect-chat-interface ... </script>"></textarea>
+    <div style="display: flex; gap: 0.5rem;">
+      <button class="btn btn-primary btn-sm" onclick="salvarEInjetarSnippetAws()">
+        <i class="fa-solid fa-check"></i> Aplicar Script Oficial
+      </button>
+      <button class="btn btn-outline btn-sm" onclick="toggleAwsConfigDrawer()">Cancelar</button>
+    </div>
+    <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.75rem;">
+      * Enquanto não colar o script oficial, a Iara simula com perfeição as 8 intenções do Lex e Amazon Q.
+    </p>
+  </div>
+
+  <!-- Mensagens do Chat -->
+  <div class="chat-messages" id="chat-messages">
+    <!-- Mensagem inicial do bot com protocolo ANS RN 623 -->
+    <div class="chat-msg bot">
+      <div class="msg-bubble">
+        Olá! Sou a <strong>Iara</strong>, sua assistente virtual da <strong>Med+Saúde</strong>.<br><br>
+        📌 <strong>Protocolo de Atendimento:</strong> <code>#20261102-4571</code><br>
+        <small style="color: var(--text-muted); font-size: 0.75rem;">(Conforme Resolução Normativa ANS RN 623)</small><br><br>
+        Como posso te ajudar hoje?
+      </div>
+      <span class="msg-timestamp">Agora mesmo</span>
+    </div>
+  </div>
+
+  <!-- Input do Chat -->
+  <div class="chat-input-area">
+    <input type="text" id="chat-user-input" placeholder="Digite uma dúvida ou especialidade..." onkeypress="tratarEnterChat(event)">
+    <button class="chat-send-btn" onclick="enviarMensagemChat()" title="Enviar Mensagem">
+      <i class="fa-solid fa-paper-plane"></i>
+    </button>
+  </div>
+</div>

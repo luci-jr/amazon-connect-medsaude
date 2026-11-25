@@ -1,0 +1,2298 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Med+Saúde | Guia Médico Inteligente & Atendimento Omnichannel</title>
+  <meta name="description"
+    content="Encontre especialistas credenciados e agende sua consulta conversacionalmente via Chat e Voz com inteligência artificial Amazon Connect e Amazon Lex.">
+
+  <!-- Google Fonts: Plus Jakarta Sans + Space Grotesk + Chakra Petch (Retro-Tech) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Favicons Oficiais Med+Saúde Pará -->
+  <link rel="icon" type="image/png" sizes="64x64" href="./images/favicon.png">
+  <link rel="shortcut icon" href="./favicon.ico">
+  <link rel="apple-touch-icon" href="./images/favicon.png">
+
+  <!-- PWA & Mobile App Experience (Android / iOS) -->
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#0284c7">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Med+Saúde">
+
+  <!-- Ionicons (Biblioteca de Ícones Mobile / Web) -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+  <!-- Critical Override: Restauração Absoluta de Scroll Nativo no HTML & Blindagem de Elementos Fixos -->
+  <style>
+    html {
+      width: 100% !important;
+      height: auto !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: scroll !important;
+      scroll-behavior: smooth !important;
+      position: static !important;
+    }
+
+    body {
+      width: 100% !important;
+      height: auto !important;
+      min-height: 100% !important;
+      overflow-x: hidden !important;
+      overflow-y: visible !important;
+      position: static !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      transform: none !important;
+      -webkit-overflow-scrolling: touch !important;
+    }
+
+    .app-container,
+    ion-app {
+      display: block !important;
+      position: static !important;
+      width: 100% !important;
+      height: auto !important;
+      min-height: 100% !important;
+      overflow: visible !important;
+      contain: none !important;
+    }
+
+    main {
+      display: block !important;
+      width: 100% !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    .page-view.active {
+      display: block !important;
+      width: 100% !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    /* Blindagem Absoluta do Menu Superior Fixo na Janela */
+    #floating-nav-wrapper.floating-nav-wrapper {
+      position: fixed !important;
+      top: 1.25rem !important;
+      left: 0 !important;
+      right: 0 !important;
+      margin: 0 auto !important;
+      max-width: 1380px !important;
+      width: calc(100% - 2rem) !important;
+      z-index: 999999 !important;
+      pointer-events: auto !important;
+    }
+
+    /* Blindagem Absoluta do Botão do Chatbot e Painel no Viewport do Monitor */
+    #chat-launcher.chat-launcher-btn {
+      position: fixed !important;
+      bottom: 2rem !important;
+      right: 2rem !important;
+      top: auto !important;
+      left: auto !important;
+      margin: 0 !important;
+      z-index: 2147483647 !important;
+      display: flex !important;
+    }
+
+    #chat-panel.chat-widget-panel {
+      position: fixed !important;
+      bottom: 6.5rem !important;
+      right: 2rem !important;
+      top: auto !important;
+      left: auto !important;
+      margin: 0 !important;
+      z-index: 2147483646 !important;
+    }
+
+    @media (max-width: 768px) {
+      #floating-nav-wrapper.floating-nav-wrapper {
+        top: 0.5rem !important;
+        width: calc(100% - 1rem) !important;
+      }
+
+      #chat-launcher.chat-launcher-btn {
+        bottom: 84px !important;
+        right: 1.25rem !important;
+      }
+
+      #chat-panel.chat-widget-panel {
+        bottom: 78px !important;
+        right: 0.5rem !important;
+      }
+
+      .chat-launcher-tooltip {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+      }
+
+      body.chat-is-open #chat-launcher.chat-launcher-btn,
+      #chat-launcher.chat-launcher-btn.chat-open {
+        display: none !important;
+      }
+    }
+  </style>
+
+  <!-- Estilos Customizados & Design System (Angular + Ionic Tokens) -->
+  <link rel="stylesheet" href="./css/style.css?v=1795609875979">
+</head>
+
+<body class="ion-app-root">
+  <!-- BARRA DE NAVEGAÇÃO FLUTUANTE EM CÁPSULA (ESTILO ISLAND NAVBAR - FIXA NO VIEWPORT) -->
+  <header class="floating-nav-wrapper" id="floating-nav-wrapper">
+    <nav class="floating-navbar" id="floating-navbar">
+      <!-- LOGO OFICIAL MED+SAÚDE -->
+      <a href="#inicio" class="brand-logo" title="Med+Saúde - Página Inicial">
+        <div class="logo-icon-box">
+          <img src="./images/logo-medsaude-para.png" alt="Med+Saúde - Logo Oficial" class="logo-brand-img">
+        </div>
+        <div class="brand-name">Med+<span>Saúde</span></div>
+      </a>
+
+      <!-- LINKS CENTRAIS (NAVEGAÇÃO INSTANTÂNEA SPA COM SUBMENUS) -->
+      <ul class="nav-links">
+        <!-- 1. Início -->
+        <li class="nav-item">
+          <a href="#inicio" class="nav-link-pill active" onclick="navegarPara('inicio'); return false;">Início</a>
+        </li>
+
+        <!-- 2. Guia Médico -->
+        <li class="nav-item">
+          <a href="#guia-medico" class="nav-link-pill" onclick="navegarPara('guia-medico'); return false;">Guia
+            Médico</a>
+        </li>
+
+        <!-- 3. Planos de Saúde -->
+        <li class="nav-item nav-has-dropdown">
+          <a href="#planos" class="nav-link-pill" onclick="navegarPara('planos'); return false;">
+            Planos de Saúde <i class="fa-solid fa-chevron-down nav-chevron"></i>
+          </a>
+          <ul class="nav-dropdown-menu">
+            <li>
+              <a href="#planos-cards" onclick="navegarPara('planos-cards'); return false;">
+                <i class="fa-solid fa-layer-group"></i>
+                <div>
+                  <strong>Categorias & Preços</strong>
+                  <small>Básico, Regional e Premium</small>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#planos-simulador" onclick="navegarPara('planos-simulador'); return false;">
+                <i class="fa-solid fa-calculator"></i>
+                <div>
+                  <strong>Simulador por Idade</strong>
+                  <small>Cálculo de mensalidade</small>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#planos-tabela" onclick="navegarPara('planos-tabela'); return false;">
+                <i class="fa-solid fa-table-list"></i>
+                <div>
+                  <strong>Matriz de Cobertura</strong>
+                  <small>Rol ANS, carências e urgência</small>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- 4. Sobre Nós -->
+        <li class="nav-item nav-has-dropdown">
+          <a href="#sobre-nos" class="nav-link-pill" onclick="navegarPara('sobre-nos'); return false;">
+            Sobre Nós <i class="fa-solid fa-chevron-down nav-chevron"></i>
+          </a>
+          <ul class="nav-dropdown-menu">
+            <li>
+              <a href="#sobre-nos-integrantes" onclick="navegarPara('sobre-nos-integrantes'); return false;">
+                <i class="fa-solid fa-users"></i>
+                <div>
+                  <strong>Squad Grupo 6</strong>
+                  <small>Integrantes e papéis técnicos</small>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="#sobre-nos-timeline" onclick="navegarPara('sobre-nos-timeline'); return false;">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <div>
+                  <strong>Escola da Nuvem</strong>
+                  <small>Turma piloto e jornada Connect</small>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- 5. Apresentação (Roteiro Oficial do Pitch) -->
+        <li class="nav-item">
+          <a href="#apresentacao" class="nav-link-pill" onclick="navegarPara('apresentacao'); return false;">
+            <i class="fa-solid fa-chalkboard-user"></i> Apresentação
+          </a>
+        </li>
+      </ul>
+
+      <!-- AÇÕES À DIREITA (TEMA, VOZ, SOLICITAR/CHAT, ENTRAR) -->
+      <div class="nav-actions">
+        <!-- CRONÔMETRO INTEGRADO À BARRA DE MENU (ATIVADO QUANDO INICIADO) -->
+        <div class="nav-pitch-timer" id="nav-pitch-timer" style="display: none;" title="Cronômetro do Pitch Integrado">
+          <span class="nav-timer-dot" id="nav-timer-dot"></span>
+          <span class="nav-timer-tag">PITCH</span>
+          <span class="nav-timer-val" id="nav-timer-val">10:00</span>
+          <button type="button" class="nav-timer-btn btn-nav-toggle" id="nav-btn-toggle" onclick="togglePitchTimer()" title="Iniciar / Pausar Cronômetro">
+            <i class="fa-solid fa-play" id="nav-icon-toggle"></i>
+          </button>
+          <button type="button" class="nav-timer-btn btn-nav-restart" id="nav-btn-restart" onclick="reiniciarPitchTimer()" title="Reiniciar Cronômetro (10:00)">
+            <i class="fa-solid fa-rotate-left"></i>
+          </button>
+          <button type="button" class="nav-timer-btn btn-nav-stop" onclick="pararPitchTimer()" title="Parar Apresentação (Stop)">
+            <i class="fa-solid fa-stop"></i>
+          </button>
+        </div>
+
+        <!-- Alternador Dark / Light Mode -->
+        <button class="nav-icon-btn" id="theme-toggle" onclick="alternarTema()" title="Alternar Modo Claro / Escuro">
+          <i class="fa-solid fa-sun" id="theme-icon"></i>
+        </button>
+
+        <!-- Controle de Acessibilidade: Tamanho da Fonte (A- / A / A+) -->
+        <div class="font-accessibility-group" title="Acessibilidade: Ajustar Tamanho da Fonte">
+          <button type="button" class="font-btn" onclick="ajustarTamanhoFonte(-1)"
+            title="Diminuir tamanho da fonte (A-)" aria-label="Diminuir tamanho da fonte">
+            A-
+          </button>
+          <button type="button" class="font-btn font-btn-reset" onclick="resetarTamanhoFonte()"
+            title="Restaurar tamanho padrão da fonte (A)" aria-label="Restaurar tamanho padrão da fonte">
+            A
+          </button>
+          <button type="button" class="font-btn" onclick="ajustarTamanhoFonte(1)" title="Aumentar tamanho da fonte (A+)"
+            aria-label="Aumentar tamanho da fonte">
+            A+
+          </button>
+        </div>
+
+
+        <!-- Botão Entrar -->
+        <button class="btn btn-pill-outline" onclick="simularLoginBeneficiario()">
+          <i class="fa-regular fa-user"></i> Entrar
+        </button>
+
+      </div>
+    </nav>
+  </header>
+
+  <div class="app-container" id="app-container">
+
+    <!-- MENU LATERAL MOBILE DESLIZANTE (DRAWER ESTILO APP IONIC) -->
+    <div class="mobile-drawer-backdrop" id="mobile-drawer-backdrop" onclick="fecharMenuMobile()"></div>
+    <aside class="mobile-drawer" id="mobile-drawer">
+      <div class="drawer-header">
+        <div class="brand-logo">
+          <div class="logo-icon-box" style="width: 36px; height: 36px;">
+            <img src="./images/logo-medsaude-para.png" alt="Med+Saúde" class="logo-brand-img">
+          </div>
+          <div class="brand-name" style="font-size: 1.15rem;">Med+<span>Saúde</span></div>
+        </div>
+        <button class="drawer-close-btn" onclick="fecharMenuMobile()" title="Fechar Menu">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="drawer-content">
+        <div class="drawer-section-title">Páginas do Portal</div>
+        <ul class="drawer-nav-list">
+          <li>
+            <a href="#inicio" class="drawer-nav-link active" onclick="navegarDrawer('inicio')">
+              <i class="fa-solid fa-house"></i> Início
+            </a>
+          </li>
+          <li>
+            <a href="#guia-medico" class="drawer-nav-link" onclick="navegarDrawer('guia-medico')">
+              <i class="fa-solid fa-stethoscope"></i> Guia Médico
+            </a>
+          </li>
+          <li>
+            <a href="#planos" class="drawer-nav-link" onclick="navegarDrawer('planos')">
+              <i class="fa-solid fa-shield-halved"></i> Planos de Saúde
+            </a>
+          </li>
+          <li>
+            <a href="#sobre-nos" class="drawer-nav-link" onclick="navegarDrawer('sobre-nos')">
+              <i class="fa-solid fa-users"></i> Sobre Nós (Grupo 6)
+            </a>
+          </li>
+          <li>
+            <a href="#apresentacao" class="drawer-nav-link" onclick="navegarDrawer('apresentacao')">
+              <i class="fa-solid fa-chalkboard-user"></i> Roteiro de Apresentação
+            </a>
+          </li>
+        </ul>
+
+        <div class="drawer-section-title" style="margin-top: 1.5rem;">Canais de Atendimento</div>
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+          <button class="btn btn-outline" style="width: 100%; justify-content: center; font-size: 0.88rem;"
+            onclick="simularLigacaoVoz(); fecharMenuMobile();">
+            <i class="fa-solid fa-phone"></i> Central de Voz 0800
+          </button>
+          <button class="btn btn-primary" style="width: 100%; justify-content: center; font-size: 0.88rem;"
+            onclick="abrirChatWidget(); fecharMenuMobile();">
+            <i class="fa-solid fa-robot"></i> Conversar com Iara
+          </button>
+        </div>
+
+        <div
+          style="margin-top: 2rem; padding-top: 1.25rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 0.85rem; color: var(--text-muted); font-family: var(--font-tech);">Alternar
+            Tema</span>
+          <button class="nav-icon-btn" onclick="alternarTema()" title="Alternar Modo Claro / Escuro">
+            <i class="fa-solid fa-sun" id="theme-icon-drawer"></i>
+          </button>
+        </div>
+
+        <div
+          style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 0.85rem; color: var(--text-muted); font-family: var(--font-tech);">Tamanho do
+            Texto</span>
+          <div class="font-accessibility-group">
+            <button type="button" class="font-btn" onclick="ajustarTamanhoFonte(-1)"
+              title="Diminuir texto (A-)">A-</button>
+            <button type="button" class="font-btn font-btn-reset" onclick="resetarTamanhoFonte()"
+              title="Restaurar padrão (A)">A</button>
+            <button type="button" class="font-btn" onclick="ajustarTamanhoFonte(1)"
+              title="Aumentar texto (A+)">A+</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main>
+      <!-- VIEW 1: PÁGINA INÍCIO -->
+      <div class="page-view active" id="view-inicio">
+        <!-- HERO SECTION -->
+        <section class="hero-section" id="inicio">
+          <div class="container hero-grid">
+            <div class="hero-content">
+              <!-- BADGE REGIONAL OFICIAL ALINHADO AO CASE -->
+              <div class="hero-region-pill">
+                <span class="region-dot"></span>
+                Atendimento Oficial em Curitiba (PR) & Rede Credenciada Nacional • Grupo 6 (Escola da Nuvem)
+              </div>
+
+              <h1 class="hero-title">
+                Encontre o especialista ideal sem filas no <span class="text-highlight">Guia Médico</span>.
+              </h1>
+              <p class="hero-subtitle">
+                Localize cardiologistas, ortopedistas e clínicas por especialidade e localidade. Agende sua consulta em
+                segundos conversando com a assistente virtual Iara no Chat ou por Voz (com protocolo ANS RN 623
+                imediato).
+              </p>
+
+              <!-- BUSCA RÁPIDA DO GUIA MÉDICO -->
+              <div class="hero-search-box">
+                <div class="search-field">
+                  <i class="fa-solid fa-stethoscope field-icon"></i>
+                  <select id="select-especialidade" onchange="aplicarFiltros()">
+                    <option value="todas">Todas as Especialidades</option>
+                  </select>
+                </div>
+                <div class="search-field">
+                  <i class="fa-solid fa-location-dot field-icon"></i>
+                  <select id="select-cidade" onchange="aplicarFiltros()">
+                    <option value="todas">Todas as Cidades</option>
+                  </select>
+                </div>
+                <div class="search-field">
+                  <i class="fa-solid fa-magnifying-glass field-icon"></i>
+                  <input type="text" id="input-busca-geral" placeholder="Nome do médico ou bairro..."
+                    oninput="aplicarFiltros()">
+                </div>
+                <button class="btn btn-primary" onclick="filtrarEIrParaGuia()">
+                  <i class="fa-solid fa-search"></i> Buscar no Guia
+                </button>
+              </div>
+            </div>
+
+            <!-- CARD DE STATUS OMNICHANNEL & CORPO CLÍNICO -->
+            <div class="hero-card-side">
+              <!-- CARD DE EQUIPE MÉDICA E ACOLHIMENTO -->
+              <div class="human-care-card">
+                <img src="./images/atendimento-humanizado.jpg"
+                  alt="Equipe médica credenciada Med+Saúde e acolhimento humanizado">
+                <div class="human-care-overlay">
+                  <span class="human-care-badge">
+                    <i class="fa-solid fa-user-doctor"></i> Corpo Clínico Credenciado
+                  </span>
+                  <span class="human-care-caption">Cuidado que conecta</span>
+                </div>
+              </div>
+
+              <div class="omnichannel-preview-card">
+                <div class="preview-header">
+                  <div>
+                    <h3 class="preview-title">Contact Center Inteligente</h3>
+                    <p class="preview-subtitle">Monitoramento dos canais de atendimento</p>
+                  </div>
+                  <div class="pulse-indicator">
+                    <span class="pulse-dot"></span> Operação 24/7
+                  </div>
+                </div>
+
+                <div class="channel-items-stack">
+                  <div class="channel-status-item" onclick="abrirChatWidget()" style="cursor: pointer;">
+                    <div class="channel-icon">
+                      <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <div class="channel-details">
+                      <h4>Chat Online (Amazon Lex)</h4>
+                      <p>Interpretação de linguagem natural e busca no S3 em tempo real.</p>
+                    </div>
+                    <span class="aws-badge-pill" style="margin-left: auto;">Online</span>
+                  </div>
+
+                  <div class="channel-status-item" onclick="simularLigacaoVoz()" style="cursor: pointer;">
+                    <div class="channel-icon"
+                      style="background: rgba(2, 132, 199, 0.2); color: #38bdf8; border: 1px solid rgba(2, 132, 199, 0.35);">
+                      <i class="fa-solid fa-headset"></i>
+                    </div>
+                    <div class="channel-details">
+                      <h4>Canal de Voz (IA Agêntica)</h4>
+                      <p>Sem menus rígidos: compreensão de fala natural para idosos e urgências.</p>
+                    </div>
+                    <span class="aws-badge-pill" style="margin-left: auto;">Disponível</span>
+                  </div>
+
+                  <div class="channel-status-item">
+                    <div class="channel-icon"
+                      style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.35);">
+                      <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <div class="channel-details">
+                      <h4>Amazon Q in Connect</h4>
+                      <p>Base de conhecimento integrada e respostas de cobertura e carência.</p>
+                    </div>
+                    <span class="aws-badge-pill" style="margin-left: auto;">Sincronizado</span>
+                  </div>
+
+                  <div class="channel-status-item">
+                    <div class="channel-icon"
+                      style="background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.35);">
+                      <i class="fa-solid fa-user-doctor"></i>
+                    </div>
+                    <div class="channel-details">
+                      <h4>Transbordo Humano N1</h4>
+                      <p>Transferência humanizada preservando o histórico completo na tela do agente.</p>
+                    </div>
+                    <span class="aws-badge-pill" style="margin-left: auto;">Fila Reduzida</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ATALHOS RÁPIDOS E APRESENTAÇÃO DO CASE 1 NA HOME -->
+        <section style="padding: 4.5rem 0; background: var(--bg-surface); border-top: 1px solid var(--border-color);">
+          <div class="container">
+            <div class="section-header">
+              <span class="tag-badge">Escola da Nuvem • Case 1</span>
+              <h2>Solução Omnichannel com Inteligência Artificial</h2>
+              <p>Conectando beneficiários a especialistas através de Chatbot Lex, Telefonia Inteligente e Amazon Q in
+                Connect.</p>
+            </div>
+
+            <div class="arch-cards-grid" style="margin-bottom: 2rem;">
+              <div class="arch-card" onclick="navegarPara('guia-medico')" style="cursor: pointer;">
+                <div class="arch-card-icon">
+                  <i class="fa-solid fa-stethoscope"></i>
+                </div>
+                <h3>Guia Médico Interativo</h3>
+                <p>Consulte especialistas por bairro, especialidade e telemedicina com agendamento direto e sem filas.
+                </p>
+                <span class="arch-card-tag">Acessar Guia →</span>
+              </div>
+
+              <div class="arch-card" onclick="navegarPara('planos')" style="cursor: pointer;">
+                <div class="arch-card-icon" style="background: rgba(14, 165, 233, 0.25); color: #38bdf8;">
+                  <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h3>Planos de Saúde</h3>
+                <p>Tabela comparativa, carências reduzidas e simulador de mensalidades para o Pará e Brasil.</p>
+                <span class="arch-card-tag tag-blue">Simular Planos →</span>
+              </div>
+
+              <div class="arch-card" onclick="navegarPara('sobre-nos')" style="cursor: pointer;">
+                <div class="arch-card-icon" style="background: rgba(16, 185, 129, 0.25); color: #34d399;">
+                  <i class="fa-solid fa-users"></i>
+                </div>
+                <h3>Integrantes do Grupo 6</h3>
+                <p>Conheça os profissionais da Escola da Nuvem responsáveis pelo desenvolvimento e engenharia da
+                  solução.</p>
+                <span class="arch-card-tag tag-green">Conhecer Equipe →</span>
+              </div>
+            </div>
+
+            <!-- SEÇÃO DE GOVERNANÇA, SEGURANÇA E TRATAMENTO DE DADOS COMPATÍVEL COM LGPD -->
+            <div
+              style="margin-top: 3.5rem; padding: 2.5rem; border: 1px solid var(--border-color); border-radius: var(--radius-md);"
+              id="inicio-lgpd-compliance">
+              <div class="section-header" style="text-align: center; margin-bottom: 2rem;">
+                <span class="tag-badge tag-badge-green"><i class="fa-solid fa-shield-halved"></i> Governança de
+                  Dados</span>
+                <h2 style="word-break: normal; hyphens: none;">Tratamento de Dados e Governança LGPD</h2>
+                <p style="max-width: 780px; margin: 0 auto;">
+                  A arquitetura do <strong>Grupo 6</strong> foi implementada seguindo rigorosas salvaguardas técnicas e
+                  diretrizes de conformidade da <strong>LGPD (Lei Geral de Proteção de Dados)</strong> para proteção absoluta de dados de saúde e informações médicas sensíveis.
+                </p>
+              </div>
+
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem;">
+                <!-- Card 1: Criptografia -->
+                <div
+                  style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.35rem;">
+                  <div
+                    style="width: 42px; height: 42px; border-radius: 8px; background: rgba(2, 132, 199, 0.15); color: #38bdf8; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: 0.85rem;">
+                    <i class="fa-solid fa-lock"></i>
+                  </div>
+                  <h4 style="font-size: 0.98rem; color: var(--text-primary); margin-bottom: 0.4rem;">Criptografia KMS &
+                    TLS 1.2+</h4>
+                  <p style="font-size: 0.83rem; color: var(--text-secondary); line-height: 1.5; margin: 0;">
+                    Gravações e base do Guia Médico no Amazon S3 criptografados em repouso com <strong>AWS KMS
+                      (AES-256)</strong>. Sessões de voz, chat e APIs trafegam com <strong>TLS 1.2+</strong> ponta a
+                    ponta.
+                  </p>
+                </div>
+
+                <!-- Card 2: Proteção de Dados Sensíveis -->
+                <div
+                  style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.35rem;">
+                  <div
+                    style="width: 42px; height: 42px; border-radius: 8px; background: rgba(16, 185, 129, 0.15); color: #34d399; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: 0.85rem;">
+                    <i class="fa-solid fa-user-shield"></i>
+                  </div>
+                  <h4 style="font-size: 0.98rem; color: var(--text-primary); margin-bottom: 0.4rem;">Proteção de Dados Sensíveis &
+                    Mascaramento</h4>
+                  <p style="font-size: 0.83rem; color: var(--text-secondary); line-height: 1.5; margin: 0;">
+                    Mascaramento e anonimização de informações clínicas sensíveis (sintomas, CPF) nos fluxos do Contact
+                    Flow, prevenindo exposição de dados em texto plano no <strong>Amazon CloudWatch</strong>.
+                  </p>
+                </div>
+
+                <!-- Card 3: IAM Least Privilege -->
+                <div
+                  style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.35rem;">
+                  <div
+                    style="width: 42px; height: 42px; border-radius: 8px; background: rgba(245, 158, 11, 0.15); color: #fbbf24; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: 0.85rem;">
+                    <i class="fa-solid fa-id-badge"></i>
+                  </div>
+                  <h4 style="font-size: 0.98rem; color: var(--text-primary); margin-bottom: 0.4rem;">IAM Least Privilege
+                    & RBAC</h4>
+                  <p style="font-size: 0.83rem; color: var(--text-secondary); line-height: 1.5; margin: 0;">
+                    Políticas de menor privilégio no <strong>AWS IAM</strong>: separação estrita de perfis de atendentes
+                    (fila <code>AgenteN1</code>), bot Lex V2 e leitura restrita do bucket S3 sem permissão pública.
+                  </p>
+                </div>
+
+                <!-- Card 4: Auditoria CloudTrail -->
+                <div
+                  style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.35rem;">
+                  <div
+                    style="width: 42px; height: 42px; border-radius: 8px; background: rgba(168, 85, 247, 0.15); color: #c084fc; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: 0.85rem;">
+                    <i class="fa-solid fa-clipboard-check"></i>
+                  </div>
+                  <h4 style="font-size: 0.98rem; color: var(--text-primary); margin-bottom: 0.4rem;">Auditoria &
+                    Rastreabilidade</h4>
+                  <p style="font-size: 0.83rem; color: var(--text-secondary); line-height: 1.5; margin: 0;">
+                    Trilha de eventos via <strong>AWS CloudTrail</strong> com retenção controlada dos registros de
+                    rastreamento de contato (CTR) para auditorias técnicas e conformidade regulatória.
+                  </p>
+                </div>
+              </div>
+
+              <div
+                style="margin-top: 1.5rem; background: rgba(2, 132, 199, 0.08); border: 1px dashed rgba(2, 132, 199, 0.35); border-radius: 8px; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+                <span style="font-size: 0.86rem; color: var(--text-secondary);">
+                  <i class="fa-solid fa-file-shield text-primary"></i> Governança de Dados & Privacidade: Diretrizes em
+                  conformidade com a LGPD.
+                </span>
+              </div>
+            </div>
+
+            <!-- SEÇÃO FICTÍCIA: NÚMEROS E IMPACTO INSTITUCIONAL MED+SAÚDE NO PARÁ -->
+            <div style="margin-top: 4rem; padding-top: 3rem; border-top: 1px solid var(--border-color);">
+              <div class="section-header" style="text-align: center; margin-bottom: 2rem;">
+                <span class="tag-badge">Números da Operadora</span>
+                <h2>Impacto e Cobertura no Estado do Pará</h2>
+                <p>Conectando vidas a cuidados de saúde humanizados com infraestrutura médica e tecnológica de ponta.
+                </p>
+              </div>
+
+              <div class="stats-grid">
+                <div class="stats-card">
+                  <div class="stats-card-val">145.000+</div>
+                  <div class="stats-card-label">Beneficiários Ativos no Pará</div>
+                </div>
+                <div class="stats-card">
+                  <div class="stats-card-val">520+</div>
+                  <div class="stats-card-label">Médicos Cooperados & Clínicas</div>
+                </div>
+                <div class="stats-card">
+                  <div class="stats-card-val">32</div>
+                  <div class="stats-card-label">Hospitais & Prontos-Socorros</div>
+                </div>
+                <div class="stats-card">
+                  <div class="stats-card-val">99,98%</div>
+                  <div class="stats-card-label">Disponibilidade na AWS</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SEÇÃO FICTÍCIA: HOSPITAIS E CENTROS MÉDICOS DE REFERÊNCIA -->
+            <div style="margin-top: 3.5rem;">
+              <div class="section-header" style="text-align: center; margin-bottom: 2rem;">
+                <span class="tag-badge tag-badge-blue">Rede Credenciada Pará</span>
+                <h2>Principais Hospitais e Centros de Diagnóstico</h2>
+                <p>Atendimento emergencial e agendado com tecnologia e acolhimento em Belém e Região Metropolitana.</p>
+              </div>
+
+              <div class="hospitals-grid">
+                <div class="hospital-card">
+                  <div class="hospital-icon"><i class="fa-solid fa-hospital"></i></div>
+                  <div class="hospital-details">
+                    <h4>Hospital Porto Dias</h4>
+                    <p>Av. Almirante Barroso, Marco • Belém<br>Pronto Atendimento Adulto/Infantil 24h & UTI de Alta
+                      Complexidade.</p>
+                  </div>
+                </div>
+
+                <div class="hospital-card">
+                  <div class="hospital-icon" style="background: rgba(16, 185, 129, 0.15); color: #34d399;"><i
+                      class="fa-solid fa-square-plus"></i></div>
+                  <div class="hospital-details">
+                    <h4>Hospital Guadalupe</h4>
+                    <p>R. Arcipreste Manoel Teodoro, Campina • Belém<br>Centro Cirúrgico Avançado, Maternidade e Centro
+                      Cardiológico.</p>
+                  </div>
+                </div>
+
+                <div class="hospital-card">
+                  <div class="hospital-icon" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24;"><i
+                      class="fa-solid fa-truck-medical"></i></div>
+                  <div class="hospital-details">
+                    <h4>Hospital Metropolitano</h4>
+                    <p>Rodovia BR-316, Km 3 • Ananindeua<br>Referência em Ortopedia, Traumatologia e Medicina
+                      Diagnóstica.</p>
+                  </div>
+                </div>
+
+                <div class="hospital-card">
+                  <div class="hospital-icon" style="background: rgba(239, 68, 68, 0.15); color: #f87171;"><i
+                      class="fa-solid fa-heart-pulse"></i></div>
+                  <div class="hospital-details">
+                    <h4>Clínica Som Diagnósticos</h4>
+                    <p>Tv. Dom Romualdo de Seixas, Umarizal • Belém<br>Ressonância Magnética, Tomografia Computadorizada
+                      e Laboratório.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- SEÇÃO FICTÍCIA: DEPOIMENTOS DE BENEFICIÁRIOS DO PARÁ -->
+            <div style="margin-top: 4rem; padding-top: 3rem; border-top: 1px solid var(--border-color);">
+              <div class="section-header" style="text-align: center; margin-bottom: 2rem;">
+                <span class="tag-badge tag-badge-green">Experiência do Paciente</span>
+                <h2>O que Dizem Nossos Beneficiários</h2>
+                <p>Histórias reais de quem precisou de agilidade e foi atendido sem filas pela nossa inteligência
+                  artificial.</p>
+              </div>
+
+              <div class="testimonials-grid">
+                <div class="testimonial-card">
+                  <div>
+                    <div class="testimonial-stars">
+                      <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                        class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">
+                      "Eu tinha receio de usar robô por causa da minha idade, mas liguei pro atendimento e a voz da Iara
+                      me entendeu perfeitamente! Falei que precisava de especialista em Curitiba e ela localizou o
+                      médico na hora, sem menu chato. Nota mil!"
+                    </p>
+                  </div>
+                  <div class="testimonial-author">
+                    <div class="testimonial-avatar">RN</div>
+                    <div class="testimonial-info">
+                      <h4>Dona Raimunda Nonata, 64 anos</h4>
+                      <span>Beneficiária Med+Saúde • Atendimento Humanizado</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="testimonial-card">
+                  <div>
+                    <div class="testimonial-stars">
+                      <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                        class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">
+                      "No meio da correria do trabalho precisei agendar um ortopedista pra uma lesão no joelho. Pelo
+                      chat aqui no celular, em 40 segundos escolhi o horário em Ananindeua e já recebi o protocolo no
+                      WhatsApp."
+                    </p>
+                  </div>
+                  <div class="testimonial-author">
+                    <div class="testimonial-avatar" style="background: linear-gradient(135deg, #0284c7, #2563eb);">CS
+                    </div>
+                    <div class="testimonial-info">
+                      <h4>Carlos Eduardo Siqueira, 38 anos</h4>
+                      <span>Engenheiro Civil • Cidade Nova, Ananindeua/PA</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="testimonial-card">
+                  <div>
+                    <div class="testimonial-stars">
+                      <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                        class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">
+                      "Como médico cooperado, percebi uma queda de mais de 40% no não comparecimento às consultas. Os
+                      pacientes chegam informados, com guia autorizada e dados já integrados ao sistema."
+                    </p>
+                  </div>
+                  <div class="testimonial-author">
+                    <div class="testimonial-avatar" style="background: linear-gradient(135deg, #059669, #10b981);">PA
+                    </div>
+                    <div class="testimonial-info">
+                      <h4>Dr. Paulo Sérgio Alencar</h4>
+                      <span>Cardiologista Credenciado • CRM/PA 6720</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+      </div>
+      <!-- FIM DA VIEW 1: INÍCIO -->
+
+      <!-- VIEW 2: PÁGINA GUIA MÉDICO -->
+      <div class="page-view" id="view-guia-medico">
+        <!-- SEÇÃO GUIA MÉDICO INTERATIVO -->
+        <section class="section-guia" id="guia-medico">
+          <div class="container">
+            <div class="section-header">
+              <span class="tag-badge">Rede Credenciada Med+Saúde</span>
+              <h2>Especialistas e Clínicas Credenciadas</h2>
+              <p>Consulte a disponibilidade de consultas presenciais e por telemedicina em nossa base de dados oficial.
+              </p>
+            </div>
+
+            <!-- BARRA DE CONTROLE E PESQUISA INTERATIVA DO GUIA MÉDICO -->
+            <div class="guia-control-panel"
+              style="margin-bottom: 2rem; display: flex; flex-direction: column; gap: 1rem;">
+              <!-- LINHA DE BUSCA DIRETA, REGIÃO E CIDADE -->
+              <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;">
+                <div style="flex: 1; min-width: 260px; position: relative;">
+                  <i class="fa-solid fa-magnifying-glass"
+                    style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none;"></i>
+                  <input type="text" id="input-busca-guia"
+                    placeholder="Buscar por especialista, CRM, sintomas, clínica, exames ou bairro..."
+                    oninput="filtrarGuiaMedico()"
+                    style="width: 100%; padding: 0.75rem 1rem 0.75rem 2.6rem; border-radius: 16px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-primary); font-family: var(--font-sans); font-size: 0.9rem; outline: none; transition: var(--transition);">
+                </div>
+                <div style="min-width: 170px;">
+                  <select id="select-regiao-guia" onchange="filtrarGuiaMedico()"
+                    style="width: 100%; padding: 0.75rem 1rem; border-radius: 16px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-primary); font-family: var(--font-sans); font-size: 0.9rem; cursor: pointer; outline: none;">
+                    <option value="todas">Todas as Regiões</option>
+                    <option value="Sul">Região Sul</option>
+                    <option value="Sudeste">Região Sudeste</option>
+                    <option value="Norte">Região Norte</option>
+                    <option value="Nordeste">Região Nordeste</option>
+                    <option value="Centro-Oeste">Região Centro-Oeste</option>
+                  </select>
+                </div>
+                <div style="min-width: 220px;">
+                  <select id="select-cidade-guia" onchange="filtrarGuiaMedico()"
+                    style="width: 100%; padding: 0.75rem 1rem; border-radius: 16px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-primary); font-family: var(--font-sans); font-size: 0.9rem; cursor: pointer; outline: none;">
+                    <option value="todas">Todas as Cidades (Brasil)</option>
+                  </select>
+                </div>
+                <button class="btn btn-outline" onclick="limparFiltrosGuia()"
+                  style="padding: 0.75rem 1.25rem; font-size: 0.85rem; border-radius: 14px; display: inline-flex; align-items: center; gap: 0.4rem;"
+                  title="Limpar todos os filtros">
+                  <i class="fa-solid fa-rotate-left"></i> Limpar Filtros
+                </button>
+              </div>
+
+              <!-- BARRA DE FILTROS POR CHIP COM COBERTURA TOTAL DAS 5 REGIÕES -->
+              <div class="filter-bar" id="guia-busca" style="margin-bottom: 0;">
+                <div class="filter-tags" id="chips-especialidades">
+                  <button type="button" class="filter-chip active" onclick="filtrarPorChip('todas', this)"><i
+                      class="fa-solid fa-layer-group"></i> Todas (25)</button>
+                  <button type="button" class="filter-chip"
+                    onclick="filtrarPorChip('Cardiologia', this)">Cardiologia</button>
+                  <button type="button" class="filter-chip"
+                    onclick="filtrarPorChip('Ortopedia', this)">Ortopedia</button>
+                  <button type="button" class="filter-chip"
+                    onclick="filtrarPorChip('Pediatria', this)">Pediatria</button>
+                  <button type="button" class="filter-chip"
+                    onclick="filtrarPorChip('Pneumologia', this)">Pneumologia</button>
+                  <button type="button" class="filter-chip"
+                    onclick="filtrarPorChip('Dermatologia', this)">Dermatologia</button>
+                  <button type="button" class="filter-chip"
+                    onclick="filtrarPorChip('Neurologia', this)">Neurologia</button>
+                  <button type="button" class="filter-chip"
+                    onclick="filtrarPorChip('Gastroenterologia', this)">Gastroenterologia</button>
+                  <button type="button" class="filter-chip"
+                    onclick="filtrarPorChip('Ginecologia', this)">Ginecologia</button>
+                  <button type="button" class="filter-chip" onclick="filtrarPorChip('Clínica Geral', this)">Clínica
+                    Geral</button>
+                  <button type="button" class="filter-chip"
+                    onclick="filtrarPorChip('Endocrinologia', this)">Endocrinologia</button>
+                  <button type="button" class="filter-chip"
+                    onclick="filtrarPorChip('Oftalmologia', this)">Oftalmologia</button>
+                  <button type="button" class="filter-chip"
+                    onclick="filtrarPorChip('Infectologia', this)">Infectologia</button>
+                  <button type="button" class="filter-chip"
+                    onclick="filtrarPorChip('Geriatria', this)">Geriatria</button>
+                  <button type="button" class="filter-chip"
+                    onclick="filtrarPorChip('Otorrinolaringologia', this)">Otorrinolaringologia</button>
+                  <button type="button" class="filter-chip"
+                    onclick="filtrarPorChip('Psiquiatria', this)">Psiquiatria</button>
+                  <button type="button" class="filter-chip" onclick="filtrarPorChip('Urologia', this)">Urologia</button>
+                  <button type="button" class="filter-chip"
+                    onclick="filtrarPorChip('Reumatologia', this)">Reumatologia</button>
+                </div>
+                <div style="font-size: 0.88rem; color: var(--text-secondary); white-space: nowrap;">
+                  Exibindo <strong id="contador-medicos" style="color: var(--primary); font-size: 1.05rem;">25</strong>
+                  credenciados
+                </div>
+              </div>
+            </div>
+
+            <!-- GRID DE CARDS DOS MÉDICOS (BASE OFICIAL 25 CREDENCIADOS COM CURITIBA EM DESTAQUE) -->
+            <div class="doctors-grid" id="doctors-container">
+              <!-- Card Oficial 1: Dra. Ana Carolina Silva (Cenário Chat • Cardiologia) -->
+              <div class="doctor-card" id="card-MED-001">
+                <div class="doctor-header">
+                  <div class="doctor-avatar">AC</div>
+                  <div class="doctor-info" style="flex: 1;">
+                    <div
+                      style="display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap;">
+                      <h3 style="margin: 0;">Dra. Ana Carolina Silva</h3>
+                      <span
+                        style="font-size: 0.72rem; font-weight: 700; padding: 0.15rem 0.55rem; border-radius: 999px; background: rgba(2, 132, 199, 0.15); color: #0284c7; border: 1px solid rgba(2, 132, 199, 0.35);">
+                        Sul • Destaque Chat
+                      </span>
+                    </div>
+                    <span class="doctor-specialty">Cardiologia</span>
+                    <div class="doctor-crm">CRM: CRM-PR 28.490 • RQE 18.230</div>
+                  </div>
+                </div>
+                <div
+                  style="margin: 0.75rem 0 0.5rem 0; padding: 0.5rem 0.75rem; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; font-size: 0.78rem; line-height: 1.4; color: #10b981; display: flex; align-items: flex-start; gap: 0.45rem;">
+                  <i class="fa-solid fa-wheelchair" style="margin-top: 2px;"></i>
+                  <span><strong>Acessível PNE & Idosos:</strong> Edifício 100% acessível, rampa frontal suave e
+                    elevadores amplos para macas.</span>
+                </div>
+                <div class="doctor-meta-list">
+                  <div class="meta-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <div>
+                      <strong>Curitiba - PR</strong> (Centro Cívico)<br>
+                      <span style="font-size: 0.8rem; color: var(--text-muted);">Av. Cândido de Abreu, 526 - Torre
+                        Corporate, Sala 804</span>
+                    </div>
+                  </div>
+                  <div class="meta-item">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>(41) 3254-8900</span>
+                  </div>
+                  <div class="meta-item">
+                    <i class="fa-solid fa-clock"></i>
+                    <span>Segunda a Quinta: 08:15 a 15:30</span>
+                  </div>
+                  <div class="meta-item">
+                    <i class="fa-solid fa-star" style="color: #f59e0b;"></i>
+                    <span><strong>4.9</strong> / 5.0 no Guia Nacional</span>
+                  </div>
+                </div>
+                <div class="doctor-schedule-box">
+                  <div class="schedule-title"><i class="fa-regular fa-calendar-check"></i> Próximos horários
+                    disponíveis:</div>
+                  <div class="schedule-pills">
+                    <span class="schedule-pill">Amanhã às 08:30</span>
+                    <span class="schedule-pill">Amanhã às 10:15</span>
+                    <span class="schedule-pill">Quinta às 14:15</span>
+                  </div>
+                </div>
+                <div class="doctor-card-footer">
+                  <button class="btn btn-primary btn-sm" style="flex: 1;" onclick="abrirModalAgendamento('MED-001')">
+                    <i class="fa-solid fa-calendar-plus"></i> Agendar Consulta
+                  </button>
+                  <button class="btn btn-outline btn-sm" onclick="abrirChatComMedico('MED-001')"
+                    title="Agendar via Chat Iara"
+                    style="width: 38px; display: inline-flex; align-items: center; justify-content: center;">
+                    <i class="fa-solid fa-comment-dots"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Card Oficial 2: Dr. Carlos Eduardo Mendonça (Cenário Voz • Ortopedia Idoso) -->
+              <div class="doctor-card" id="card-MED-002">
+                <div class="doctor-header">
+                  <div class="doctor-avatar">CE</div>
+                  <div class="doctor-info" style="flex: 1;">
+                    <div
+                      style="display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap;">
+                      <h3 style="margin: 0;">Dr. Carlos Eduardo Mendonça</h3>
+                      <span
+                        style="font-size: 0.72rem; font-weight: 700; padding: 0.15rem 0.55rem; border-radius: 999px; background: rgba(2, 132, 199, 0.15); color: #0284c7; border: 1px solid rgba(2, 132, 199, 0.35);">
+                        Sul • Destaque Voz
+                      </span>
+                    </div>
+                    <span class="doctor-specialty">Ortopedia & Traumatologia</span>
+                    <div class="doctor-crm">CRM: CRM-PR 22.115 • RQE 14.508</div>
+                  </div>
+                </div>
+                <div
+                  style="margin: 0.75rem 0 0.5rem 0; padding: 0.5rem 0.75rem; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; font-size: 0.78rem; line-height: 1.4; color: #10b981; display: flex; align-items: flex-start; gap: 0.45rem;">
+                  <i class="fa-solid fa-wheelchair" style="margin-top: 2px;"></i>
+                  <span><strong>Acessível PNE & Idosos:</strong> Atendimento especializado para idosos, prevenção de
+                    quedas, artrose e joelho.</span>
+                </div>
+                <div class="doctor-meta-list">
+                  <div class="meta-item">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <div>
+                      <strong>Curitiba - PR</strong> (Centro)<br>
+                      <span style="font-size: 0.8rem; color: var(--text-muted);">Rua XV de Novembro, 1280 - Centro
+                        Médico Curitiba, 3º Andar</span>
+                    </div>
+                  </div>
+                  <div class="meta-item">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>(41) 3322-4500</span>
+                  </div>
+                  <div class="meta-item">
+                    <i class="fa-solid fa-clock"></i>
+                    <span>Segunda, Quarta e Sexta: 08:30 a 16:30</span>
+                  </div>
+                  <div class="meta-item">
+                    <i class="fa-solid fa-star" style="color: #f59e0b;"></i>
+                    <span><strong>4.9</strong> / 5.0 no Guia Nacional</span>
+                  </div>
+                </div>
+                <div class="doctor-schedule-box">
+                  <div class="schedule-title"><i class="fa-regular fa-calendar-check"></i> Próximos horários
+                    disponíveis:</div>
+                  <div class="schedule-pills">
+                    <span class="schedule-pill">Amanhã às 08:30</span>
+                    <span class="schedule-pill">Quarta às 10:00</span>
+                    <span class="schedule-pill">Sexta às 14:00</span>
+                  </div>
+                </div>
+                <div class="doctor-card-footer">
+                  <button class="btn btn-primary btn-sm" style="flex: 1;" onclick="abrirModalAgendamento('MED-002')">
+                    <i class="fa-solid fa-calendar-plus"></i> Agendar Consulta
+                  </button>
+                  <button class="btn btn-outline btn-sm" onclick="abrirChatComMedico('MED-002')"
+                    title="Agendar via Chat Iara"
+                    style="width: 38px; display: inline-flex; align-items: center; justify-content: center;">
+                    <i class="fa-solid fa-comment-dots"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <!-- FIM DA VIEW 2: GUIA MÉDICO -->
+
+
+
+      <!-- VIEW 3: PÁGINA PLANOS DE SAÚDE -->
+      <div class="page-view" id="view-planos">
+        <!-- SEÇÃO PLANOS DE SAÚDE -->
+        <section class="section-guia" id="planos" style="background-color: var(--bg-surface);">
+          <div class="container">
+            <div class="section-header">
+              <span class="tag-badge">Nossos Planos</span>
+              <h2>Planos sob Medida para Você e Sua Família</h2>
+              <p>Ampla cobertura nacional, rede própria e credenciada de excelência.</p>
+            </div>
+
+            <!-- SUB-BARRA DE NAVEGAÇÃO RÁPIDA NOS TÓPICOS DOS PLANOS -->
+            <div style="display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 2rem;">
+              <a href="#planos-cards" onclick="navegarPara('planos-cards')" class="btn btn-pill-outline"
+                style="font-size: 0.82rem; padding: 0.45rem 1rem;">
+                <i class="fa-solid fa-layer-group"></i> 1. Categorias & Preços
+              </a>
+              <a href="#planos-simulador" onclick="navegarPara('planos-simulador')" class="btn btn-pill-outline"
+                style="font-size: 0.82rem; padding: 0.45rem 1rem;">
+                <i class="fa-solid fa-calculator"></i> 2. Simulador por Idade
+              </a>
+              <a href="#planos-tabela" onclick="navegarPara('planos-tabela')" class="btn btn-pill-outline"
+                style="font-size: 0.82rem; padding: 0.45rem 1rem;">
+                <i class="fa-solid fa-table-list"></i> 3. Matriz de Cobertura
+              </a>
+              <a href="#guia-medico" onclick="navegarPara('guia-medico')" class="btn btn-pill-outline"
+                style="font-size: 0.82rem; padding: 0.45rem 1rem; border-color: var(--primary);">
+                <i class="fa-solid fa-stethoscope"></i> Consultar Especialistas →
+              </a>
+            </div>
+
+            <div class="doctors-grid" id="planos-cards">
+              <div class="doctor-card" style="border-top: 4px solid var(--primary);">
+                <div
+                  style="font-family: var(--font-tech); font-size: 0.85rem; color: var(--primary-light); margin-bottom: 0.25rem;">
+                  PLANO AMBULATORIAL & HOSPITALAR</div>
+                <h3 style="font-size: 1.4rem; margin-bottom: 0.25rem;">Med+ Básico</h3>
+                <div
+                  style="font-family: var(--font-tech); font-size: 1.6rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.75rem;">
+                  R$ 189<span style="font-size: 1rem; font-weight: 500; color: var(--text-muted);">,90 /mês</span>
+                </div>
+                <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1.5rem;">Atendimento
+                  ambulatorial e hospitalar com enfermaria regional (Belém e Ananindeua).</p>
+                <ul
+                  style="list-style: none; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.88rem; margin-bottom: 2rem;">
+                  <li><i class="fa-solid fa-check text-primary"></i> Consultas em todas as especialidades</li>
+                  <li><i class="fa-solid fa-check text-primary"></i> Pronto Atendimento Virtual 24h via IA Iara</li>
+                  <li><i class="fa-solid fa-check text-primary"></i> Exames laboratoriais e radiografia simples</li>
+                  <li><i class="fa-solid fa-check text-primary"></i> Internação em Enfermaria Regional</li>
+                </ul>
+                <button class="btn btn-outline" style="width: 100%; justify-content: center;"
+                  onclick="abrirChatComMensagem('Quero saber mais sobre o plano Med+ Básico')">Consultar
+                  Detalhes</button>
+              </div>
+
+              <div class="doctor-card"
+                style="border-top: 4px solid var(--secondary); transform: scale(1.02); box-shadow: var(--shadow-lg);">
+                <div class="aws-badge-pill" style="position: absolute; top: 1rem; right: 1rem;">Mais Procurado</div>
+                <div
+                  style="font-family: var(--font-tech); font-size: 0.85rem; color: var(--secondary); margin-bottom: 0.25rem;">
+                  COBERTURA NACIONAL COMPLETA</div>
+                <h3 style="font-size: 1.4rem; margin-bottom: 0.25rem;">Med+ Especial</h3>
+                <div
+                  style="font-family: var(--font-tech); font-size: 1.6rem; font-weight: 800; color: var(--secondary); margin-bottom: 0.75rem;">
+                  R$ 349<span style="font-size: 1rem; font-weight: 500; color: var(--text-muted);">,90 /mês</span>
+                </div>
+                <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1.5rem;">Quarto individual,
+                  cobertura nacional e ampla rede de laboratórios e hospitais.</p>
+                <ul
+                  style="list-style: none; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.88rem; margin-bottom: 2rem;">
+                  <li><i class="fa-solid fa-check text-primary"></i> Todas as coberturas do Med+ Básico</li>
+                  <li><i class="fa-solid fa-check text-primary"></i> Acomodação em Apartamento Privativo</li>
+                  <li><i class="fa-solid fa-check text-primary"></i> Reembolso de consultas e exames</li>
+                  <li><i class="fa-solid fa-check text-primary"></i> Cobertura nacional completa com urgência 24h</li>
+                  <li><i class="fa-solid fa-check text-primary"></i> Parto e internações de alta complexidade</li>
+                </ul>
+                <button class="btn btn-primary" style="width: 100%; justify-content: center;"
+                  onclick="abrirChatComMensagem('Quero contratar o plano Med+ Especial')">Falar com Consultor</button>
+              </div>
+
+              <div class="doctor-card" style="border-top: 4px solid #f59e0b;">
+                <div style="font-family: var(--font-tech); font-size: 0.85rem; color: #fbbf24; margin-bottom: 0.25rem;">
+                  LINHA EXECUTIVA & PREMIUM</div>
+                <h3 style="font-size: 1.4rem; margin-bottom: 0.25rem;">Med+ Premium</h3>
+                <div
+                  style="font-family: var(--font-tech); font-size: 1.6rem; font-weight: 800; color: #fbbf24; margin-bottom: 0.75rem;">
+                  R$ 599<span style="font-size: 1rem; font-weight: 500; color: var(--text-muted);">,90 /mês</span>
+                </div>
+                <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1.5rem;">Centros de
+                  referência de ponta, vacinas internacionais, concierge e coleta em casa.</p>
+                <ul
+                  style="list-style: none; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.88rem; margin-bottom: 2rem;">
+                  <li><i class="fa-solid fa-check text-primary"></i> Hospitais de primeira linha (Einstein, Sírio, Porto
+                    Dias)</li>
+                  <li><i class="fa-solid fa-check text-primary"></i> Seguro viagem internacional (US$ 60.000)</li>
+                  <li><i class="fa-solid fa-check text-primary"></i> Coleta domiciliar de exames laboratoriais</li>
+                  <li><i class="fa-solid fa-check text-primary"></i> Reembolso com teto diferenciado em até 48h</li>
+                  <li><i class="fa-solid fa-check text-primary"></i> Atendimento Concierge exclusivo com Iara VIP</li>
+                </ul>
+                <button class="btn btn-outline" style="width: 100%; justify-content: center;"
+                  onclick="abrirChatComMensagem('Quero proposta para o plano Med+ Premium')">Solicitar Proposta</button>
+              </div>
+            </div>
+
+            <!-- SIMULADOR INTERATIVO FICTÍCIO DE MENSALIDADE POR IDADE -->
+            <div class="plan-simulator-card" id="planos-simulador">
+              <div class="section-header" style="text-align: left; margin-bottom: 1rem;">
+                <span class="tag-badge tag-badge-teal">Simulador de Mensalidades</span>
+                <h3>Calcule sua Mensalidade por Idade e Plano</h3>
+                <p>Selecione a categoria desejada e a faixa etária para visualizar os valores oficiais regulamentados
+                  pela ANS.</p>
+              </div>
+
+              <div class="plan-calc-grid">
+                <div>
+                  <label
+                    style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.4rem;">
+                    <i class="fa-solid fa-shield-halved text-primary"></i> Categoria do Plano:
+                  </label>
+                  <select id="simulador-plano" class="plan-calc-select" onchange="simularPrecoPlano()">
+                    <option value="basico">Med+ Básico (Enfermaria Regional PA)</option>
+                    <option value="especial" selected>Med+ Especial (Apartamento Nacional)</option>
+                    <option value="premium">Med+ Premium (VIP & Concierge)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label
+                    style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 0.4rem;">
+                    <i class="fa-solid fa-user text-primary"></i> Faixa Etária:
+                  </label>
+                  <select id="simulador-faixa" class="plan-calc-select" onchange="simularPrecoPlano()">
+                    <option value="0-18">0 a 18 anos</option>
+                    <option value="19-23">19 a 23 anos</option>
+                    <option value="24-28">24 a 28 anos</option>
+                    <option value="29-33" selected>29 a 33 anos</option>
+                    <option value="34-38">34 a 38 anos</option>
+                    <option value="39-43">39 a 43 anos</option>
+                    <option value="44-48">44 a 48 anos</option>
+                    <option value="49-53">49 a 53 anos</option>
+                    <option value="54-58">54 a 58 anos</option>
+                    <option value="59+">59 anos ou mais</option>
+                  </select>
+                </div>
+
+                <div class="plan-price-output">
+                  <span
+                    style="font-size: 0.78rem; font-family: var(--font-tech); text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.2rem;">Valor
+                    da Mensalidade</span>
+                  <div class="plan-price-val" id="simulador-resultado-valor">R$ 529,00</div>
+                  <span id="simulador-resultado-desc"
+                    style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-top: 0.35rem;">Med+
+                    Especial • Faixa: 29-33 anos • Carência zero online</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- MATRIZ COMPARATIVA DE COBERTURAS FICTÍCIA -->
+            <div style="margin-top: 3.5rem;" id="planos-tabela">
+              <div class="section-header" style="text-align: left; margin-bottom: 1rem;">
+                <span class="tag-badge tag-badge-green">Transparência Total</span>
+                <h3>Matriz Comparativa de Coberturas e Benefícios</h3>
+                <p>Confira o comparativo detalhado de cada plano e escolha a melhor opção para sua família ou empresa.
+                </p>
+              </div>
+
+              <div class="finops-table-wrapper">
+                <table class="matrix-table">
+                  <thead>
+                    <tr>
+                      <th>Benefício / Cobertura</th>
+                      <th>Med+ Básico</th>
+                      <th>Med+ Especial</th>
+                      <th>Med+ Premium</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Tipo de Acomodação</strong></td>
+                      <td>Enfermaria Coletiva</td>
+                      <td>Apartamento Individual</td>
+                      <td>Suíte VIP c/ Acompanhante</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Abrangência Geográfica</strong></td>
+                      <td>Regional (Pará)</td>
+                      <td>Nacional</td>
+                      <td>Nacional + Internacional</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Telemedicina 24h c/ IA Iara</strong></td>
+                      <td><i class="fa-solid fa-check text-primary"></i> Ilimitada</td>
+                      <td><i class="fa-solid fa-check text-primary"></i> Ilimitada</td>
+                      <td><i class="fa-solid fa-check text-primary"></i> Ilimitada VIP</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Parto e Obstetrícia</strong></td>
+                      <td><i class="fa-solid fa-xmark text-muted"></i> Não incluso</td>
+                      <td><i class="fa-solid fa-check text-primary"></i> Incluso</td>
+                      <td><i class="fa-solid fa-check text-primary"></i> Incluso c/ Suite Especial</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Reembolso de Consultas</strong></td>
+                      <td><i class="fa-solid fa-xmark text-muted"></i> Sem reembolso</td>
+                      <td>R$ 180,00 por consulta</td>
+                      <td>R$ 450,00 por consulta</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Coleta Domiciliar de Exames</strong></td>
+                      <td><i class="fa-solid fa-xmark text-muted"></i> Não incluso</td>
+                      <td>Coparticipação reduzida</td>
+                      <td><i class="fa-solid fa-check text-primary"></i> Gratuita e Ilimitada</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Desconto em Medicamentos</strong></td>
+                      <td>Até 35% em farmácias</td>
+                      <td>Até 50% em farmácias</td>
+                      <td>Até 65% em farmácias</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <!-- FIM DA VIEW 4: PLANOS -->
+
+      <!-- VIEW 5: PÁGINA SOBRE NÓS (EQUIPE GRUPO 6 - ESCOLA DA NUVEM) -->
+      <div class="page-view" id="view-sobre-nos">
+        <section class="section-sobre-nos" id="sobre-nos">
+          <div class="container">
+            <div class="section-header">
+              <span class="tag-badge tag-badge-green">Escola da Nuvem • Grupo 6</span>
+              <h2>Conheça os Integrantes do Grupo 6</h2>
+              <p>Equipe multidisciplinar responsável pelo planejamento, arquitetura em nuvem e implementação da jornada
+                omnichannel no Amazon Connect para o Case 1 da Med+Saúde.</p>
+            </div>
+
+            <!-- AVISO DE ESCOPO: O PROJETO É O AGENTE NA AWS; O SITE É A VITRINE E CENTRAL DE DOCUMENTAÇÃO -->
+            <div
+              style="background: rgba(2, 132, 199, 0.08); border: 1px solid rgba(2, 132, 199, 0.35); border-left: 4px solid #0284c7; border-radius: var(--radius-md); padding: 1.25rem 1.5rem; margin-bottom: 2.25rem; display: flex; align-items: flex-start; gap: 1.25rem;">
+              <i class="fa-solid fa-cloud-arrow-up"
+                style="font-size: 1.75rem; color: #38bdf8; margin-top: 0.15rem; flex-shrink: 0;"></i>
+              <div>
+                <h4
+                  style="font-size: 1.05rem; color: var(--text-primary); margin-bottom: 0.4rem; font-family: var(--font-tech);">
+                  <i class="fa-solid fa-diagram-project text-primary"></i> Nota Arquitetural de Escopo: O Agente AWS
+                  Connect é o Produto Central
+                </h4>
+                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin: 0;">
+                  O projeto central desenvolvido pelo <strong>Grupo 6</strong> é a solução de <strong>Contact Center
+                    Omnichannel e Agente Inteligente na AWS (Amazon Connect + Lex V2 + Q in Connect + S3)</strong>. Este
+                  portal web foi concebido e desenvolvido do zero por <strong>Lucivaldo Junior</strong> para
+                  materializar os requisitos estipulados no documento oficial do <strong>Case 1
+                    (<code>ca_1</code>)</strong> da Escola da Nuvem, funcionando como vitrine executiva de engenharia,
+                  simulador da jornada do paciente e central unificada de documentação de todas as áreas de engenharia do projeto.
+                </p>
+              </div>
+            </div>
+
+            <!-- SUB-BARRA DE NAVEGAÇÃO RÁPIDA NOS TÓPICOS DO SOBRE NÓS -->
+            <div class="sub-nav-topics">
+              <a href="#sobre-nos-integrantes" onclick="navegarPara('sobre-nos-integrantes')"
+                class="btn btn-pill-outline" style="font-size: 0.82rem; padding: 0.45rem 1rem;">
+                <i class="fa-solid fa-users"></i> 1. Integrantes da Squad
+              </a>
+              <a href="#sobre-nos-timeline" onclick="navegarPara('sobre-nos-timeline')" class="btn btn-pill-outline"
+                style="font-size: 0.82rem; padding: 0.45rem 1rem;">
+                <i class="fa-solid fa-code-commit"></i> 2. Indicadores do Projeto
+              </a>
+            </div>
+
+            <!-- ESTRUTURA DOS INTEGRANTES DO GRUPO 6 ORGANIZADA POR DUPLAS (ÁREAS OFICIAIS) -->
+            <div id="sobre-nos-integrantes" class="team-sections-wrapper">
+
+              <!-- DUPLA 1: FLUXOS DE ATENDIMENTO & VOZ -->
+              <div class="team-area-block">
+                <div class="team-area-header">
+                  <span class="team-area-badge badge-blue">
+                    <i class="fa-solid fa-headset"></i> Fluxos de Atendimento &amp; Voz
+                  </span>
+                </div>
+                <div class="team-pair-grid">
+                  <!-- Integrante 1: Daniel Villegas -->
+                  <div class="team-card team-card-blue">
+                    <div class="team-avatar-box">
+                      <img src="./images/daniel.png" alt="Daniel Villegas" class="team-avatar-img">
+                    </div>
+                    <h3 class="team-name">Daniel Villegas</h3>
+                    <span class="team-role" style="color: #38bdf8;"><i class="fa-solid fa-circle"
+                        style="font-size: 0.6rem; color: #0284c7;"></i> Arquiteto de Fluxos &amp; Voz</span>
+                    <p class="team-bio">
+                      Responsável pelos fluxos de atendimento no Amazon Connect. Desenhou o esboço do fluxo ponta a ponta, iniciou o fluxo de voz em linguagem natural para o público idoso e publicou o fluxo de chat e voz em pt-BR, com protocolo de atendimento, fila AgenteN1, urgência com prioridade e atributos de motivo e resultado para o atendente e as métricas.
+                    </p>
+                    <div class="team-links">
+                      <a href="https://www.linkedin.com/in/vdaniel07/" target="_blank" rel="noopener noreferrer"
+                        class="team-icon-btn team-icon-linkedin" title="LinkedIn de Daniel Villegas" aria-label="LinkedIn">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                      </a>
+                    </div>
+                  </div>
+
+                  <!-- Integrante 2: Rebeca Espinoza Alves -->
+                  <div class="team-card team-card-blue">
+                    <div class="team-avatar-box">
+                      <span class="team-avatar-initials"
+                        style="background: linear-gradient(135deg, #0284c7, #2563eb); color: #ffffff;">RE</span>
+                    </div>
+                    <h3 class="team-name">Rebeca Espinoza Alves</h3>
+                    <span class="team-role" style="color: #38bdf8;"><i class="fa-solid fa-circle"
+                        style="font-size: 0.6rem; color: #0284c7;"></i> Fluxos de Atendimento</span>
+                    <p class="team-bio">
+                      Integrante da equipe de fluxos do Amazon Connect na formação inicial do grupo. Precisou se afastar durante o desenvolvimento, e o trabalho seguiu com o Daniel e Jessie no apoio.
+                    </p>
+                    <div class="team-links">
+                      <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer"
+                        class="team-icon-btn team-icon-linkedin" title="Conectar no LinkedIn" aria-label="LinkedIn">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- DUPLA 2: BOT, IA GENERATIVA & GOVERNANÇA -->
+              <div class="team-area-block">
+                <div class="team-area-header">
+                  <span class="team-area-badge badge-purple">
+                    <i class="fa-solid fa-brain"></i> Bot, IA Generativa &amp; Governança
+                  </span>
+                </div>
+                <div class="team-pair-grid">
+                  <!-- Integrante 3: Jessie V -->
+                  <div class="team-card team-card-purple">
+                    <div class="team-avatar-box">
+                      <img src="./images/jessica.png" alt="Jessie V" class="team-avatar-img">
+                    </div>
+                    <h3 class="team-name">Jessie V</h3>
+                    <span class="team-role" style="color: #c084fc;"><i class="fa-solid fa-circle"
+                        style="font-size: 0.6rem; color: #9333ea;"></i> Dev, Governança &amp; IA Generativa</span>
+                    <p class="team-bio">
+                      Criou o bot Lex de triagem e configurou os agentes de IA da Iara no Q in Connect. Desenvolveu as Lambdas e o DynamoDB de protocolo e agendamento, depurando os erros pelo CloudWatch, e criou o widget do site. Organizou a squad no Trello, com as tarefas e os prazos de cada etapa. Conduziu as demonstrações com a Paula.
+                    </p>
+                    <div class="team-links">
+                      <a href="https://www.linkedin.com/in/jessieviana/" target="_blank" rel="noopener noreferrer"
+                        class="team-icon-btn team-icon-linkedin" title="LinkedIn de Jessie V" aria-label="LinkedIn">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                      </a>
+                    </div>
+                  </div>
+
+                  <!-- Integrante 4: Ana Paula Tavares Lopes -->
+                  <div class="team-card team-card-purple">
+                    <div class="team-avatar-box">
+                      <img src="./images/ana-paula.jpg" alt="Ana Paula Tavares Lopes" class="team-avatar-img">
+                    </div>
+                    <h3 class="team-name">Ana Paula Tavares Lopes</h3>
+                    <span class="team-role" style="color: #c084fc;"><i class="fa-solid fa-circle"
+                        style="font-size: 0.6rem; color: #9333ea;"></i> Dev Conversacional &amp; Linguagem Natural</span>
+                    <p class="team-bio">
+                      Desenvolveu no bot Lex as intenções BuscarPorLocalidade e AgendarConsulta: frases de exemplo em linguagem natural, slots de especialidade, cidade, data e horário e a confirmação do agendamento. Conduziu com a Jessie as demonstrações de chat e voz.
+                    </p>
+                    <div class="team-links">
+                      <a href="https://www.linkedin.com/in/aptlopes/" target="_blank" rel="noopener noreferrer"
+                        class="team-icon-btn team-icon-linkedin" title="LinkedIn de Ana Paula Tavares Lopes" aria-label="LinkedIn">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- DUPLA 3: DADOS, CONHECIMENTO & PORTAL WEB -->
+              <div class="team-area-block">
+                <div class="team-area-header">
+                  <span class="team-area-badge badge-orange">
+                    <i class="fa-solid fa-database"></i> Dados, Conhecimento &amp; Portal Web
+                  </span>
+                </div>
+                <div class="team-pair-grid">
+                  <!-- Integrante 5: Lucivaldo Junior -->
+                  <div class="team-card team-card-orange">
+                    <div class="team-avatar-box">
+                      <img src="./images/lucivaldo-junior.jpg" alt="Lucivaldo Junior" class="team-avatar-img"
+                        style="object-position: center 15%;">
+                    </div>
+                    <h3 class="team-name">Lucivaldo Junior</h3>
+                    <span class="team-role" style="color: #fb923c;"><i class="fa-solid fa-circle"
+                        style="font-size: 0.6rem; color: #ea580c;"></i> Cloud, Dados &amp; Portal Web</span>
+                    <p class="team-bio">
+                      Desenvolveu integralmente o projeto do site Med+Saúde com base em 100% dos requisitos estipulados no
+                      documento oficial do <strong>Case 1 (<code>ca_1</code>)</strong> da Escola da Nuvem, conectando a
+                      simulação do Chat online e centralizando as documentações do grupo. Liderou a Frente C no
+                      provisionamento do Amazon S3 (<code>dados-guia-medico</code>), estruturação da Base de Conhecimento
+                      única para o Amazon Q in Connect, engenharia dos 25 especialistas com cenários de Curitiba-PR e
+                      governança de dados compatível com LGPD.
+                    </p>
+                    <div class="team-links">
+                      <a href="https://github.com/luci-jr" target="_blank" rel="noopener noreferrer"
+                        class="team-icon-btn team-icon-github" title="GitHub de Lucivaldo Junior" aria-label="GitHub">
+                        <i class="fa-brands fa-github"></i>
+                      </a>
+                      <a href="https://www.linkedin.com/in/lucivaldojr/" target="_blank" rel="noopener noreferrer"
+                        class="team-icon-btn team-icon-linkedin" title="LinkedIn de Lucivaldo Junior" aria-label="LinkedIn">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                      </a>
+                      <a href="https://portifolio.lucivaldo.cloud/" target="_blank" rel="noopener noreferrer"
+                        class="team-icon-btn team-icon-portfolio" title="Portfólio Profissional de Lucivaldo Junior"
+                        aria-label="Portfólio">
+                        <i class="fa-solid fa-globe"></i>
+                      </a>
+                    </div>
+                  </div>
+
+                  <!-- Integrante 6: Felipe Henrique Souza -->
+                  <div class="team-card team-card-orange">
+                    <div class="team-avatar-box">
+                      <span class="team-avatar-initials"
+                        style="background: linear-gradient(135deg, #f97316, #c2410c); color: #ffffff;">FH</span>
+                    </div>
+                    <h3 class="team-name">Felipe Henrique Souza</h3>
+                    <span class="team-role" style="color: #fb923c;"><i class="fa-solid fa-circle"
+                        style="font-size: 0.6rem; color: #ea580c;"></i> Modelagem de Dados &amp; Base de Conhecimento</span>
+                    <p class="team-bio">
+                      Responsável pela base de dados do Guia Médico: elaborou e entregou o documento com os 25 médicos credenciados fictícios, em 17 especialidades, com endereço, dias e horários de atendimento. É essa base que a Iara consulta em tempo real pelo Q in Connect.
+                    </p>
+                    <div class="team-links">
+                      <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer"
+                        class="team-icon-btn team-icon-linkedin" title="Conectar no LinkedIn" aria-label="LinkedIn">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- DUPLA 4: ANÁLISE DE DADOS, MÉTRICAS & QUALIDADE -->
+              <div class="team-area-block">
+                <div class="team-area-header">
+                  <span class="team-area-badge badge-green">
+                    <i class="fa-solid fa-chart-line"></i> Análise de Dados, Métricas &amp; Qualidade
+                  </span>
+                </div>
+                <div class="team-pair-grid">
+                  <!-- Integrante 7: Elizabeth Silva do Nascimento -->
+                  <div class="team-card team-card-green">
+                    <div class="team-avatar-box">
+                      <span class="team-avatar-initials"
+                        style="background: linear-gradient(135deg, #10b981, #047857); color: #ffffff;">EN</span>
+                    </div>
+                    <h3 class="team-name">Elizabeth Silva do Nascimento</h3>
+                    <span class="team-role" style="color: #34d399;"><i class="fa-solid fa-circle"
+                        style="font-size: 0.6rem; color: #16a34a;"></i> Métricas &amp; Dashboards</span>
+                    <p class="team-bio">
+                      Integrante da equipe de métricas e dashboards na formação inicial do grupo.
+                    </p>
+                    <div class="team-links">
+                      <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer"
+                        class="team-icon-btn team-icon-linkedin" title="Conectar no LinkedIn" aria-label="LinkedIn">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                      </a>
+                    </div>
+                  </div>
+
+                  <!-- Integrante 8: Camila Landy Fernandes de Oliveira -->
+                  <div class="team-card team-card-green">
+                    <div class="team-avatar-box">
+                      <img src="./images/camila.png" alt="Camila Landy Fernandes de Oliveira" class="team-avatar-img">
+                    </div>
+                    <h3 class="team-name">Camila Landy Fernandes de Oliveira</h3>
+                    <span class="team-role" style="color: #34d399;"><i class="fa-solid fa-circle"
+                        style="font-size: 0.6rem; color: #16a34a;"></i> Análise de Dados, Métricas &amp; QA</span>
+                    <p class="team-bio">
+                      Configurou inicialmente o Customer Profiles com os perfis de demonstração (Dona Maria, Seu Carlos e Dona Josefa), que permitem à Iara identificar o beneficiário pelo telefone. Responsável pelos testes integrados dos cenários de chat, voz e transbordo para o atendente. Responsável pelo Dashboard de TMA e volume.
+                    </p>
+                    <div class="team-links">
+                      <a href="https://www.linkedin.com/in/camila-landy-fernandes-de-oliveira/" target="_blank" rel="noopener noreferrer"
+                        class="team-icon-btn team-icon-linkedin" title="Conectar no LinkedIn" aria-label="LinkedIn">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- INDICADORES DE ENGENHARIA DA SQUAD GRUPO 6 -->
+            <div style="margin-top: 3.5rem;" id="sobre-nos-timeline">
+              <div class="section-header" style="text-align: center; margin-bottom: 1.5rem;">
+                <span class="tag-badge tag-badge-green">Entregáveis do Projeto</span>
+                <h3>Resultados de Desenvolvimento da Squad</h3>
+                <p>Esforço prático e entregáveis consolidados durante a construção da arquitetura no laboratório AWS
+                  Connect da Escola da Nuvem.</p>
+              </div>
+
+              <div class="stats-grid">
+                <div class="stats-card">
+                  <div class="stats-card-val">240h</div>
+                  <div class="stats-card-label">Laboratórios Práticos AWS</div>
+                </div>
+                <div class="stats-card">
+                  <div class="stats-card-val">5</div>
+                  <div class="stats-card-label">Entregáveis Oficiais do Case</div>
+                </div>
+                <div class="stats-card">
+                  <div class="stats-card-val">4 Áreas</div>
+                  <div class="stats-card-label">Atuação Técnica Integrada da Squad</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- BANNER DE CONCLUSÃO DO MÓDULO -->
+            <div
+              style="margin-top: 4rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 2.5rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap;">
+              <div>
+                <span class="aws-badge-pill" style="margin-bottom: 0.75rem;">Capacitação Profissional AWS</span>
+                <h3 style="font-size: 1.35rem; color: var(--text-primary); margin-bottom: 0.5rem;">Desenvolvido no
+                  Programa Escola da Nuvem</h3>
+                <p style="color: var(--text-secondary); max-width: 650px; font-size: 0.92rem;">
+                  Projeto prático focado na modernização do contact center hospitalar utilizando computação em nuvem
+                  AWS, Inteligência Artificial generativa e soluções omnichannel resilientes.
+                </p>
+              </div>
+              <button class="btn btn-primary" onclick="navegarPara('guia-medico')">
+                <i class="fa-solid fa-stethoscope"></i> Acessar Guia Médico
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
+      <!-- FIM DA VIEW 5: SOBRE NÓS -->
+
+<!-- VIEW 6: APRESENTAÇÃO DO PROJETO & ROTEIRO DA BANCA -->
+      <div class="page-view" id="view-apresentacao" style="display: none;">
+        <section class="section-apresentacao" id="apresentacao">
+          <div class="container">
+            <!-- HEADER DA APRESENTAÇÃO -->
+            <div style="text-align: center; max-width: 860px; margin: 0 auto 2rem auto;">
+              <div class="pitch-hero-badge">
+                <i class="fa-solid fa-graduation-cap"></i> Turma Piloto AWS Connect • Escola da Nuvem | Grupo 6
+              </div>
+              <h1 style="font-size: clamp(1.85rem, 4vw, 2.75rem); font-family: var(--font-retro); font-weight: 800; line-height: 1.2; margin-bottom: 0.75rem;">
+                Apresentação do Projeto <br><span style="color: var(--primary);">Med+Saúde & Amazon Connect</span>
+              </h1>
+              <p style="font-size: 1.05rem; color: var(--text-secondary); line-height: 1.5;">
+                Roteiro oficial de 9 blocos e 3 demonstrações (10 minutos) para a banca examinadora.
+              </p>
+            </div>
+
+            <!-- CRONÔMETRO INTERATIVO DO PITCH (STICKY & FLUTUANTE) -->
+            <div class="pitch-timer-container">
+              <div>
+                <div class="pitch-timer-label" style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; color: var(--text-muted); margin-bottom: 3px;">
+                  <i class="fa-solid fa-stopwatch"></i> Tempo do Pitch (Meta: 10 min)
+                </div>
+                <div class="pitch-timer-val" id="pitch-timer-display">10:00</div>
+              </div>
+              <div class="pitch-timer-controls">
+                <button type="button" class="pitch-timer-btn btn-play" id="btn-banner-pitch-toggle" onclick="togglePitchTimer()" title="Iniciar / Pausar Cronômetro">
+                  <i class="fa-solid fa-play" id="banner-icon-toggle"></i>
+                  <span id="banner-text-toggle">Iniciar</span>
+                </button>
+                <button type="button" class="pitch-timer-btn" onclick="reiniciarPitchTimer()" title="Reiniciar para 10 Minutos">
+                  <i class="fa-solid fa-rotate-left"></i> Reiniciar
+                </button>
+                <button type="button" class="pitch-timer-btn btn-stop" onclick="pararPitchTimer()" title="Parar Apresentação (Stop)">
+                  <i class="fa-solid fa-stop"></i> Parar
+                </button>
+              </div>
+            </div>
+
+            <!-- VÍDEO OFICIAL DA APRESENTAÇÃO (GRAVAÇÃO DA SQUAD GRUPO 6) -->
+            <div class="pitch-video-card">
+              <div class="pitch-video-header">
+                <div class="pitch-video-title-group">
+                  <span class="tag-badge tag-badge-teal" style="font-size: 0.78rem; padding: 0.25rem 0.65rem;">
+                    <i class="fa-solid fa-play"></i> Gravação Oficial
+                  </span>
+                  <strong style="color: var(--text-primary); font-size: 0.95rem;">Vídeo de Apresentação da Squad Grupo 6</strong>
+                </div>
+                <a href="https://www.youtube.com/watch?v=dI8Z_fwjyCo" target="_blank" rel="noopener noreferrer" class="btn btn-pill-outline" style="font-size: 0.78rem; padding: 0.35rem 0.85rem;">
+                  <i class="fa-brands fa-youtube" style="color: #ef4444;"></i> Assistir no YouTube
+                </a>
+              </div>
+
+              <!-- Container Responsivo 16:9 com ID no iframe para controle interativo -->
+              <div class="pitch-video-frame-box">
+                <iframe 
+                  id="pitch-video-iframe"
+                  src="https://www.youtube.com/embed/dI8Z_fwjyCo?rel=0" 
+                  title="Vídeo de Apresentação Med+Saúde & Amazon Connect" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                  allowfullscreen>
+                </iframe>
+              </div>
+
+              <!-- BARRA DE CAPÍTULOS INTERATIVOS DO VÍDEO (TIMECODES CLICÁVEIS) -->
+              <div class="pitch-video-chapters-wrapper">
+                <div class="pitch-chapters-title">
+                  <i class="fa-solid fa-list-ol text-primary"></i> Capítulos do Vídeo (Clique para pular):
+                </div>
+                <div class="pitch-chapters-grid">
+                  <button type="button" class="pitch-chapter-btn" onclick="pularVideoApresentacao(0, 'pitch-bloco-1')">
+                    <span class="pitch-chapter-time">00:00</span>
+                    <span>1. O Problema da Dona Maria</span>
+                  </button>
+                  <button type="button" class="pitch-chapter-btn" onclick="pularVideoApresentacao(49, 'pitch-bloco-2')">
+                    <span class="pitch-chapter-time">00:49</span>
+                    <span>2. A Solução Iara & Lex V2</span>
+                  </button>
+                  <button type="button" class="pitch-chapter-btn" onclick="pularVideoApresentacao(131, 'pitch-bloco-3')">
+                    <span class="pitch-chapter-time">02:11</span>
+                    <span>Demo 1 · Chat (Lucas)</span>
+                  </button>
+                  <button type="button" class="pitch-chapter-btn" onclick="pularVideoApresentacao(180, 'pitch-bloco-4')">
+                    <span class="pitch-chapter-time">03:00</span>
+                    <span>3. Base S3 & Q in Connect</span>
+                  </button>
+                  <button type="button" class="pitch-chapter-btn" onclick="pularVideoApresentacao(221, 'pitch-bloco-5')">
+                    <span class="pitch-chapter-time">03:41</span>
+                    <span>4. Telefonia & Escuta 6s</span>
+                  </button>
+                  <button type="button" class="pitch-chapter-btn" onclick="pularVideoApresentacao(253, 'pitch-bloco-5')">
+                    <span class="pitch-chapter-time">04:13</span>
+                    <span>Demo 2 · Voz (Dona Josefa)</span>
+                  </button>
+                  <button type="button" class="pitch-chapter-btn" onclick="pularVideoApresentacao(406, 'pitch-bloco-6')">
+                    <span class="pitch-chapter-time">06:46</span>
+                    <span>5. Transbordo N1 Humano</span>
+                  </button>
+                  <button type="button" class="pitch-chapter-btn" onclick="pularVideoApresentacao(425, 'pitch-bloco-6')">
+                    <span class="pitch-chapter-time">07:05</span>
+                    <span>Demo 3 · Tela CCP & SAMU 192</span>
+                  </button>
+                  <button type="button" class="pitch-chapter-btn" onclick="pularVideoApresentacao(490, 'pitch-bloco-7')">
+                    <span class="pitch-chapter-time">08:10</span>
+                    <span>6. O Portal do Lucivaldo</span>
+                  </button>
+                  <button type="button" class="pitch-chapter-btn" onclick="pularVideoApresentacao(521, 'pitch-bloco-8')">
+                    <span class="pitch-chapter-time">08:41</span>
+                    <span>7. Telemetria & Testes</span>
+                  </button>
+                  <button type="button" class="pitch-chapter-btn" onclick="pularVideoApresentacao(552, 'pitch-bloco-9')">
+                    <span class="pitch-chapter-time">09:12</span>
+                    <span>8. Antes × Depois & Fim</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- OS 9 BLOCOS DE ROLAGEM (ESTRUTURA OFICIAL DO GRUPO 6 - ESTILO SLIDES) -->
+            <div class="pitch-blocks-flow">
+
+              <!-- PARTE 1: O PROBLEMA -->
+              <div class="pitch-timeline-step" id="pitch-bloco-1">
+                <div class="pitch-step-header">
+                  <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                    <span class="pitch-step-pill">1 · 0:00–0:50</span>
+                    <span class="pitch-speaker-badge">
+                      <img src="./images/camila.png" alt="Camila Landy" class="pitch-speaker-avatar">
+                      <span class="pitch-speaker-info">
+                        <span class="pitch-speaker-name">Camila Landy</span>
+                        <span class="pitch-speaker-role">Dados, Métricas, Dashboards &amp; QA</span>
+                      </span>
+                    </span>
+                  </div>
+                  <button type="button" class="pitch-jump-btn" onclick="pularVideoApresentacao(0, 'pitch-bloco-1')" title="Ouvir fala de Camila no vídeo">
+                    <i class="fa-solid fa-play"></i> Ouvir no Vídeo [00:00]
+                  </button>
+                </div>
+                <h2 class="pitch-slide-title">Hoje, achar um médico é esperar na fila</h2>
+                <p class="pitch-slide-punchline">
+                  Fila longa, tempo de espera elevado e o novo Decreto do SAC exigindo canal 24h e resolução imediata.
+                </p>
+                <div class="pitch-visual-card" style="background: rgba(239, 68, 68, 0.08); border: 1px dashed rgba(239, 68, 68, 0.35); border-radius: 12px; padding: 1.25rem; display: flex; align-items: center; gap: 1rem; margin-top: 1rem;">
+                  <i class="fa-solid fa-phone-slash" style="font-size: 2rem; color: #ef4444;"></i>
+                  <div>
+                    <strong style="color: #f87171;">Cenário Real: Dona Maria (72 anos, Curitiba)</strong>
+                    <div style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 2px;">"Digite 1... Digite 2... Fila de espera... Anotação em papel."</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PARTE 2: A SOLUÇÃO -->
+              <div class="pitch-timeline-step" id="pitch-bloco-2">
+                <div class="pitch-step-header">
+                  <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                    <span class="pitch-step-pill" style="background: rgba(8, 145, 178, 0.15); color: #0891b2; border-color: rgba(8, 145, 178, 0.35);">2 · 0:50–1:45</span>
+                    <span class="pitch-speaker-badge">
+                      <img src="./images/ana-paula.jpg" alt="Ana Paula" class="pitch-speaker-avatar">
+                      <span class="pitch-speaker-info">
+                        <span class="pitch-speaker-name">Ana Paula</span>
+                        <span class="pitch-speaker-role">Dev Conversacional &amp; Linguagem Natural</span>
+                      </span>
+                    </span>
+                  </div>
+                  <button type="button" class="pitch-jump-btn" onclick="pularVideoApresentacao(49, 'pitch-bloco-2')" title="Ouvir fala de Ana Paula no vídeo">
+                    <i class="fa-solid fa-play"></i> Ouvir no Vídeo [00:49]
+                  </button>
+                </div>
+                <h2 class="pitch-slide-title">Iara: chat e voz, 24 horas, um só fluxo</h2>
+                <p class="pitch-slide-punchline">
+                  Atendimento unificado no Amazon Connect com emissão de protocolo imediato (ANS RN 623) e integração com Customer Profiles.
+                </p>
+                <div class="pitch-visual-card" style="background: rgba(8, 145, 178, 0.08); border: 1px dashed rgba(8, 145, 178, 0.35); border-radius: 12px; padding: 1.25rem; display: flex; align-items: center; gap: 1rem; margin-top: 1rem;">
+                  <i class="fa-solid fa-diagram-project" style="font-size: 2rem; color: #0891b2;"></i>
+                  <div>
+                    <strong style="color: #38bdf8;">Visão Geral do Fluxo Connect</strong>
+                    <div style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 2px;">Um único fluxo conversacional atendendo chat e telefonia sem 'digite 1'.</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PARTE 3: COMO A IARA ENTENDE + DEMO 1 -->
+              <div class="pitch-timeline-step" id="pitch-bloco-3">
+                <div class="pitch-step-header">
+                  <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                    <span class="pitch-step-pill" style="background: rgba(139, 92, 246, 0.15); color: #a855f7; border-color: rgba(139, 92, 246, 0.35);">3 · 1:45–2:44</span>
+                    <span class="pitch-speaker-badge">
+                      <img src="./images/ana-paula.jpg" alt="Ana Paula" class="pitch-speaker-avatar">
+                      <span class="pitch-speaker-info">
+                        <span class="pitch-speaker-name">Ana Paula</span>
+                        <span class="pitch-speaker-role">Dev Conversacional &amp; Linguagem Natural</span>
+                      </span>
+                    </span>
+                  </div>
+                  <button type="button" class="pitch-jump-btn" onclick="pularVideoApresentacao(131, 'pitch-bloco-3')" title="Ver Demo do Chat no vídeo">
+                    <i class="fa-solid fa-play"></i> Ver Demo 1 no Vídeo [02:11]
+                  </button>
+                </div>
+                <h2 class="pitch-slide-title">Ela entende do jeito que você fala</h2>
+                <p class="pitch-slide-punchline">
+                  Amazon Lex V2 mapeando linguagem natural para 17 especialidades e Amazon Q in Connect com IA generativa.
+                </p>
+                <!-- DEMO 1 CARD -->
+                <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 12px; padding: 1.25rem; margin-top: 1rem;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap;">
+                    <strong style="color: #10b981; font-size: 1rem;"><i class="fa-solid fa-circle-play"></i> Demo 1 – Chat (Lucas agendando cardiologista)</strong>
+                    <span style="font-size: 0.8rem; background: rgba(16, 185, 129, 0.2); color: #10b981; padding: 2px 8px; border-radius: 6px; font-weight: 700;">Vídeo · 2:11–2:44</span>
+                  </div>
+                  <div style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.4;">
+                    Lucas agenda cardiologista para a avó (Dona Maria) em Curitiba. Demonstração ao vivo: intenções do Lex V2, resposta precisa da base e protocolo gerado na hora.
+                  </div>
+                </div>
+              </div>
+
+              <!-- PARTE 4: DE ONDE VEM A RESPOSTA -->
+              <div class="pitch-timeline-step" id="pitch-bloco-4">
+                <div class="pitch-step-header">
+                  <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                    <span class="pitch-step-pill">4 · 3:00–3:40</span>
+                    <span class="pitch-speaker-badge">
+                      <img src="./images/jessica.png" alt="Jéssica Vylia" class="pitch-speaker-avatar">
+                      <span class="pitch-speaker-info">
+                        <span class="pitch-speaker-name">Jéssica Vylia</span>
+                        <span class="pitch-speaker-role">Dev, Governança &amp; IA Generativa</span>
+                      </span>
+                    </span>
+                  </div>
+                  <button type="button" class="pitch-jump-btn" onclick="pularVideoApresentacao(180, 'pitch-bloco-4')" title="Ouvir fala de Jéssica no vídeo">
+                    <i class="fa-solid fa-play"></i> Ouvir no Vídeo [03:00]
+                  </button>
+                </div>
+                <h2 class="pitch-slide-title">A resposta vem da base do Guia Médico no S3</h2>
+                <p class="pitch-slide-punchline">
+                  25 médicos, 17 especialidades e 15 cidades no Amazon S3 conectados ao Amazon Q. Respostas precisas sem alucinação e com zero dados de pacientes no S3.
+                </p>
+                <div class="pitch-visual-card" style="background: rgba(245, 158, 11, 0.08); border: 1px dashed rgba(245, 158, 11, 0.35); border-radius: 12px; padding: 1.25rem; display: flex; align-items: center; gap: 1rem; margin-top: 1rem;">
+                  <i class="fa-solid fa-database" style="font-size: 2rem; color: #f59e0b;"></i>
+                  <div>
+                    <strong style="color: #fbbf24;">Base Verificada no Amazon S3 (RAG)</strong>
+                    <div style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 2px;">Dra. Ana Carolina Silva e especialistas com dias, horários e endereços reais sem inventar dados.</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PARTE 5: A VOZ + DEMO 2 -->
+              <div class="pitch-timeline-step" id="pitch-bloco-5">
+                <div class="pitch-step-header">
+                  <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                    <span class="pitch-step-pill">5 · 3:41–6:45</span>
+                    <span class="pitch-speaker-badge">
+                      <img src="./images/jessica.png" alt="Jéssica Vylia" class="pitch-speaker-avatar">
+                      <span class="pitch-speaker-info">
+                        <span class="pitch-speaker-name">Jéssica Vylia</span>
+                        <span class="pitch-speaker-role">Dev, Governança &amp; IA Generativa</span>
+                      </span>
+                    </span>
+                  </div>
+                  <button type="button" class="pitch-jump-btn" onclick="pularVideoApresentacao(253, 'pitch-bloco-5')" title="Ver Demo de Voz no vídeo">
+                    <i class="fa-solid fa-play"></i> Ver Demo 2 (Voz) [04:13]
+                  </button>
+                </div>
+                <h2 class="pitch-slide-title">No telefone, sem menu rígido (Escuta de 6 segundos)</h2>
+                <p class="pitch-slide-punchline">
+                  Mesmo fluxo inteligente com voz natural em português, número falado por extenso (Seu Carlos, Belém) e escuta estendida para 6 segundos para acolher idosos.
+                </p>
+                <!-- DEMO 2 CARD -->
+                <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 12px; padding: 1.25rem; margin-top: 1rem;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap;">
+                    <strong style="color: #10b981; font-size: 1rem;"><i class="fa-solid fa-circle-play"></i> Demo 2 – Ligação Real da Dona Josefa (Recife)</strong>
+                    <span style="font-size: 0.8rem; background: rgba(16, 185, 129, 0.2); color: #10b981; padding: 2px 8px; border-radius: 6px; font-weight: 700;">Vídeo · 4:13–6:45</span>
+                  </div>
+                  <div style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.4;">
+                    Dona Josefa pede médico para dor nos ossos em Recife. A Iara agenda com o Dr. Eduardo Cavalcante de Albuquerque para quarta-feira (18/11 às 10:30), emitindo o número de agendamento 7 e protocolo oficial.
+                  </div>
+                </div>
+              </div>
+
+              <!-- PARTE 6: TRANSBORDO + DEMO 3 -->
+              <div class="pitch-timeline-step" id="pitch-bloco-6">
+                <div class="pitch-step-header">
+                  <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                    <span class="pitch-step-pill" style="background: rgba(239, 68, 68, 0.15); color: #ef4444; border-color: rgba(239, 68, 68, 0.35);">6 · 6:46–8:09</span>
+                    <span class="pitch-speaker-badge">
+                      <img src="./images/daniel.png" alt="Daniel Villegas" class="pitch-speaker-avatar">
+                      <span class="pitch-speaker-info">
+                        <span class="pitch-speaker-name">Daniel Villegas</span>
+                        <span class="pitch-speaker-role">Arquiteto de Fluxos (chat e voz) &amp; QA</span>
+                      </span>
+                    </span>
+                  </div>
+                  <button type="button" class="pitch-jump-btn" onclick="pularVideoApresentacao(406, 'pitch-bloco-6')" title="Ouvir Daniel Villegas no vídeo">
+                    <i class="fa-solid fa-play"></i> Ver no Vídeo [06:46]
+                  </button>
+                </div>
+                <h2 class="pitch-slide-title">Quando precisa de uma pessoa: contexto preservado</h2>
+                <p class="pitch-slide-punchline">
+                  Transbordo para N1 com contexto completo: protocolo, histórico e cadastro sem o cliente precisar repetir nada.
+                </p>
+                <!-- DEMO 3 CARD -->
+                <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 12px; padding: 1.25rem; margin-top: 1rem;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap;">
+                    <strong style="color: #10b981; font-size: 1rem;"><i class="fa-solid fa-circle-play"></i> Demo 3 – Transbordo em Tela Dividida (CCP)</strong>
+                    <span style="font-size: 0.8rem; background: rgba(16, 185, 129, 0.2); color: #10b981; padding: 2px 8px; border-radius: 6px; font-weight: 700;">Vídeo · 7:05–8:09</span>
+                  </div>
+                  <div style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.4;">
+                    Dona Josefa pergunta sobre a carteirinha e é transferida para o atendente com a conversa intacta na tela. Se o cliente disser "dor no peito", é orientado ao SAMU 192 e entra na fila prioritária 1.
+                  </div>
+                </div>
+                <!-- 4 PONTOS DO DECRETO -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; margin-top: 1rem;">
+                  <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-color); padding: 0.75rem; border-radius: 8px; font-size: 0.82rem;">
+                    <i class="fa-solid fa-check" style="color: #10b981;"></i> <strong>Eletrônico 24h</strong>
+                  </div>
+                  <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-color); padding: 0.75rem; border-radius: 8px; font-size: 0.82rem;">
+                    <i class="fa-solid fa-check" style="color: #10b981;"></i> <strong>Urgência Prioridade 1 (SAMU 192)</strong>
+                  </div>
+                  <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-color); padding: 0.75rem; border-radius: 8px; font-size: 0.82rem;">
+                    <i class="fa-solid fa-check" style="color: #10b981;"></i> <strong>Cancelamento 1º Nível</strong>
+                  </div>
+                  <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-color); padding: 0.75rem; border-radius: 8px; font-size: 0.82rem;">
+                    <i class="fa-solid fa-check" style="color: #10b981;"></i> <strong>Nunca Repetir Informação</strong>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PARTE 7: O PORTAL, SEGURANÇA E LGPD -->
+              <div class="pitch-timeline-step" id="pitch-bloco-7">
+                <div class="pitch-step-header">
+                  <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                    <span class="pitch-step-pill" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border-color: rgba(56, 189, 248, 0.35);">7 · 8:10–8:40</span>
+                    <span class="pitch-speaker-badge">
+                      <img src="./images/camila.png" alt="Camila Landy" class="pitch-speaker-avatar">
+                      <span class="pitch-speaker-info">
+                        <span class="pitch-speaker-name">Camila Landy</span>
+                        <span class="pitch-speaker-role">Dados, Métricas, Dashboards &amp; QA</span>
+                      </span>
+                    </span>
+                  </div>
+                  <button type="button" class="pitch-jump-btn" onclick="pularVideoApresentacao(490, 'pitch-bloco-7')" title="Ver no vídeo">
+                    <i class="fa-solid fa-play"></i> Ver no Vídeo [08:10]
+                  </button>
+                </div>
+                <h2 class="pitch-slide-title">Só o necessário e com permissão</h2>
+                <p class="pitch-slide-punchline">
+                  Princípio da minimização de dados da LGPD (Art. 6º): sem coleta de CPF ou dados sensíveis de saúde em texto aberto.
+                </p>
+
+                <div class="pitch-visual-card" style="background: rgba(56, 189, 248, 0.08); border: 1px dashed rgba(56, 189, 248, 0.35); border-radius: 12px; padding: 1.25rem; display: flex; align-items: center; gap: 1rem; margin-top: 1rem;">
+                  <i class="fa-solid fa-shield-halved" style="font-size: 2rem; color: #38bdf8;"></i>
+                  <div>
+                    <strong style="color: #38bdf8;">Responsabilidade Compartilhada AWS</strong>
+                    <div style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 2px;">Segurança da infraestrutura pela AWS; governança de acesso e consentimento pela operadora.</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PARTE 8: TESTES E DASHBOARD -->
+              <div class="pitch-timeline-step" id="pitch-bloco-8">
+                <div class="pitch-step-header">
+                  <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                    <span class="pitch-step-pill">8 · 8:41–9:11</span>
+                    <span class="pitch-speaker-badge">
+                      <img src="./images/camila.png" alt="Camila Landy" class="pitch-speaker-avatar">
+                      <span class="pitch-speaker-info">
+                        <span class="pitch-speaker-name">Camila Landy</span>
+                        <span class="pitch-speaker-role">Dados, Métricas, Dashboards &amp; QA</span>
+                      </span>
+                    </span>
+                  </div>
+                  <button type="button" class="pitch-jump-btn" onclick="pularVideoApresentacao(521, 'pitch-bloco-8')" title="Ver trecho de testes no vídeo">
+                    <i class="fa-solid fa-play"></i> Ver no Vídeo [08:41]
+                  </button>
+                </div>
+                <h2 class="pitch-slide-title">O gestor vê tudo em tempo real</h2>
+                <p class="pitch-slide-punchline">
+                  Telemetria no Amazon Connect e CloudWatch com volume de atendimentos e TMA em chat e voz.
+                </p>
+                <div class="pitch-visual-card" style="background: rgba(168, 85, 247, 0.08); border: 1px dashed rgba(168, 85, 247, 0.35); border-radius: 12px; padding: 1.25rem; display: flex; align-items: center; gap: 1rem; margin-top: 1rem;">
+                  <i class="fa-solid fa-chart-pie" style="font-size: 2rem; color: #a855f7;"></i>
+                  <div>
+                    <strong style="color: #c084fc;">Métricas e Melhoria Contínua</strong>
+                    <div style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 2px;">Nos testes, "dor no peito" caía em ortopedia. A correção gerou o caminho de urgência com prioridade máxima e SAMU 192.</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PARTE 9: IMPACTO E FECHAMENTO -->
+              <div class="pitch-timeline-step" id="pitch-bloco-9">
+                <div class="pitch-step-header">
+                  <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                    <span class="pitch-step-pill" style="background: rgba(16, 185, 129, 0.15); color: #10b981; border-color: rgba(16, 185, 129, 0.35);">9 · 9:12–10:00</span>
+                    <span class="pitch-speaker-badge">
+                      <img src="./images/camila.png" alt="Camila Landy" class="pitch-speaker-avatar">
+                      <span class="pitch-speaker-info">
+                        <span class="pitch-speaker-name">Camila Landy</span>
+                        <span class="pitch-speaker-role">Dados, Métricas, Dashboards &amp; QA</span>
+                      </span>
+                    </span>
+                  </div>
+                  <button type="button" class="pitch-jump-btn" onclick="pularVideoApresentacao(552, 'pitch-bloco-9')" title="Ver encerramento no vídeo">
+                    <i class="fa-solid fa-play"></i> Ver Fechamento [09:12]
+                  </button>
+                </div>
+                <h2 class="pitch-slide-title">Antes × Depois: A Transformação</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 1rem 0;">
+                  <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 10px; padding: 1rem;">
+                    <strong style="color: #ef4444;"><i class="fa-solid fa-xmark"></i> Antes:</strong>
+                    <div style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 4px;">Menu telefônico engessado, fila de espera e anotação em papel.</div>
+                  </div>
+                  <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 10px; padding: 1rem;">
+                    <strong style="color: #10b981;"><i class="fa-solid fa-check"></i> Depois:</strong>
+                    <div style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 4px;">Conversa natural, protocolo na hora e consulta agendada em minutos.</div>
+                  </div>
+                </div>
+                <div style="text-align: center; margin-top: 1rem;">
+                  <button class="btn btn-outline" onclick="navegarPara('sobre-nos')" style="font-size: 0.9rem;">
+                    <i class="fa-solid fa-users"></i> Ver Squad Completo do Grupo 6
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- PERGUNTAS DA BANCA (Q&A DE APOIO) -->
+            <h2 style="font-size: 1.5rem; font-family: var(--font-retro); font-weight: 800; margin: 3.5rem 0 1.5rem 0; display: flex; align-items: center; gap: 0.6rem;">
+              <i class="fa-solid fa-circle-question" style="color: var(--primary);"></i> Perguntas Preparadas da Banca (Q&A de Apoio)
+            </h2>
+            <div class="pitch-card-grid">
+              <div class="pitch-feature-card">
+                <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase;">Ana Paula responde</span>
+                <h4 style="margin: 0.4rem 0 0.5rem 0; font-size: 0.98rem; font-weight: 700;">Por que não deixar tudo com IA generativa?</h4>
+                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.4;">
+                  Triagem com regras fixas é previsível: urgência e pedido de atendente nunca dependem da IA acertar. A IA entra só na conversa sobre médicos.
+                </p>
+              </div>
+
+              <div class="pitch-feature-card">
+                <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase;">Felipe responde</span>
+                <h4 style="margin: 0.4rem 0 0.5rem 0; font-size: 0.98rem; font-weight: 700;">A Iara pode inventar médico?</h4>
+                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.4;">
+                  Ela só responde com o que vem da base no S3, e o prompt proíbe inventar médico, endereço ou horário.
+                </p>
+              </div>
+
+              <div class="pitch-feature-card">
+                <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase;">Lucivaldo responde</span>
+                <h4 style="margin: 0.4rem 0 0.5rem 0; font-size: 0.98rem; font-weight: 700;">Envia SMS de verdade?</h4>
+                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.4;">
+                  Ainda não. Hoje registramos a preferência com o consentimento do cliente (LGPD). O envio por SMS e e-mail via Amazon SNS/SES é o próximo passo.
+                </p>
+              </div>
+
+              <div class="pitch-feature-card">
+                <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase;">Daniel responde</span>
+                <h4 style="margin: 0.4rem 0 0.5rem 0; font-size: 0.98rem; font-weight: 700;">E se cair a Lambda ou a IA?</h4>
+                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.4;">
+                  Todo erro técnico vira transferência para o atendente, nunca queda. Se o protocolo falhar, usamos o ID do contato do Amazon Connect.
+                </p>
+              </div>
+
+              <div class="pitch-feature-card">
+                <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase;">Rebeca responde</span>
+                <h4 style="margin: 0.4rem 0 0.5rem 0; font-size: 0.98rem; font-weight: 700;">Por que um fluxo só?</h4>
+                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.4;">
+                  Mesma lógica pra chat e voz: muda só o agente de IA e o jeito de falar o protocolo. Menos manutenção e o mesmo atendimento nos dois canais.
+                </p>
+              </div>
+
+              <div class="pitch-feature-card">
+                <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase;">Elizabeth responde</span>
+                <h4 style="margin: 0.4rem 0 0.5rem 0; font-size: 0.98rem; font-weight: 700;">Quanto o TMA cai?</h4>
+                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.4;">
+                  Não temos número real, só dados de teste. A meta é que a maioria das buscas termine na Iara, e o dashboard mede isso no piloto.
+                </p>
+              </div>
+
+              <div class="pitch-feature-card">
+                <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase;">Jessie responde</span>
+                <h4 style="margin: 0.4rem 0 0.5rem 0; font-size: 0.98rem; font-weight: 700;">E se o cliente não tiver cadastro?</h4>
+                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.4;">
+                  Duas tentativas no Loop e depois o atendente confirma o cadastro. Atender quem não é beneficiário, encaminhando para o comercial, é uma evolução futura.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <!-- FIM DA VIEW 6: APRESENTAÇÃO -->
+
+
+
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-col">
+            <div class="brand-logo" style="margin-bottom: 1rem;">
+              <div class="logo-icon-box">
+                <img src="./images/logo-medsaude-para.png" alt="Med+Saúde - Logo Oficial" class="logo-brand-img">
+              </div>
+              <div class="brand-name">Med+<span>Saúde</span></div>
+            </div>
+            <p style="max-width: 420px; font-size: 0.9rem; margin-bottom: 1rem;">
+              Operadora de Saúde fictícia criada para demonstração prática da jornada omnichannel de atendimento e
+              agendamento de consultas via Amazon Connect, Amazon Lex e Amazon Q in Connect.
+            </p>
+            <div class="aws-badge-pill">
+              Turma Piloto | Escola da Nuvem — Grupo 6
+            </div>
+          </div>
+
+          <div class="footer-col">
+            <h4>Navegação</h4>
+            <ul>
+              <li><a href="#inicio" onclick="navegarPara('inicio')">Início</a></li>
+              <li><a href="#guia-medico" onclick="navegarPara('guia-medico')">Guia Médico</a></li>
+              <li><a href="#planos" onclick="navegarPara('planos')">Planos de Saúde</a></li>
+              <li><a href="#sobre-nos" onclick="navegarPara('sobre-nos')">Sobre Nós (Grupo 6)</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>Canais & Atendimento</h4>
+            <ul>
+              <li><a href="javascript:void(0)" onclick="simularLigacaoVoz()"><i class="fa-solid fa-headset"></i> Central
+                  0800 & Telefonia</a></li>
+              <li><a href="javascript:void(0)" onclick="abrirChatWidget()"><i class="fa-solid fa-robot"></i> Chatbot
+                  Iara</a></li>
+              <li><a href="#guia-medico" onclick="navegarPara('guia-medico')"><i class="fa-solid fa-stethoscope"></i>
+                  Guia Médico Online</a></li>
+              <li><a href="#planos" onclick="navegarPara('planos')"><i class="fa-solid fa-shield-halved"></i> Simulação
+                  de Planos</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p class="footer-copy-credits">
+            <span>&copy; 2026 <strong>Med+Saúde</strong></span>
+            <span class="footer-divider">•</span>
+            <span>Projeto em Equipe — Curso de Amazon Connect (Escola da Nuvem • Grupo 6)</span>
+            <span class="footer-divider">|</span>
+            <span>Desenvolvido por <a href="https://portifolio.lucivaldo.cloud/" target="_blank"
+                rel="noopener noreferrer" class="footer-dev-link">Lucivaldo Junior • Engenheiro de Software</a></span>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+
+    <!-- BARRA DE NAVEGAÇÃO INFERIOR MOBILE (IONIC TAB BAR NATIVO) -->
+    <ion-tab-bar slot="bottom" class="mobile-bottom-bar" id="mobile-bottom-bar">
+      <ion-tab-button tab="inicio" href="#inicio" class="bottom-tab-item active" onclick="navegarPara('inicio')">
+        <ion-icon name="home-outline"></ion-icon>
+        <i class="fa-solid fa-house" style="display: none;"></i>
+        <span>Início</span>
+      </ion-tab-button>
+      <ion-tab-button tab="guia-medico" href="#guia-medico" class="bottom-tab-item"
+        onclick="navegarPara('guia-medico')">
+        <ion-icon name="medkit-outline"></ion-icon>
+        <i class="fa-solid fa-stethoscope" style="display: none;"></i>
+        <span>Guia</span>
+      </ion-tab-button>
+      <ion-tab-button tab="planos" href="#planos" class="bottom-tab-item" onclick="navegarPara('planos')">
+        <ion-icon name="shield-checkmark-outline"></ion-icon>
+        <i class="fa-solid fa-shield-halved" style="display: none;"></i>
+        <span>Planos</span>
+      </ion-tab-button>
+      <ion-tab-button tab="sobre-nos" href="#sobre-nos" class="bottom-tab-item" onclick="navegarPara('sobre-nos')">
+        <ion-icon name="people-outline"></ion-icon>
+        <i class="fa-solid fa-users" style="display: none;"></i>
+        <span>Grupo 6</span>
+      </ion-tab-button>
+      <ion-tab-button tab="apresentacao" href="#apresentacao" class="bottom-tab-item" onclick="navegarPara('apresentacao')">
+        <ion-icon name="easel-outline"></ion-icon>
+        <i class="fa-solid fa-chalkboard-user" style="display: none;"></i>
+        <span>Pitch</span>
+      </ion-tab-button>
+    </ion-tab-bar>
+
+    <!-- Pílula Oficial de Atendimento Mobile [ 🎧 Iara ] -->
+    <button type="button" id="btn-chat-mobile-pill" class="btn-chat-mobile-pill" onclick="abrirChatConnectMobile()" title="Abrir Assistente Virtual Iara" aria-label="Assistente Iara">
+      <i class="fa-solid fa-headset"></i>
+      <span>Iara</span>
+    </button>
+
+    <div id="amazon-connect-live-widget">
+      <!-- Script Oficial Amazon Connect Communications Widget -->
+      <script type="text/javascript">
+        (function (w, d, x, id) {
+          s = d.createElement('script');
+          s.src = 'https://g6saude.my.connect.aws/connectwidget/static/amazon-connect-chat-interface-client.js';
+          s.async = 1;
+          s.id = id;
+          d.getElementsByTagName('head')[0].appendChild(s);
+          w[x] = w[x] || function () { (w[x].ac = w[x].ac || []).push(arguments) };
+        })(window, document, 'amazon_connect', '61d62c6c-3dfc-411d-95a2-2d879f633b19');
+        amazon_connect('styles', { 
+          iconType: 'CHAT', 
+          openChat: { color: '#ffffff', backgroundColor: '#0891B2' }, 
+          closeChat: { color: '#ffffff', backgroundColor: '#0891B2' } 
+        });
+        amazon_connect('customDisplayNames', {
+          header: {
+            logoUrl: 'https://luci-jr.github.io/amazon-connect-medsaude/images/banner-iara-oficial-v3.png',
+            logoAltText: 'Iara – Assistente Virtual',
+            headerMessage: '\u200B'
+          }
+        });
+        amazon_connect('customizationObject', {
+          header: {
+            logoUrl: 'https://luci-jr.github.io/amazon-connect-medsaude/images/banner-iara-oficial-v3.png',
+            logoAltText: 'Iara – Assistente Virtual',
+            headerMessage: '\u200B'
+          }
+        });
+        amazon_connect('webCallingCustomizationObject', {
+          header: {
+            logoUrl: 'https://luci-jr.github.io/amazon-connect-medsaude/images/avatar-iara-chamada.png',
+            logoAltText: 'Iara – Assistente Virtual',
+            headerMessage: 'Iara – Assistente Virtual'
+          }
+        });
+        var isMobileConnect = window.innerWidth <= 768;
+        var dynamicConnectWidth = isMobileConnect ? Math.min(window.innerWidth - 24, 360) + 'px' : '380px';
+        var dynamicConnectHeight = isMobileConnect ? Math.min(Math.round(window.innerHeight * 0.58), 450) + 'px' : '620px';
+
+        amazon_connect('customStyles', {
+          global: {
+            frameWidth: dynamicConnectWidth,
+            frameHeight: dynamicConnectHeight,
+            textColor: '#0f172a',
+            fontSize: '14px',
+            typeface: "'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+          },
+          header: {
+            headerTextColor: 'transparent',
+            headerBackgroundColor: '#0891B2'
+          },
+          transcript: {
+            widgetBackgroundColor: '#ffffff',
+            agentChatBubbleColor: '#f1f5f9',
+            agentMessageTextColor: '#0f172a',
+            customerChatBubbleColor: '#0891B2',
+            customerMessageTextColor: '#ffffff'
+          },
+          footer: {
+            footerBackgroundColor: '#ffffff',
+            buttonBackgroundColor: '#0891B2',
+            buttonTextColor: '#ffffff'
+          },
+          logo: {
+            logoMaxHeight: '80px',
+            logoMaxWidth: '100%'
+          }
+        });
+        amazon_connect('snippetId', 'QVFJREFIZ1NqZWV5MTExbXUwZXRHZUlvQ2NPT3RQZ1k4bTl0VDhTaTZYcy9YcFVCVHdFayttUEpFNmlJZkdOL3FRd1Jld0R5QUFBQWJqQnNCZ2txaGtpRzl3MEJCd2FnWHpCZEFnRUFNRmdHQ1NxR1NJYjNEUUVIQVRBZUJnbGdoa2dCWlFNRUFTNHdFUVFNNXV5ODdRYnVQSVphK0lYN0FnRVFnQ3ZaTFFNdVMwVDYrcXRjNGxvM2xGVFRZbHhpV2dnL2hXczZCSTcwZ092NGNzY3g0N1pJVFNEZEllS0c6Om1xOEI2L0NTV3Mwd1U5aW1vK0dmSUI5QTlaSTJndVlwT3k2bm1PUGJQd1Y4YlA3MmRNbEMyN24zMVYrRm01Ly9PMnYwZGZpMDk3RDNXSTJIdjBWU2l1M0poSFhpZFU5MUpUUmJEQmExcjFwenNhTHljSFdkQ2NYYXpSSkFQQmdoY2pWcm9YTnBBUXBUemtwTWRkQVY3ZEVCSzJZWW5NOD0=');
+        amazon_connect('supportedMessagingContentTypes', ['text/plain', 'text/markdown', 'application/vnd.amazonaws.connect.message.interactive', 'application/vnd.amazonaws.connect.message.interactive.response']);
+      </script>
+    </div>
+    <!-- ========================================================================= -->
+
+  </div>
+
+  <!-- MODAL DE AGENDAMENTO DE CONSULTA -->
+  <div class="modal-backdrop" id="modal-agendamento">
+    <div class="modal-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h3>Agendamento de Consulta</h3>
+        <button class="chat-btn-icon" style="color: #64748b;" onclick="fecharModalAgendamento()">
+          <i class="fa-solid fa-xmark" style="font-size: 1.25rem;"></i>
+        </button>
+      </div>
+
+      <div id="modal-medico-detalhes" class="modal-doctor-highlight">
+        <!-- Dados do médico selecionado -->
+      </div>
+
+      <form id="form-agendamento" onsubmit="confirmarAgendamento(event)">
+        <input type="hidden" id="agend-medico-id">
+        <div class="form-group">
+          <label for="agend-paciente-nome">Nome Completo do Beneficiário *</label>
+          <input type="text" id="agend-paciente-nome" required placeholder="Ex: Lucivaldo Junior">
+        </div>
+
+        <div class="form-group">
+          <label for="agend-cpf">CPF do Titular / Dependente *</label>
+          <input type="text" id="agend-cpf" required placeholder="000.000.000-00">
+        </div>
+
+        <div class="form-group">
+          <label for="agend-telefone">Telefone WhatsApp *</label>
+          <input type="text" id="agend-telefone" required placeholder="(91) 98888-7777">
+        </div>
+
+        <div class="form-group">
+          <label for="agend-horario">Horário Desejado *</label>
+          <select id="agend-horario" required>
+            <!-- Injetado dinamicamente com os horários do médico -->
+          </select>
+        </div>
+
+        <div style="display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem;">
+          <button type="button" class="btn btn-outline" onclick="fecharModalAgendamento()">Cancelar</button>
+          <button type="submit" class="btn btn-primary">
+            <i class="fa-solid fa-calendar-check"></i> Confirmar Agendamento
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+
+  <!-- Botão Flutuante Voltar ao Topo (Global - Lado Inferior Esquerdo) -->
+  <button id="btn-voltar-topo" class="btn-floating-topo" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+    title="Voltar ao início da página" aria-label="Voltar ao topo da página">
+    <i class="fa-solid fa-arrow-up"></i>
+    <span class="btn-topo-label">Topo</span>
+  </button>
+
+  <!-- Scripts da Aplicação (Arquitetura Angular Standalone + Ionic Runtime) -->
+  <script src="./js/data.js?v=1795609875979"></script>
+  <script src="./js/app.js?v=1795609875979"></script>
+  <script src="./js/chat-widget.js?v=1795609875979"></script>
+  <script type="module" src="./main.js?v=1795609875979"></script>
+</body>
+
+</html>

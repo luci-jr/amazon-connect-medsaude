@@ -1,0 +1,488 @@
+      <!-- VIEW 6: APRESENTAÇÃO DO PROJETO & ROTEIRO DA BANCA -->
+      <div class="page-view" id="view-apresentacao" style="display: none;">
+        <section class="section-apresentacao" id="apresentacao">
+          <div class="container">
+            <!-- HEADER DA APRESENTAÇÃO -->
+            <div style="text-align: center; max-width: 860px; margin: 0 auto 2rem auto;">
+              <div class="pitch-hero-badge">
+                <i class="fa-solid fa-graduation-cap"></i> Turma Piloto AWS Connect • Escola da Nuvem | Grupo 6
+              </div>
+              <h1 style="font-size: clamp(1.85rem, 4vw, 2.75rem); font-family: var(--font-retro); font-weight: 800; line-height: 1.2; margin-bottom: 0.75rem;">
+                Apresentação do Projeto <br><span style="color: var(--primary);">Med+Saúde & Amazon Connect</span>
+              </h1>
+              <p style="font-size: 1.05rem; color: var(--text-secondary); line-height: 1.5;">
+                Roteiro oficial de 9 blocos e 3 demonstrações (10 minutos) para a banca examinadora.
+              </p>
+            </div>
+
+            <!-- CRONÔMETRO INTERATIVO DO PITCH (STICKY & FLUTUANTE) -->
+            <div class="pitch-timer-container">
+              <div>
+                <div class="pitch-timer-label" style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; color: var(--text-muted); margin-bottom: 3px;">
+                  <i class="fa-solid fa-stopwatch"></i> Tempo do Pitch (Meta: 10 min)
+                </div>
+                <div class="pitch-timer-val" id="pitch-timer-display">10:00</div>
+              </div>
+              <div class="pitch-timer-controls">
+                <button type="button" class="pitch-timer-btn btn-play" id="btn-banner-pitch-toggle" onclick="togglePitchTimer()" title="Iniciar / Pausar Cronômetro">
+                  <i class="fa-solid fa-play" id="banner-icon-toggle"></i>
+                  <span id="banner-text-toggle">Iniciar</span>
+                </button>
+                <button type="button" class="pitch-timer-btn" onclick="reiniciarPitchTimer()" title="Reiniciar para 10 Minutos">
+                  <i class="fa-solid fa-rotate-left"></i> Reiniciar
+                </button>
+                <button type="button" class="pitch-timer-btn btn-stop" onclick="pararPitchTimer()" title="Parar Apresentação (Stop)">
+                  <i class="fa-solid fa-stop"></i> Parar
+                </button>
+              </div>
+            </div>
+
+            <!-- VÍDEO OFICIAL DA APRESENTAÇÃO (GRAVAÇÃO DA SQUAD GRUPO 6) -->
+            <div class="pitch-video-card">
+              <div class="pitch-video-header">
+                <div class="pitch-video-title-group">
+                  <span class="tag-badge tag-badge-teal" style="font-size: 0.78rem; padding: 0.25rem 0.65rem;">
+                    <i class="fa-solid fa-play"></i> Gravação Oficial
+                  </span>
+                  <strong style="color: var(--text-primary); font-size: 0.95rem;">Vídeo de Apresentação da Squad Grupo 6</strong>
+                </div>
+                <a href="https://www.youtube.com/watch?v=dI8Z_fwjyCo" target="_blank" rel="noopener noreferrer" class="btn btn-pill-outline" style="font-size: 0.78rem; padding: 0.35rem 0.85rem;">
+                  <i class="fa-brands fa-youtube" style="color: #ef4444;"></i> Assistir no YouTube
+                </a>
+              </div>
+
+              <!-- Container Responsivo 16:9 com ID no iframe para controle interativo -->
+              <div class="pitch-video-frame-box">
+                <iframe 
+                  id="pitch-video-iframe"
+                  src="https://www.youtube.com/embed/dI8Z_fwjyCo?rel=0" 
+                  title="Vídeo de Apresentação Med+Saúde & Amazon Connect" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                  allowfullscreen>
+                </iframe>
+              </div>
+
+              <!-- BARRA DE CAPÍTULOS INTERATIVOS DO VÍDEO (TIMECODES CLICÁVEIS) -->
+              <div class="pitch-video-chapters-wrapper">
+                <div class="pitch-chapters-title">
+                  <i class="fa-solid fa-list-ol text-primary"></i> Capítulos do Vídeo (Clique para pular):
+                </div>
+                <div class="pitch-chapters-grid">
+                  <button type="button" class="pitch-chapter-btn" onclick="pularVideoApresentacao(0, 'pitch-bloco-1')">
+                    <span class="pitch-chapter-time">00:00</span>
+                    <span>1. O Problema da Dona Maria</span>
+                  </button>
+                  <button type="button" class="pitch-chapter-btn" onclick="pularVideoApresentacao(49, 'pitch-bloco-2')">
+                    <span class="pitch-chapter-time">00:49</span>
+                    <span>2. A Solução Iara & Lex V2</span>
+                  </button>
+                  <button type="button" class="pitch-chapter-btn" onclick="pularVideoApresentacao(131, 'pitch-bloco-3')">
+                    <span class="pitch-chapter-time">02:11</span>
+                    <span>Demo 1 · Chat (Lucas)</span>
+                  </button>
+                  <button type="button" class="pitch-chapter-btn" onclick="pularVideoApresentacao(180, 'pitch-bloco-4')">
+                    <span class="pitch-chapter-time">03:00</span>
+                    <span>3. Base S3 & Q in Connect</span>
+                  </button>
+                  <button type="button" class="pitch-chapter-btn" onclick="pularVideoApresentacao(221, 'pitch-bloco-5')">
+                    <span class="pitch-chapter-time">03:41</span>
+                    <span>4. Telefonia & Escuta 6s</span>
+                  </button>
+                  <button type="button" class="pitch-chapter-btn" onclick="pularVideoApresentacao(253, 'pitch-bloco-5')">
+                    <span class="pitch-chapter-time">04:13</span>
+                    <span>Demo 2 · Voz (Dona Josefa)</span>
+                  </button>
+                  <button type="button" class="pitch-chapter-btn" onclick="pularVideoApresentacao(406, 'pitch-bloco-6')">
+                    <span class="pitch-chapter-time">06:46</span>
+                    <span>5. Transbordo N1 Humano</span>
+                  </button>
+                  <button type="button" class="pitch-chapter-btn" onclick="pularVideoApresentacao(425, 'pitch-bloco-6')">
+                    <span class="pitch-chapter-time">07:05</span>
+                    <span>Demo 3 · Tela CCP & SAMU 192</span>
+                  </button>
+                  <button type="button" class="pitch-chapter-btn" onclick="pularVideoApresentacao(490, 'pitch-bloco-7')">
+                    <span class="pitch-chapter-time">08:10</span>
+                    <span>6. O Portal do Lucivaldo</span>
+                  </button>
+                  <button type="button" class="pitch-chapter-btn" onclick="pularVideoApresentacao(521, 'pitch-bloco-8')">
+                    <span class="pitch-chapter-time">08:41</span>
+                    <span>7. Telemetria & Testes</span>
+                  </button>
+                  <button type="button" class="pitch-chapter-btn" onclick="pularVideoApresentacao(552, 'pitch-bloco-9')">
+                    <span class="pitch-chapter-time">09:12</span>
+                    <span>8. Antes × Depois & Fim</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- OS 9 BLOCOS DE ROLAGEM (ESTRUTURA OFICIAL DO GRUPO 6 - ESTILO SLIDES) -->
+            <div class="pitch-blocks-flow">
+
+              <!-- PARTE 1: O PROBLEMA -->
+              <div class="pitch-timeline-step" id="pitch-bloco-1">
+                <div class="pitch-step-header">
+                  <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                    <span class="pitch-step-pill">1 · 0:00–0:50</span>
+                    <span class="pitch-speaker-badge">
+                      <img src="./images/camila.png" alt="Camila Landy" class="pitch-speaker-avatar">
+                      <span class="pitch-speaker-info">
+                        <span class="pitch-speaker-name">Camila Landy</span>
+                        <span class="pitch-speaker-role">Dados, Métricas, Dashboards &amp; QA</span>
+                      </span>
+                    </span>
+                  </div>
+                  <button type="button" class="pitch-jump-btn" onclick="pularVideoApresentacao(0, 'pitch-bloco-1')" title="Ouvir fala de Camila no vídeo">
+                    <i class="fa-solid fa-play"></i> Ouvir no Vídeo [00:00]
+                  </button>
+                </div>
+                <h2 class="pitch-slide-title">Hoje, achar um médico é esperar na fila</h2>
+                <p class="pitch-slide-punchline">
+                  Fila longa, tempo de espera elevado e o novo Decreto do SAC exigindo canal 24h e resolução imediata.
+                </p>
+                <div class="pitch-visual-card" style="background: rgba(239, 68, 68, 0.08); border: 1px dashed rgba(239, 68, 68, 0.35); border-radius: 12px; padding: 1.25rem; display: flex; align-items: center; gap: 1rem; margin-top: 1rem;">
+                  <i class="fa-solid fa-phone-slash" style="font-size: 2rem; color: #ef4444;"></i>
+                  <div>
+                    <strong style="color: #f87171;">Cenário Real: Dona Maria (72 anos, Curitiba)</strong>
+                    <div style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 2px;">"Digite 1... Digite 2... Fila de espera... Anotação em papel."</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PARTE 2: A SOLUÇÃO -->
+              <div class="pitch-timeline-step" id="pitch-bloco-2">
+                <div class="pitch-step-header">
+                  <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                    <span class="pitch-step-pill" style="background: rgba(8, 145, 178, 0.15); color: #0891b2; border-color: rgba(8, 145, 178, 0.35);">2 · 0:50–1:45</span>
+                    <span class="pitch-speaker-badge">
+                      <img src="./images/ana-paula.jpg" alt="Ana Paula" class="pitch-speaker-avatar">
+                      <span class="pitch-speaker-info">
+                        <span class="pitch-speaker-name">Ana Paula</span>
+                        <span class="pitch-speaker-role">Dev Conversacional &amp; Linguagem Natural</span>
+                      </span>
+                    </span>
+                  </div>
+                  <button type="button" class="pitch-jump-btn" onclick="pularVideoApresentacao(49, 'pitch-bloco-2')" title="Ouvir fala de Ana Paula no vídeo">
+                    <i class="fa-solid fa-play"></i> Ouvir no Vídeo [00:49]
+                  </button>
+                </div>
+                <h2 class="pitch-slide-title">Iara: chat e voz, 24 horas, um só fluxo</h2>
+                <p class="pitch-slide-punchline">
+                  Atendimento unificado no Amazon Connect com emissão de protocolo imediato (ANS RN 623) e integração com Customer Profiles.
+                </p>
+                <div class="pitch-visual-card" style="background: rgba(8, 145, 178, 0.08); border: 1px dashed rgba(8, 145, 178, 0.35); border-radius: 12px; padding: 1.25rem; display: flex; align-items: center; gap: 1rem; margin-top: 1rem;">
+                  <i class="fa-solid fa-diagram-project" style="font-size: 2rem; color: #0891b2;"></i>
+                  <div>
+                    <strong style="color: #38bdf8;">Visão Geral do Fluxo Connect</strong>
+                    <div style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 2px;">Um único fluxo conversacional atendendo chat e telefonia sem 'digite 1'.</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PARTE 3: COMO A IARA ENTENDE + DEMO 1 -->
+              <div class="pitch-timeline-step" id="pitch-bloco-3">
+                <div class="pitch-step-header">
+                  <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                    <span class="pitch-step-pill" style="background: rgba(139, 92, 246, 0.15); color: #a855f7; border-color: rgba(139, 92, 246, 0.35);">3 · 1:45–2:44</span>
+                    <span class="pitch-speaker-badge">
+                      <img src="./images/ana-paula.jpg" alt="Ana Paula" class="pitch-speaker-avatar">
+                      <span class="pitch-speaker-info">
+                        <span class="pitch-speaker-name">Ana Paula</span>
+                        <span class="pitch-speaker-role">Dev Conversacional &amp; Linguagem Natural</span>
+                      </span>
+                    </span>
+                  </div>
+                  <button type="button" class="pitch-jump-btn" onclick="pularVideoApresentacao(131, 'pitch-bloco-3')" title="Ver Demo do Chat no vídeo">
+                    <i class="fa-solid fa-play"></i> Ver Demo 1 no Vídeo [02:11]
+                  </button>
+                </div>
+                <h2 class="pitch-slide-title">Ela entende do jeito que você fala</h2>
+                <p class="pitch-slide-punchline">
+                  Amazon Lex V2 mapeando linguagem natural para 17 especialidades e Amazon Q in Connect com IA generativa.
+                </p>
+                <!-- DEMO 1 CARD -->
+                <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 12px; padding: 1.25rem; margin-top: 1rem;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap;">
+                    <strong style="color: #10b981; font-size: 1rem;"><i class="fa-solid fa-circle-play"></i> Demo 1 – Chat (Lucas agendando cardiologista)</strong>
+                    <span style="font-size: 0.8rem; background: rgba(16, 185, 129, 0.2); color: #10b981; padding: 2px 8px; border-radius: 6px; font-weight: 700;">Vídeo · 2:11–2:44</span>
+                  </div>
+                  <div style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.4;">
+                    Lucas agenda cardiologista para a avó (Dona Maria) em Curitiba. Demonstração ao vivo: intenções do Lex V2, resposta precisa da base e protocolo gerado na hora.
+                  </div>
+                </div>
+              </div>
+
+              <!-- PARTE 4: DE ONDE VEM A RESPOSTA -->
+              <div class="pitch-timeline-step" id="pitch-bloco-4">
+                <div class="pitch-step-header">
+                  <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                    <span class="pitch-step-pill">4 · 3:00–3:40</span>
+                    <span class="pitch-speaker-badge">
+                      <img src="./images/jessica.png" alt="Jéssica Vylia" class="pitch-speaker-avatar">
+                      <span class="pitch-speaker-info">
+                        <span class="pitch-speaker-name">Jéssica Vylia</span>
+                        <span class="pitch-speaker-role">Dev, Governança &amp; IA Generativa</span>
+                      </span>
+                    </span>
+                  </div>
+                  <button type="button" class="pitch-jump-btn" onclick="pularVideoApresentacao(180, 'pitch-bloco-4')" title="Ouvir fala de Jéssica no vídeo">
+                    <i class="fa-solid fa-play"></i> Ouvir no Vídeo [03:00]
+                  </button>
+                </div>
+                <h2 class="pitch-slide-title">A resposta vem da base do Guia Médico no S3</h2>
+                <p class="pitch-slide-punchline">
+                  25 médicos, 17 especialidades e 15 cidades no Amazon S3 conectados ao Amazon Q. Respostas precisas sem alucinação e com zero dados de pacientes no S3.
+                </p>
+                <div class="pitch-visual-card" style="background: rgba(245, 158, 11, 0.08); border: 1px dashed rgba(245, 158, 11, 0.35); border-radius: 12px; padding: 1.25rem; display: flex; align-items: center; gap: 1rem; margin-top: 1rem;">
+                  <i class="fa-solid fa-database" style="font-size: 2rem; color: #f59e0b;"></i>
+                  <div>
+                    <strong style="color: #fbbf24;">Base Verificada no Amazon S3 (RAG)</strong>
+                    <div style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 2px;">Dra. Ana Carolina Silva e especialistas com dias, horários e endereços reais sem inventar dados.</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PARTE 5: A VOZ + DEMO 2 -->
+              <div class="pitch-timeline-step" id="pitch-bloco-5">
+                <div class="pitch-step-header">
+                  <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                    <span class="pitch-step-pill">5 · 3:41–6:45</span>
+                    <span class="pitch-speaker-badge">
+                      <img src="./images/jessica.png" alt="Jéssica Vylia" class="pitch-speaker-avatar">
+                      <span class="pitch-speaker-info">
+                        <span class="pitch-speaker-name">Jéssica Vylia</span>
+                        <span class="pitch-speaker-role">Dev, Governança &amp; IA Generativa</span>
+                      </span>
+                    </span>
+                  </div>
+                  <button type="button" class="pitch-jump-btn" onclick="pularVideoApresentacao(253, 'pitch-bloco-5')" title="Ver Demo de Voz no vídeo">
+                    <i class="fa-solid fa-play"></i> Ver Demo 2 (Voz) [04:13]
+                  </button>
+                </div>
+                <h2 class="pitch-slide-title">No telefone, sem menu rígido (Escuta de 6 segundos)</h2>
+                <p class="pitch-slide-punchline">
+                  Mesmo fluxo inteligente com voz natural em português, número falado por extenso (Seu Carlos, Belém) e escuta estendida para 6 segundos para acolher idosos.
+                </p>
+                <!-- DEMO 2 CARD -->
+                <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 12px; padding: 1.25rem; margin-top: 1rem;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap;">
+                    <strong style="color: #10b981; font-size: 1rem;"><i class="fa-solid fa-circle-play"></i> Demo 2 – Ligação Real da Dona Josefa (Recife)</strong>
+                    <span style="font-size: 0.8rem; background: rgba(16, 185, 129, 0.2); color: #10b981; padding: 2px 8px; border-radius: 6px; font-weight: 700;">Vídeo · 4:13–6:45</span>
+                  </div>
+                  <div style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.4;">
+                    Dona Josefa pede médico para dor nos ossos em Recife. A Iara agenda com o Dr. Eduardo Cavalcante de Albuquerque para quarta-feira (18/11 às 10:30), emitindo o número de agendamento 7 e protocolo oficial.
+                  </div>
+                </div>
+              </div>
+
+              <!-- PARTE 6: TRANSBORDO + DEMO 3 -->
+              <div class="pitch-timeline-step" id="pitch-bloco-6">
+                <div class="pitch-step-header">
+                  <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                    <span class="pitch-step-pill" style="background: rgba(239, 68, 68, 0.15); color: #ef4444; border-color: rgba(239, 68, 68, 0.35);">6 · 6:46–8:09</span>
+                    <span class="pitch-speaker-badge">
+                      <img src="./images/daniel.png" alt="Daniel Villegas" class="pitch-speaker-avatar">
+                      <span class="pitch-speaker-info">
+                        <span class="pitch-speaker-name">Daniel Villegas</span>
+                        <span class="pitch-speaker-role">Arquiteto de Fluxos (chat e voz) &amp; QA</span>
+                      </span>
+                    </span>
+                  </div>
+                  <button type="button" class="pitch-jump-btn" onclick="pularVideoApresentacao(406, 'pitch-bloco-6')" title="Ouvir Daniel Villegas no vídeo">
+                    <i class="fa-solid fa-play"></i> Ver no Vídeo [06:46]
+                  </button>
+                </div>
+                <h2 class="pitch-slide-title">Quando precisa de uma pessoa: contexto preservado</h2>
+                <p class="pitch-slide-punchline">
+                  Transbordo para N1 com contexto completo: protocolo, histórico e cadastro sem o cliente precisar repetir nada.
+                </p>
+                <!-- DEMO 3 CARD -->
+                <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 12px; padding: 1.25rem; margin-top: 1rem;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap;">
+                    <strong style="color: #10b981; font-size: 1rem;"><i class="fa-solid fa-circle-play"></i> Demo 3 – Transbordo em Tela Dividida (CCP)</strong>
+                    <span style="font-size: 0.8rem; background: rgba(16, 185, 129, 0.2); color: #10b981; padding: 2px 8px; border-radius: 6px; font-weight: 700;">Vídeo · 7:05–8:09</span>
+                  </div>
+                  <div style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.4;">
+                    Dona Josefa pergunta sobre a carteirinha e é transferida para o atendente com a conversa intacta na tela. Se o cliente disser "dor no peito", é orientado ao SAMU 192 e entra na fila prioritária 1.
+                  </div>
+                </div>
+                <!-- 4 PONTOS DO DECRETO -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; margin-top: 1rem;">
+                  <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-color); padding: 0.75rem; border-radius: 8px; font-size: 0.82rem;">
+                    <i class="fa-solid fa-check" style="color: #10b981;"></i> <strong>Eletrônico 24h</strong>
+                  </div>
+                  <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-color); padding: 0.75rem; border-radius: 8px; font-size: 0.82rem;">
+                    <i class="fa-solid fa-check" style="color: #10b981;"></i> <strong>Urgência Prioridade 1 (SAMU 192)</strong>
+                  </div>
+                  <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-color); padding: 0.75rem; border-radius: 8px; font-size: 0.82rem;">
+                    <i class="fa-solid fa-check" style="color: #10b981;"></i> <strong>Cancelamento 1º Nível</strong>
+                  </div>
+                  <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border-color); padding: 0.75rem; border-radius: 8px; font-size: 0.82rem;">
+                    <i class="fa-solid fa-check" style="color: #10b981;"></i> <strong>Nunca Repetir Informação</strong>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PARTE 7: O PORTAL, SEGURANÇA E LGPD -->
+              <div class="pitch-timeline-step" id="pitch-bloco-7">
+                <div class="pitch-step-header">
+                  <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                    <span class="pitch-step-pill" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border-color: rgba(56, 189, 248, 0.35);">7 · 8:10–8:40</span>
+                    <span class="pitch-speaker-badge">
+                      <img src="./images/camila.png" alt="Camila Landy" class="pitch-speaker-avatar">
+                      <span class="pitch-speaker-info">
+                        <span class="pitch-speaker-name">Camila Landy</span>
+                        <span class="pitch-speaker-role">Dados, Métricas, Dashboards &amp; QA</span>
+                      </span>
+                    </span>
+                  </div>
+                  <button type="button" class="pitch-jump-btn" onclick="pularVideoApresentacao(490, 'pitch-bloco-7')" title="Ver no vídeo">
+                    <i class="fa-solid fa-play"></i> Ver no Vídeo [08:10]
+                  </button>
+                </div>
+                <h2 class="pitch-slide-title">Só o necessário e com permissão</h2>
+                <p class="pitch-slide-punchline">
+                  Princípio da minimização de dados da LGPD (Art. 6º): sem coleta de CPF ou dados sensíveis de saúde em texto aberto.
+                </p>
+
+                <div class="pitch-visual-card" style="background: rgba(56, 189, 248, 0.08); border: 1px dashed rgba(56, 189, 248, 0.35); border-radius: 12px; padding: 1.25rem; display: flex; align-items: center; gap: 1rem; margin-top: 1rem;">
+                  <i class="fa-solid fa-shield-halved" style="font-size: 2rem; color: #38bdf8;"></i>
+                  <div>
+                    <strong style="color: #38bdf8;">Responsabilidade Compartilhada AWS</strong>
+                    <div style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 2px;">Segurança da infraestrutura pela AWS; governança de acesso e consentimento pela operadora.</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PARTE 8: TESTES E DASHBOARD -->
+              <div class="pitch-timeline-step" id="pitch-bloco-8">
+                <div class="pitch-step-header">
+                  <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                    <span class="pitch-step-pill">8 · 8:41–9:11</span>
+                    <span class="pitch-speaker-badge">
+                      <img src="./images/camila.png" alt="Camila Landy" class="pitch-speaker-avatar">
+                      <span class="pitch-speaker-info">
+                        <span class="pitch-speaker-name">Camila Landy</span>
+                        <span class="pitch-speaker-role">Dados, Métricas, Dashboards &amp; QA</span>
+                      </span>
+                    </span>
+                  </div>
+                  <button type="button" class="pitch-jump-btn" onclick="pularVideoApresentacao(521, 'pitch-bloco-8')" title="Ver trecho de testes no vídeo">
+                    <i class="fa-solid fa-play"></i> Ver no Vídeo [08:41]
+                  </button>
+                </div>
+                <h2 class="pitch-slide-title">O gestor vê tudo em tempo real</h2>
+                <p class="pitch-slide-punchline">
+                  Telemetria no Amazon Connect e CloudWatch com volume de atendimentos e TMA em chat e voz.
+                </p>
+                <div class="pitch-visual-card" style="background: rgba(168, 85, 247, 0.08); border: 1px dashed rgba(168, 85, 247, 0.35); border-radius: 12px; padding: 1.25rem; display: flex; align-items: center; gap: 1rem; margin-top: 1rem;">
+                  <i class="fa-solid fa-chart-pie" style="font-size: 2rem; color: #a855f7;"></i>
+                  <div>
+                    <strong style="color: #c084fc;">Métricas e Melhoria Contínua</strong>
+                    <div style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 2px;">Nos testes, "dor no peito" caía em ortopedia. A correção gerou o caminho de urgência com prioridade máxima e SAMU 192.</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PARTE 9: IMPACTO E FECHAMENTO -->
+              <div class="pitch-timeline-step" id="pitch-bloco-9">
+                <div class="pitch-step-header">
+                  <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                    <span class="pitch-step-pill" style="background: rgba(16, 185, 129, 0.15); color: #10b981; border-color: rgba(16, 185, 129, 0.35);">9 · 9:12–10:00</span>
+                    <span class="pitch-speaker-badge">
+                      <img src="./images/camila.png" alt="Camila Landy" class="pitch-speaker-avatar">
+                      <span class="pitch-speaker-info">
+                        <span class="pitch-speaker-name">Camila Landy</span>
+                        <span class="pitch-speaker-role">Dados, Métricas, Dashboards &amp; QA</span>
+                      </span>
+                    </span>
+                  </div>
+                  <button type="button" class="pitch-jump-btn" onclick="pularVideoApresentacao(552, 'pitch-bloco-9')" title="Ver encerramento no vídeo">
+                    <i class="fa-solid fa-play"></i> Ver Fechamento [09:12]
+                  </button>
+                </div>
+                <h2 class="pitch-slide-title">Antes × Depois: A Transformação</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 1rem 0;">
+                  <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 10px; padding: 1rem;">
+                    <strong style="color: #ef4444;"><i class="fa-solid fa-xmark"></i> Antes:</strong>
+                    <div style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 4px;">Menu telefônico engessado, fila de espera e anotação em papel.</div>
+                  </div>
+                  <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 10px; padding: 1rem;">
+                    <strong style="color: #10b981;"><i class="fa-solid fa-check"></i> Depois:</strong>
+                    <div style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 4px;">Conversa natural, protocolo na hora e consulta agendada em minutos.</div>
+                  </div>
+                </div>
+                <div style="text-align: center; margin-top: 1rem;">
+                  <button class="btn btn-outline" onclick="navegarPara('sobre-nos')" style="font-size: 0.9rem;">
+                    <i class="fa-solid fa-users"></i> Ver Squad Completo do Grupo 6
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- PERGUNTAS DA BANCA (Q&A DE APOIO) -->
+            <h2 style="font-size: 1.5rem; font-family: var(--font-retro); font-weight: 800; margin: 3.5rem 0 1.5rem 0; display: flex; align-items: center; gap: 0.6rem;">
+              <i class="fa-solid fa-circle-question" style="color: var(--primary);"></i> Perguntas Preparadas da Banca (Q&A de Apoio)
+            </h2>
+            <div class="pitch-card-grid">
+              <div class="pitch-feature-card">
+                <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase;">Ana Paula responde</span>
+                <h4 style="margin: 0.4rem 0 0.5rem 0; font-size: 0.98rem; font-weight: 700;">Por que não deixar tudo com IA generativa?</h4>
+                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.4;">
+                  Triagem com regras fixas é previsível: urgência e pedido de atendente nunca dependem da IA acertar. A IA entra só na conversa sobre médicos.
+                </p>
+              </div>
+
+              <div class="pitch-feature-card">
+                <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase;">Felipe responde</span>
+                <h4 style="margin: 0.4rem 0 0.5rem 0; font-size: 0.98rem; font-weight: 700;">A Iara pode inventar médico?</h4>
+                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.4;">
+                  Ela só responde com o que vem da base no S3, e o prompt proíbe inventar médico, endereço ou horário.
+                </p>
+              </div>
+
+              <div class="pitch-feature-card">
+                <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase;">Lucivaldo responde</span>
+                <h4 style="margin: 0.4rem 0 0.5rem 0; font-size: 0.98rem; font-weight: 700;">Envia SMS de verdade?</h4>
+                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.4;">
+                  Ainda não. Hoje registramos a preferência com o consentimento do cliente (LGPD). O envio por SMS e e-mail via Amazon SNS/SES é o próximo passo.
+                </p>
+              </div>
+
+              <div class="pitch-feature-card">
+                <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase;">Daniel responde</span>
+                <h4 style="margin: 0.4rem 0 0.5rem 0; font-size: 0.98rem; font-weight: 700;">E se cair a Lambda ou a IA?</h4>
+                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.4;">
+                  Todo erro técnico vira transferência para o atendente, nunca queda. Se o protocolo falhar, usamos o ID do contato do Amazon Connect.
+                </p>
+              </div>
+
+              <div class="pitch-feature-card">
+                <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase;">Rebeca responde</span>
+                <h4 style="margin: 0.4rem 0 0.5rem 0; font-size: 0.98rem; font-weight: 700;">Por que um fluxo só?</h4>
+                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.4;">
+                  Mesma lógica pra chat e voz: muda só o agente de IA e o jeito de falar o protocolo. Menos manutenção e o mesmo atendimento nos dois canais.
+                </p>
+              </div>
+
+              <div class="pitch-feature-card">
+                <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase;">Elizabeth responde</span>
+                <h4 style="margin: 0.4rem 0 0.5rem 0; font-size: 0.98rem; font-weight: 700;">Quanto o TMA cai?</h4>
+                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.4;">
+                  Não temos número real, só dados de teste. A meta é que a maioria das buscas termine na Iara, e o dashboard mede isso no piloto.
+                </p>
+              </div>
+
+              <div class="pitch-feature-card">
+                <span style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase;">Jessie responde</span>
+                <h4 style="margin: 0.4rem 0 0.5rem 0; font-size: 0.98rem; font-weight: 700;">E se o cliente não tiver cadastro?</h4>
+                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.4;">
+                  Duas tentativas no Loop e depois o atendente confirma o cadastro. Atender quem não é beneficiário, encaminhando para o comercial, é uma evolução futura.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <!-- FIM DA VIEW 6: APRESENTAÇÃO -->
