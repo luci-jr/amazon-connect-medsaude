@@ -2689,7 +2689,7 @@ body.light-theme .team-area-block {
 }
 
 /* DENTRO DE CADA BLOCO DE DUPLA:
-   - minmax(380px, 1fr) garante cards bem largos, horizontais e confortáveis.
+   - minmax(380px, 1fr) garante cards bem largos, horizontais e confortáveis em desktop.
    - Espaçamento de 2.25rem entre os cards da dupla.
 */
 .team-pair-grid {
@@ -2728,6 +2728,65 @@ body.light-theme .team-area-block {
   font-size: 1rem;
   line-height: 1.75;
   text-align: justify;
+}
+
+/* Otimização Específica para Mobile e Telas Pequenas (< 768px) */
+@media (max-width: 768px) {
+  .section-sobre-nos {
+    padding: 3.5rem 0 5rem 0;
+  }
+  .section-sobre-nos .container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 0.85rem;
+  }
+  .team-sections-wrapper {
+    gap: 1.75rem;
+    margin-top: 1.5rem;
+  }
+  .team-area-block {
+    padding: 1.25rem 1rem;
+    border-radius: 14px;
+  }
+  .team-area-header {
+    margin-bottom: 1rem;
+  }
+  .team-pair-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  .team-pair-grid .team-card {
+    padding: 1.5rem 1.15rem;
+    border-radius: 12px;
+    align-items: center;
+    text-align: center;
+  }
+  .team-pair-grid .team-avatar-box {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 1rem auto;
+  }
+  .team-pair-grid .team-name {
+    font-size: 1.15rem;
+    text-align: center;
+    width: 100%;
+  }
+  .team-pair-grid .team-role {
+    font-size: 0.8rem;
+    margin-bottom: 0.85rem;
+    text-align: center;
+    width: 100%;
+  }
+  .team-pair-grid .team-bio {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    text-align: left;
+    margin-bottom: 1.25rem;
+  }
+  .team-pair-grid .team-links {
+    justify-content: center;
+    width: 100%;
+  }
 }
 
 /* Ajuste proporcional mais compacto quando em modo 2x2 (>= 1500px) */
